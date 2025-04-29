@@ -71,6 +71,8 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
     // Fetch available tests based on user role
     getTests(USER.role)
       .then((data) => {
+        console.log(data);
+        
         setTests(data || []);
       })
       .catch((err) => console.error("Error fetching tests:", err));
