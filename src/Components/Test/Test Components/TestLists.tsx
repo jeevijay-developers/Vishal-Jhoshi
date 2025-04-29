@@ -72,7 +72,7 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
     getTests(USER.role)
       .then((data) => {
         console.log(data);
-        
+
         setTests(data || []);
       })
       .catch((err) => console.error("Error fetching tests:", err));
@@ -116,9 +116,10 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
   }, [USER._id, USER.role]);
 
   const attendTest = (test: LiveTestFormData) => {
-    const today = new Date();
+    /*  const today = new Date();
     today.setHours(0, 0, 0, 0); // Today's 12:00 AM timestamp
     const TODAYTIMESTAMP = today.getTime();
+    console.log(TODAYTIMESTAMP);
 
     // Get the current time (in minutes since midnight)
     const currentTime = new Date();
@@ -145,6 +146,8 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
       toast.error("Can't Attend right now", {
         position: "top-left",
       });
+      console.log("today");
+
       return;
     }
 
@@ -153,6 +156,7 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
       toast.error("Can't Attend right now", {
         position: "top-left",
       });
+      console.log("before");
       return;
     }
 
@@ -161,8 +165,9 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
       toast.error("Can't Attend right now", {
         position: "top-left",
       });
+      console.log("after");
       return;
-    }
+    } */
 
     dispatch(setAttendTestDetails(test));
     dispatch(setAttending());
