@@ -64,7 +64,7 @@ export const UserForm = () => {
     // }
     if (result?.ok) {
       console.log(result);
-      toast.success("successfully Logged in Rediract......");
+      toast.success("successfully Logged in ......");
       router.push(result.url || "/dashboard");
       // create a room after successfull login
     } else {
