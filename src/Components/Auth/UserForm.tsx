@@ -30,45 +30,80 @@ export const UserForm = () => {
   const [signUpCheck, setSignUp] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+  // old code
+  // const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   setLoading(true);
+
+  //   if (signUpCheck) {
+  //     const result = await signUp(email, password, name);
+  //     if (result?.status === "success") {
+  //       setSignUp(false);
+  //       toast.success("Success...");
+  //     } else {
+  //       toast.error("Invalid Data...");
+  //     }
+  //     return;
+  //   }
+
+  //   const result = await signIn("credentials", {
+  //     email,
+  //     password,
+  //     redirect: false,
+  //     callbackUrl: "/pages/dashboard",
+  //   });
+  //   // const result = await signIn(email, password);
+
+  //   // console.log(result);
+
+  //   // if (result.statusCode === 200) {
+  //   //   toast.success("successfully Logged in Rediract......");
+  //   //   router.push(result.url || "http://localhost:3000/dashboard");
+  //   // } else {
+  //   //   toast.error("Invalid Credentaial...");
+  //   // }
+  //   if (result?.ok) {
+  //     console.log(result);
+  //     toast.success("successfully Logged in ......");
+  //     router.push(result.url || "/dashboard");
+  //     // create a room after successfull login
+  //   } else {
+  //     toast.error("Invalid Credentaial...");
+  //   }
+  // };
   const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
-    if (signUpCheck) {
-      const result = await signUp(email, password, name);
-      if (result?.status === "success") {
-        setSignUp(false);
-        toast.success("Success...");
+    try {
+      if (signUpCheck) {
+        const result = await signUp(email, password, name);
+        if (result?.status === "success") {
+          setSignUp(false);
+          toast.success("Success...");
+        } else {
+          toast.error("Invalid Data...");
+        }
       } else {
-        toast.error("Invalid Data...");
+        const result = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+          callbackUrl: "/pages/dashboard",
+        });
+
+        if (result?.ok) {
+          toast.success("successfully Logged in ......");
+          router.push(result.url || "/dashboard");
+        } else {
+          toast.error("Invalid Credentaial...");
+        }
       }
-      return;
-    }
-
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      callbackUrl: "/pages/dashboard",
-    });
-    // const result = await signIn(email, password);
-
-    // console.log(result);
-
-    // if (result.statusCode === 200) {
-    //   toast.success("successfully Logged in Rediract......");
-    //   router.push(result.url || "http://localhost:3000/dashboard");
-    // } else {
-    //   toast.error("Invalid Credentaial...");
-    // }
-    if (result?.ok) {
-      console.log(result);
-      toast.success("successfully Logged in ......");
-      router.push(result.url || "/dashboard");
-      // create a room after successfull login
-    } else {
-      toast.error("Invalid Credentaial...");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -147,16 +182,38 @@ export const UserForm = () => {
                 {ForgotPassword}
               </Link>
               <div className="text-end mt-3">
-                <Button type="submit" color="primary" block>
-                  {SignIn}
+                <Button type="submit" color="primary" block disabled={loading}>
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Loading...
+                    </>
+                  ) : (
+                    SignIn
+                  )}
                 </Button>
               </div>
             </FormGroup>
           ) : (
             <FormGroup className="mb-0 checkbox-checked">
               <div className="text-end mt-3">
-                <Button type="submit" color="primary" block>
-                  {SignUp}
+                <Button type="submit" color="primary" block disabled={loading}>
+                 {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Loading...
+                    </>
+                  ) : (
+                    SignUp
+                  )}
                 </Button>
               </div>
             </FormGroup>
