@@ -35,17 +35,22 @@ const CameraView: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1>Proctor</h1>
+    <div
+      className="d-flex flex-row gap-3 justify-content-end align-items-center"
+      style={{ textAlign: "center" }}
+    >
+      {/* <h1>Proctor</h1> */}
       {error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (
         <video
           ref={videoRef}
           style={{
-            width: "100%",
+            width: "20%",
+            height: "20%",
             maxWidth: "600px",
-            borderRadius: "8px",
+            borderRadius: "50%",
+            aspectRatio: "1/1",
             border: "2px solid #ddd",
           }}
           autoPlay

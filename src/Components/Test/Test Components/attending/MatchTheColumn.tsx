@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+import { FaEye, FaImage } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 
 interface MatchColumnFormData {
   matchTheColumnQuestions: {
@@ -63,7 +65,12 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
   settestCounter,
 }) => {
   const [matches, setMatches] = useState<{ left: string; right: string }[]>([]);
-
+  const [modal, setModal] = useState({
+    text1: "",
+    text2: "",
+    descriptionImage: "",
+  });
+  const [showImageModal, setShowImageModal] = useState(false);
   const start = Date.now();
   const handleMatchChange = (leftOption: string, rightOption: string) => {
     setMatches((prev) => {
@@ -144,7 +151,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
   // }
 
   return (
-    <div className="container mt-4 w-100 bg-light rounded-4 p-1 text-dark">
+    <div className="container mt-4 w-100 bg-light rounded-4 p-1 text-dark position-relative">
       {/* Question Metadata */}
       <section
         className="d-flex justify-content-start align-items-center flex-row gap-4 flex-wrap"
@@ -165,12 +172,12 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
             {matchTheColumnQuestions.topic}
           </p>
         </div>
-        <div className="mb-3 text-center">
+        {/* <div className="mb-3 text-center">
           <label className="form-label">Subtopic</label>
           <p className="form-control-plaintext">
             {matchTheColumnQuestions.subtopic}
           </p>
-        </div>
+        </div> */}
         <div className="mb-3 text-center">
           <label className="form-label">Level</label>
           <p className="form-control-plaintext">
@@ -188,14 +195,38 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
       >
         <div className="mt-3  border-bottom">
           <h6 className="">Description</h6>
-          <p
+          <div className="d-flex flex-row justify-content-center align-items-center gap-3">
+            <p
+              className="fw-bold m-0 p-0"
+              dangerouslySetInnerHTML={{
+                __html: matchTheColumnQuestions.description,
+              }}
+            />
+            {matchTheColumnQuestions.descriptionImage && (
+              <FaImage
+                // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
+                // alt={`Left Option ${item.option}`}
+                className="img-fluid cursor-pointer pb-4"
+                style={{ maxWidth: "150px" }}
+                onClick={() => {
+                  setModal({
+                    text1: `Description`,
+                    descriptionImage: `${matchTheColumnQuestions.descriptionImage}`,
+                    text2: matchTheColumnQuestions.description,
+                  });
+                  setShowImageModal(true);
+                }}
+              >
+                View Image
+              </FaImage>
+            )}
+          </div>
+          {/* <p
             className="fw-bold"
             dangerouslySetInnerHTML={{
               __html: matchTheColumnQuestions.description,
             }}
-          >
-            {/* {} */}
-          </p>
+          ></p>
           {matchTheColumnQuestions.descriptionImage && (
             <div className="text-center mb-3">
               <img
@@ -205,14 +236,14 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
                 style={{ maxWidth: "400px" }}
               />
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Columns for Matching */}
         <div
-          className="row mt-4"
+          className="d-flex h-fit flex-row gap-5 mt-5 justify-content-between"
           style={{
-            maxHeight: "400px",
+            minHeight: "400px",
             overflow: "scroll",
           }}
         >
@@ -222,7 +253,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
               className="text-center"
               style={{
                 backgroundColor: "#32cc677d",
-                padding: "3px 0px",
+                padding: "3px 10px",
                 borderRadius: "10px",
               }}
             >
@@ -251,7 +282,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
               },
             ].map((item) => (
               <div key={item.option} className="mb-3  border-bottom">
-                <span>
+                <span className="d-flex flex-row gap-2">
                   <b
                     style={{
                       fontSize: ".8em",
@@ -259,7 +290,32 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
                   >
                     Option {item.option}
                   </b>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    {item.image && (
+                      <FaImage
+                        // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
+                        // alt={`Left Option ${item.option}`}
+                        className="img-fluid cursor-pointer"
+                        style={{ maxWidth: "150px" }}
+                        onClick={() => {
+                          setModal({
+                            text1: `Left Option ${item.option}`,
+                            descriptionImage: `${item.image}`,
+                            text2: item.text,
+                          });
+                          setShowImageModal(true);
+                        }}
+                      >
+                        View Image
+                      </FaImage>
+                    )}
+                  </div>
                 </span>
+                {/* <div className="d-flex flex-row gap-2"> */}
                 <p
                   dangerouslySetInnerHTML={{
                     __html: item.text,
@@ -267,15 +323,8 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
                 >
                   {/* {item.option}. */}
                 </p>
-                {item.image && (
-                  <img
-                    src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
-                    alt={`Left Option ${item.option}`}
-                    className="img-fluid"
-                    style={{ maxWidth: "150px" }}
-                  />
-                )}
               </div>
+              // </div>
             ))}
           </div>
 
@@ -285,7 +334,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
               className="text-center"
               style={{
                 backgroundColor: "#32cc677d",
-                padding: "3px 0px",
+                padding: "3px 10px",
                 borderRadius: "10px",
               }}
             >
@@ -314,7 +363,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
               },
             ].map((item) => (
               <div key={item.option} className="mb-3  border-bottom">
-                <span>
+                <span className="d-flex flex-row gap-2">
                   <b
                     style={{
                       fontSize: ".8em",
@@ -322,20 +371,36 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
                   >
                     Option {item.option}
                   </b>
+                  <div
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    {item.image && (
+                      <FaImage
+                        // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
+                        // alt={`Left Option ${item.option}`}
+                        className="img-fluid cursor-pointer"
+                        style={{ maxWidth: "150px" }}
+                      >
+                        View Image
+                      </FaImage>
+                    )}
+                  </div>
                 </span>
                 <p
                   dangerouslySetInnerHTML={{
                     __html: item.text,
                   }}
                 ></p>
-                {item.image && (
+                {/* {item.image && (
                   <img
                     src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
                     alt={`Right Option ${item.option}`}
                     className="img-fluid"
                     style={{ maxWidth: "150px" }}
                   />
-                )}
+                )} */}
               </div>
             ))}
           </div>
@@ -353,12 +418,12 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
             border: "1px solid",
           }}
         >
-          Match the Options
+          Match the Left Options
         </h6>
         {["A", "B", "C", "D"].map((leftOption) => (
           <div key={leftOption} className="row align-items-center mb-3">
             <div className="col-md-6">
-              <label className="form-label">Match for {leftOption}</label>
+              <label className="form-label">Match for Left {leftOption}</label>
             </div>
             <div className="col-md-6">
               <select
@@ -378,7 +443,7 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
           </div>
         ))}
 
-        <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+        {/* <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
           <button
             style={{
               fontSize: "10px",
@@ -423,8 +488,90 @@ const MatchTheColumn: React.FC<MatchColumnFormData> = ({
           >
             Mark for review and next
           </button>
+        </div> */}
+        <div className="container my-2">
+          <div className="row g-2">
+            <div className="col-5 col-sm-6 col-lg-3">
+              <button
+                className="btn btn-success w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "37% !important" }}
+                onClick={() => saveTheAnswer("green", "SAVE")}
+              >
+                Save & Next
+              </button>
+            </div>
+            <div className="col-7 col-sm-6 col-lg-3">
+              <button
+                className="btn btn-primary w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "63% !important " }}
+                onClick={() => saveTheAnswer("blue", "SAVE-MARK")}
+              >
+                Save & mark for review
+              </button>
+            </div>
+
+            <div
+              className="col-6 col-sm-6 col-lg-3"
+              style={{ fontSize: "10px", width: "45% !important" }}
+            >
+              <button
+                className="btn btn-warning w-100 timesUp fs-6"
+                onClick={() => saveTheAnswer("yellow", "REVIEW")}
+              >
+                Mark for review
+              </button>
+            </div>
+            <div
+              className="col-6 col-sm-6 col-lg-3"
+              style={{ fontSize: "10px", width: "55% !important" }}
+            >
+              <button
+                className="btn btn-dark w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "55% !important" }}
+                onClick={() => saveTheAnswer("white", "CLEAR")}
+              >
+                Clear response
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
+      {showImageModal && (
+        <div
+          className="position-absolute top-0 start-0 w-100 h-100  text-black"
+          style={{
+            backgroundColor: "#4e4e4e7d !important",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div
+            onClick={() => {
+              setShowImageModal(false);
+            }}
+            className="my-3 mx-3"
+          >
+            <MdClose />
+          </div>
+          <div className="mx-3">
+            <h3 className="text-black">{modal.text1}</h3>
+            <h6 dangerouslySetInnerHTML={{ __html: modal.text2 }} />
+          </div>
+          <div className="mx-10">
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${modal.descriptionImage}`}
+              className="w-100 h-auto d-flex justify-content-center"
+              style={{ maxWidth: "400px" }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src =
+                  "https://as2.ftcdn.net/jpg/10/46/43/33/1000_F_1046433335_5UVtQKp5On8zbytuOVv0pXh8lmyUAz3t.webp";
+              }}
+              alt="description image"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

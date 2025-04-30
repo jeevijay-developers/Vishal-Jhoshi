@@ -87,19 +87,19 @@ const IntegerQuestion: React.FC<IntegerQuestionProps> = ({
             <label className="form-label">Topic</label>
             <p className="form-control-plaintext">{integerQuestion.topic}</p>
           </div>
-          <div className="mb-3 text-center">
+          {/* <div className="mb-3 text-center">
             <label className="form-label">Subtopic</label>
             <p className="form-control-plaintext">{integerQuestion.subtopic}</p>
-          </div>
+          </div> */}
 
           <div className="mb-3 text-center">
             <label className="form-label">Level</label>
             <p className="form-control-plaintext">{integerQuestion.level}</p>
           </div>
-          <div className="mb-3 text-center">
+          {/* <div className="mb-3 text-center">
             <label className="form-label">Type</label>
             <p className="form-control-plaintext">{integerQuestion.type}</p>
-          </div>
+          </div> */}
         </section>
         <div
           className="bg-white p-3 rounded-4"
@@ -135,51 +135,51 @@ const IntegerQuestion: React.FC<IntegerQuestionProps> = ({
           </div>
         </div>
 
-        <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
-          <button
-            style={{
-              fontSize: "10px",
-            }}
-            className="btn btn-success mt-3 timesUp"
-            onClick={() => {
-              saveTheAnswer("green", "SAVE");
-            }}
-          >
-            Save & Next
-          </button>
-          <button
-            style={{
-              fontSize: "10px",
-            }}
-            className="btn btn-primary mt-3 timesUp"
-            onClick={() => {
-              saveTheAnswer("blue", "SAVE-MARK");
-            }}
-          >
-            Save and mark for review
-          </button>
-          <button
-            style={{
-              fontSize: "10px",
-            }}
-            className="btn btn-dark mt-3 timesUp"
-            onClick={() => {
-              saveTheAnswer("white", "CLEAR");
-            }}
-          >
-            Clear response
-          </button>
-          <button
-            style={{
-              fontSize: "10px",
-            }}
-            className="btn btn-warning mt-3 timesUp"
-            onClick={() => {
-              saveTheAnswer("yellow", "REVIEW");
-            }}
-          >
-            Mark for review and next
-          </button>
+        <div className="container my-2">
+          <div className="row g-2">
+            <div className="col-5 col-sm-6 col-lg-3">
+              <button
+                className="btn btn-success w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "37% !important" }}
+                onClick={() => saveTheAnswer("green", "SAVE")}
+              >
+                Save & Next
+              </button>
+            </div>
+            <div className="col-7 col-sm-6 col-lg-3">
+              <button
+                className="btn btn-primary w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "63% !important " }}
+                onClick={() => saveTheAnswer("blue", "SAVE-MARK")}
+              >
+                Save & mark for review
+              </button>
+            </div>
+
+            <div
+              className="col-6 col-sm-6 col-lg-3"
+              style={{ fontSize: "10px", width: "45% !important" }}
+            >
+              <button
+                className="btn btn-warning w-100 timesUp fs-6"
+                onClick={() => saveTheAnswer("yellow", "REVIEW")}
+              >
+                Mark for review
+              </button>
+            </div>
+            <div
+              className="col-6 col-sm-6 col-lg-3"
+              style={{ fontSize: "10px", width: "55% !important" }}
+            >
+              <button
+                className="btn btn-dark w-100 timesUp fs-6"
+                style={{ fontSize: "10px", width: "55% !important" }}
+                onClick={() => saveTheAnswer("white", "CLEAR")}
+              >
+                Clear response
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

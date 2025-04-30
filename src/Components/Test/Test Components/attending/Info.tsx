@@ -1,4 +1,5 @@
 import React from "react";
+import { FaImage } from "react-icons/fa";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const Info = () => {
@@ -62,7 +63,19 @@ const Info = () => {
         />
         <p className="p-0 m-0">Mark for review and next</p>
       </div>
-
+      <div className="d-flex align-items-center justify-content-center flex-wrap gap-3">
+        <FaImage
+          style={{
+            backgroundColor: "#000000",
+            borderRadius: "4px",
+            height: "20px",
+            width: "20px",
+            color: "#ffffff",
+          }}
+        />
+        <p className="p-0 m-0">Click to open images</p>
+      </div>
+      {/* <FaImage /> */}
       {/* <Badge className="" bg="light" text="dark">
         Not Visited
       </Badge>

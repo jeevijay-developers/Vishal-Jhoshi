@@ -208,16 +208,14 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
   }
 
   return (
-    <div className="w-100 bg-primary">
+    <div className="w-100 bg-white">
       <div
-        className="p-3"
-        style={{
-          background: "#F0DF87",
-          height: "50px !important",
-          width: "50px !important",
-        }}
+        className="d-flex justify-content-center align-items-center flex-row gap-2 p-2"
+        style={{}}
       >
-        <b>{test.category}</b>
+        <p className="p-0 m-0 d-flex flex-row justify-content-start fs-4 align-items-center gap-3 w-75">
+          Test : <b>{test.category}</b>
+        </p>
         <div>
           <CameraView />
         </div>
@@ -257,8 +255,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
                 settestCounter={settestCounter}
               />
             )}
-
-            <div className="mt-4">
+            <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
               <button
                 className="btn btn-info mx-2 timesUp"
                 onClick={() => {
@@ -344,7 +341,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
                 />
               )}
 
-              <div className="mt-4">
+              <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
                 <button
                   className="btn btn-info mx-2 timesUp"
                   onClick={() => {
