@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { fetchAllStudySessions } from "@/server/user"; // Replace with your fetch function
 import { useSelector } from "react-redux";
 import { gsap } from "gsap"; // Import GSAP for animation
@@ -58,19 +59,31 @@ const StudySessionsCard: React.FC = () => {
   return (
     <div className="study-sessions">
       {sessionsData.length > 0 ? (
-        <div className="cards-container">
-          {sessionsData.map((session, index) => (
-            <div key={index} className="card">
-              <h3>{session.subject}</h3>
-              <p>Start Time: {session.startTime}</p>
-              <p>End Time: {session.endTime}</p>
-              <p>Duration: {session.duration.toFixed(0)} minutes</p>{" "}
-              {/* Convert duration to minutes */}
-            </div>
-          ))}
-        </div>
+        <Container className="mt-4">
+          <Row>
+            {sessionsData.map((session, index) => (
+              <Col key={index} md={4} className="mb-4">
+                <Card className="shadow-sm">
+                  <Card.Body>
+                    <Card.Title>{session.subject}</Card.Title>
+                    <Card.Text>
+                      <strong>Start Time:</strong> {session.startTime}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>End Time:</strong> {session.endTime}
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Duration:</strong> {session.duration.toFixed(0)}{" "}
+                      minutes
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
       ) : (
-        <p>No study sessions available.</p>
+        <p className="text-center">No study sessions available.</p>
       )}
     </div>
   );

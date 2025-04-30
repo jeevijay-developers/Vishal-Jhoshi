@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+  .profilePicture {
+    top: -85%;
+  }
+  .profileData {
+    position: relative;
+    top: -130px;
+  }
+}
+
+@media (min-width: 768px) {
+  .profilePicture {
+    top: -55%;
+  }
+  .profileData {
+    position: relative;
+    top: 16px;
+    right: 260px;
+  }
+}

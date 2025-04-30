@@ -210,7 +210,7 @@ export default function RootLayout({
           >
             {!ATTENDING && <Sidebar />}
             {/* <Sidebar /> */}
-            <div className="page-body">{children}</div>
+            <div className="page-body p-0">{children}</div>
             <Footer />
           </div>
         </div>

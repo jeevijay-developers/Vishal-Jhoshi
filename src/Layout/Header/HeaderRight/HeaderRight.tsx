@@ -28,7 +28,7 @@ const HeaderRight = () => {
   return (
     <div className="nav-right">
       <ul className="header-right">
-        {notification && <Notification setNotification={setNotification} />}
+        {/* {notification && <Notification setNotification={setNotification} />} */}
         <Profile />
       </ul>
     </div>
