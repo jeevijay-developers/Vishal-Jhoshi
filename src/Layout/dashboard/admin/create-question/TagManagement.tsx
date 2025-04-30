@@ -49,7 +49,7 @@ const TagManagement: React.FC = () => {
   return (
     <div className="mt-4">
       <Button variant="primary" onClick={handleModalShow}>
-        Add New Topic
+        Add New Tag
       </Button>
 
       <Table striped bordered hover className="mt-4">
@@ -114,7 +114,7 @@ const TagManagement: React.FC = () => {
             onClick={handleAddTopic}
             disabled={!newTopicTitle.trim()}
           >
-            Save Topic
+            Save Tag
           </Button>
         </Modal.Footer>
       </Modal>

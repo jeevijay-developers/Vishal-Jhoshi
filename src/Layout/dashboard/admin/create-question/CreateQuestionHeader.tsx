@@ -1,6 +1,10 @@
 import React from "react";
 
-const CreateQuestionHeader = () => {
+type Props = {
+  setShow: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const CreateQuestionHeader: React.FC<Props> = ({ setShow }) => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary px-3">
       <div className="container-fluid">
@@ -22,22 +26,22 @@ const CreateQuestionHeader = () => {
 
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
-            <li className="nav-item">
+            <li className="nav-item" onClick={() => setShow("SUBJECT")}>
               <a className="nav-link text-white" href="#">
                 Add Subject
               </a>
             </li>
-            <li className="nav-item">
+            <li className="nav-item" onClick={() => setShow("CHAPTER")}>
               <a className="nav-link text-white" href="#">
                 Add Chapter
               </a>
             </li>
-            <li className="nav-item">
+            <li className="nav-item" onClick={() => setShow("TOPIC")}>
               <a className="nav-link text-white" href="#">
                 Add Topic
               </a>
             </li>
-            <li className="nav-item">
+            <li className="nav-item" onClick={() => setShow("TAG")}>
               <a className="nav-link text-white" href="#">
                 Add Tag
               </a>
@@ -58,18 +62,26 @@ const CreateQuestionHeader = () => {
                 className="dropdown-menu"
                 aria-labelledby="createQuestionDropdown"
               >
-                <li>
+                <li onClick={() => setShow("SELECT")}>
                   <a className="dropdown-item" href="#">
                     Select Type
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    onClick={() => setShow("INTEGER")}
+                  >
                     Integer
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a
+                    className="dropdown-item"
+                    href="#"
+                    onClick={() => setShow("MTC")}
+                  >
                     Match the Column
                   </a>
                 </li>
