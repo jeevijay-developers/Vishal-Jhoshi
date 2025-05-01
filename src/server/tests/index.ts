@@ -1,4 +1,5 @@
 import axios from "axios";
+import test from "node:test";
 
 export const getTestByType = async (type?: string) => {
   try {
@@ -30,6 +31,10 @@ export const getTestByType = async (type?: string) => {
 
 export const updateTestAttempt = async (testId: string) => {
   try {
+    const response = await axios.get(`
+      ${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/tests/api/publish-test/${testId}`);
+
+    return response.data;
   } catch (err: any) {
     return err.response?.data || { message: "Something went wrong" };
   }

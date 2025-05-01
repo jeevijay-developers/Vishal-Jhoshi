@@ -72,8 +72,12 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
     getTests(USER.role)
       .then((data) => {
         console.log(data);
-
-        setTests(data || []);
+        if (data && data.length > 0) {
+          const attemptable = data.filter((t: any) => {
+            return t.canAttempt;
+          });
+          setTests([...attemptable]);
+        }
       })
       .catch((err) => console.error("Error fetching tests:", err));
 
