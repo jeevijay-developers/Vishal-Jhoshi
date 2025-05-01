@@ -85,7 +85,7 @@ const TimeTakenBarChart: React.FC<TimeTakenBarChartProps> = ({
         width: "40%",
         minWidth: "400px",
       }}
-      data-aos="fade-left"
+      // data-aos="fade-left"
     >
       <Chart
         options={options}

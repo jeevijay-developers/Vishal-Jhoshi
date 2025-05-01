@@ -9,8 +9,8 @@ import QuestionData from "./QuestionData";
 import BarChart from "./BarChart";
 import TimeTakenBarChart from "./TimeTakenBarChart";
 import DataCard from "./DataCard"; // Import the DataCard component
-import AOS from "aos";
-import "aos/dist/aos.css";
+// import AOS from "aos";
+// import "aos/dist/aos.css";
 import LeaderBoadrd from "./LeaderBoadrd";
 import html2pdf from "html2pdf.js";
 // import RulerSlider from "@/Components/slider/RulerSlider";
@@ -102,10 +102,10 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
     setTotalTime(totalTimeTaken);
   };
 
-  useEffect(() => {
-    calculateData();
-    AOS.init();
-  }, [chart]);
+  // useEffect(() => {
+  //   calculateData();
+  //   AOS.init();
+  // }, [chart]);
 const cardRef = useRef<HTMLDivElement>(null);
   const handleDownloadPDF = () => {
     if (!cardRef.current) return;
@@ -153,7 +153,7 @@ const cardRef = useRef<HTMLDivElement>(null);
         {/* <div>{Math.floor(Math.random() * 100000) + 1}</div> */}
         <div
           className="w-100 d-flex justify-content-center flex-row flex-wrap align-items-center gap-3 mt-4"
-          data-aos="fade-up"
+          // data-aos="fade-up"
         >
           <DataCard
             totalQuestions={safeChart.length || 0}
@@ -171,7 +171,7 @@ const cardRef = useRef<HTMLDivElement>(null);
         </div>
         <div
           className="w-100 d-flex justify-content-center align-content-center"
-          data-aos="fade-left"
+          // data-aos="fade-left"
         >
           <PieChart
             totalPositiveMarks={totalPositiveMarks}
@@ -199,7 +199,8 @@ const cardRef = useRef<HTMLDivElement>(null);
             const { totalQuestions, positiveMarksCount } =
               subjectsData[subject];
             return (
-              <div key={subject} data-aos="fade-left">
+              <div key={subject}>
+                {/* data-aos="fade-left" */}
                 <SubjectAnalysis
                   subject={subject}
                   totalQuestions={totalQuestions}
