@@ -1,5 +1,5 @@
 import { RootState } from "@/Redux/Store";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState,useRef } from "react";
 import { useSelector } from "react-redux";
 import PieChart from "./PieChart";
 import SubjectAnalysis from "./SubjectAnalysis";
@@ -12,6 +12,7 @@ import DataCard from "./DataCard"; // Import the DataCard component
 import AOS from "aos";
 import "aos/dist/aos.css";
 import LeaderBoadrd from "./LeaderBoadrd";
+import html2pdf from "html2pdf.js";
 // import RulerSlider from "@/Components/slider/RulerSlider";
 // import SliderWithTicks from "@/Components/slider/SliderWithTicks";
 
@@ -105,89 +106,119 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
     calculateData();
     AOS.init();
   }, [chart]);
+const cardRef = useRef<HTMLDivElement>(null);
+  const handleDownloadPDF = () => {
+    if (!cardRef.current) return;
 
+    const element = cardRef.current;
+
+    const opt = {
+      margin: 0.5,
+      filename: "test-summary.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
   return (
-    <div className="w-100 h-auto d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 position-relative">
-      <FaArrowLeft
-        style={{
-          position: "absolute",
-          top: "0px",
-          left: "20px",
-          zIndex: 10,
-        }}
-        onClick={() => {
-          setTest("TEST-LIST");
-        }}
-      />
-      {/* <RulerSlider /> <br /> */}
-      {/* <SliderWithTicks /> */}
-      {/* <div>{Math.floor(Math.random() * 100000) + 1}</div> */}
-      <div
-        className="w-100 d-flex justify-content-center flex-row flex-wrap align-items-center gap-3 mt-4"
-        data-aos="fade-up"
-      >
-        <DataCard
-          totalQuestions={safeChart.length || 0}
-          totalMarks={totalMarks}
-          totalAnswered={totalAnswered}
-          totalUnanswered={totalUnanswered}
-          totalPositiveMarks={totalPositiveMarks}
-          totalNegativeMarks={totalNegativeMarks}
-          subjectsData={subjectsData}
-          totalTime={totalTime}
-        />
-      </div>
-      <div className="w-100">
-        <LeaderBoadrd />
+    <div>
+      <div className="text-center mt-4">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={handleDownloadPDF}
+        >
+          Download as PDF
+        </button>
       </div>
       <div
-        className="w-100 d-flex justify-content-center align-content-center"
-        data-aos="fade-left"
+        ref={cardRef}
+        className="w-100 h-auto d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 position-relative"
       >
-        <PieChart
-          totalPositiveMarks={totalPositiveMarks}
-          totalNegativeMarks={totalNegativeMarks}
-          totalUnanswered={totalUnanswered}
+        <FaArrowLeft
+          style={{
+            position: "absolute",
+            top: "0px",
+            left: "20px",
+            zIndex: 10,
+          }}
+          onClick={() => {
+            setTest("TEST-LIST");
+          }}
         />
-      </div>
-      <div className="w-100 d-flex justify-content-center align-content-center flex-row flex-wrap gap-3">
-        <BarChart
-          totalPositiveMarks={totalPositiveMarks}
-          totalNegativeMarks={totalNegativeMarks}
-          totalUnanswered={totalUnanswered}
+        {/* <RulerSlider /> <br /> */}
+        {/* <SliderWithTicks /> */}
+        {/* <div>{Math.floor(Math.random() * 100000) + 1}</div> */}
+        <div
+          className="w-100 d-flex justify-content-center flex-row flex-wrap align-items-center gap-3 mt-4"
+          data-aos="fade-up"
+        >
+          <DataCard
+            totalQuestions={safeChart.length || 0}
+            totalMarks={totalMarks}
+            totalAnswered={totalAnswered}
+            totalUnanswered={totalUnanswered}
+            totalPositiveMarks={totalPositiveMarks}
+            totalNegativeMarks={totalNegativeMarks}
+            subjectsData={subjectsData}
+            totalTime={totalTime}
+          />
+        </div>
+        <div className="w-100">
+          <LeaderBoadrd />
+        </div>
+        <div
+          className="w-100 d-flex justify-content-center align-content-center"
+          data-aos="fade-left"
+        >
+          <PieChart
+            totalPositiveMarks={totalPositiveMarks}
+            totalNegativeMarks={totalNegativeMarks}
+            totalUnanswered={totalUnanswered}
+          />
+        </div>
+        <div className="w-100 d-flex justify-content-center align-content-center flex-row flex-wrap gap-3">
+          <BarChart
+            totalPositiveMarks={totalPositiveMarks}
+            totalNegativeMarks={totalNegativeMarks}
+            totalUnanswered={totalUnanswered}
+          />
+          <TimeTakenBarChart subjectsData={subjectsData} />
+        </div>
+        <hr
+          style={{
+            width: "70%",
+            height: "2px",
+            backgroundColor: "red",
+          }}
         />
-        <TimeTakenBarChart subjectsData={subjectsData} />
+        <div className="w-100 d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 overflow-hidden">
+          {Object.keys(subjectsData).map((subject) => {
+            const { totalQuestions, positiveMarksCount } =
+              subjectsData[subject];
+            return (
+              <div key={subject} data-aos="fade-left">
+                <SubjectAnalysis
+                  subject={subject}
+                  totalQuestions={totalQuestions}
+                  positiveMarksCount={positiveMarksCount}
+                />
+                <p className="text-center">{subject}</p>
+              </div>
+            );
+          })}
+        </div>
+        <hr
+          style={{
+            width: "70%",
+            height: "2px",
+            backgroundColor: "blue",
+          }}
+        />
+        <QuestionData />
       </div>
-      <hr
-        style={{
-          width: "70%",
-          height: "2px",
-          backgroundColor: "red",
-        }}
-      />
-      <div className="w-100 d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 overflow-hidden">
-        {Object.keys(subjectsData).map((subject) => {
-          const { totalQuestions, positiveMarksCount } = subjectsData[subject];
-          return (
-            <div key={subject} data-aos="fade-left">
-              <SubjectAnalysis
-                subject={subject}
-                totalQuestions={totalQuestions}
-                positiveMarksCount={positiveMarksCount}
-              />
-              <p className="text-center">{subject}</p>
-            </div>
-          );
-        })}
-      </div>
-      <hr
-        style={{
-          width: "70%",
-          height: "2px",
-          backgroundColor: "blue",
-        }}
-      />
-      <QuestionData />
     </div>
   );
 });
