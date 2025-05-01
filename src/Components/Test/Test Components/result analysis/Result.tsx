@@ -1,5 +1,5 @@
 import { RootState } from "@/Redux/Store";
-import React, { memo, useEffect, useState,useRef } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import PieChart from "./PieChart";
 import SubjectAnalysis from "./SubjectAnalysis";
@@ -15,7 +15,7 @@ import LeaderBoadrd from "./LeaderBoadrd";
 import html2pdf from "html2pdf.js";
 // import RulerSlider from "@/Components/slider/RulerSlider";
 // import SliderWithTicks from "@/Components/slider/SliderWithTicks";
-
+import { FaPrint, FaFilePdf } from "react-icons/fa";
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
 }
@@ -106,7 +106,7 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
   //   calculateData();
   //   AOS.init();
   // }, [chart]);
-const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const handleDownloadPDF = () => {
     if (!cardRef.current) return;
 
@@ -122,16 +122,35 @@ const cardRef = useRef<HTMLDivElement>(null);
 
     html2pdf().set(opt).from(element).save();
   };
+const handlePrint = () => {
+  
+};
+
+
   return (
     <div>
-      <div className="text-center mt-4">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={handleDownloadPDF}
-        >
-          Download as PDF
-        </button>
+      <div className="print-hide w-100 d-flex justify-content-center align-items-center flex-row gap-2">
+        <div className="text-left mt-4 ">
+          <button
+            className="btn btn-primary gap-1 d-flex flex-row"
+            type="button"
+            onClick={() => window.print()}
+            // onClick={() => window.print()}
+          >
+            <div>Print</div>
+            <FaPrint />
+          </button>
+        </div>{" "}
+        <div className="text-left mt-4  ">
+          <button
+            className="btn btn-primary gap-1 d-flex flex-row"
+            type="button"
+            onClick={handleDownloadPDF}
+          >
+            <span>Download</span>
+            <FaFilePdf />
+          </button>
+        </div>
       </div>
       <div
         ref={cardRef}
