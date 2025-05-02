@@ -27,6 +27,14 @@ const testDetailsSlice = createSlice({
     setBiologyCount: (state) => {
       state.biology = state.biology + 1; // Update biology count
     },
+    setBulkUploadCount: (state, action) => {
+      console.log(action.payload);
+
+      state.physics = action.payload.physics ?? 0;
+      state.chemistry = action.payload.chemistry ?? 0;
+      state.maths = action.payload.maths ?? 0;
+      state.biology = action.payload.biology ?? 0;
+    },
     resetCounts: (state) => {
       state.physics = 0;
       state.chemistry = 0;
@@ -43,6 +51,7 @@ export const {
   setMathsCount,
   setBiologyCount,
   resetCounts,
+  setBulkUploadCount,
 } = testDetailsSlice.actions;
 
 export default testDetailsSlice.reducer;

@@ -159,6 +159,24 @@ export const addSelectTypeQuestion = async (question: any, id: any) => {
     return error.response?.data || { message: "Something went wrong" };
   }
 };
+
+export const uploadBulkQuestion = async (question: any, id: any) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/tests/api/create-bulk/select/${id}`,
+      question, // <- This is the request body
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+
 export const addMatchTheColumnQuestion = async (question: any, id: any) => {
   try {
     const response = await axios.post(

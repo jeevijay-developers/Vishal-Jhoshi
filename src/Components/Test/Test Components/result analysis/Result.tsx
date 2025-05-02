@@ -16,6 +16,7 @@ import html2pdf from "html2pdf.js";
 // import RulerSlider from "@/Components/slider/RulerSlider";
 // import SliderWithTicks from "@/Components/slider/SliderWithTicks";
 import { FaPrint, FaFilePdf } from "react-icons/fa";
+import Aos from "aos";
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
 }
@@ -102,10 +103,10 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
     setTotalTime(totalTimeTaken);
   };
 
-  // useEffect(() => {
-  //   calculateData();
-  //   AOS.init();
-  // }, [chart]);
+  useEffect(() => {
+    calculateData();
+    Aos.init();
+  }, [chart]);
   const cardRef = useRef<HTMLDivElement>(null);
   const handleDownloadPDF = () => {
     if (!cardRef.current) return;
@@ -122,10 +123,7 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
 
     html2pdf().set(opt).from(element).save();
   };
-const handlePrint = () => {
-  
-};
-
+  const handlePrint = () => {};
 
   return (
     <div>

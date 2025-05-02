@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
 import { setTestId } from "@/Redux/Reducers/TestCounterSlice";
 import { updateTestAttempt } from "@/server/tests";
+import BulkUpload from "./bulk upload select/BulkUpload";
 
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
@@ -86,6 +87,7 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
               <option value="select">Select</option>
               <option value="integer">Integer</option>
               <option value="match">Match the Column</option>
+              <option value="bulk">Upload in bulk</option>
             </select>
           </div>
 
@@ -123,12 +125,19 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
           </button>
         </form>
         {/* Conditional Question Type Components */}
-        {type === "integer" ? (
+        {/* {type === "integer" ? (
           <Integer type={"integer"} />
         ) : type === "select" ? (
           <MultiSelect type={"select"} />
         ) : (
           <MatchTheColumn type={"match"} />
+        )} */}
+        {type === "integer" && <Integer type={"integer"} />}
+        {type === "select" && <MultiSelect type={"select"} />}
+        {type === "match" && <MatchTheColumn type={"match"} />}
+        {/* {type === "bulk" && <BulkUpload  setTes{}, */}
+        {type === "bulk" && (
+          <BulkUpload setTest={setTest} setcreatedTest={setcreatedTest} />
         )}
       </div>
     </div>
