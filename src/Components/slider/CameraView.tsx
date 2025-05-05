@@ -48,7 +48,6 @@ const CameraView: React.FC = () => {
           style={{
             width: "20%",
             height: "20%",
-            maxWidth: "600px",
             borderRadius: "50%",
             aspectRatio: "1/1",
             border: "2px solid #ddd",

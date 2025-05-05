@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+  .prevNextSubmitButton {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background-color: rgba(116, 204, 255, 0.89);
+    padding: 10px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 768px) {
+  .prevNextSubmitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

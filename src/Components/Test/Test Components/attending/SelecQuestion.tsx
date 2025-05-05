@@ -1,11 +1,18 @@
-import { addQuestion, submitTestCompleted } from "@/Redux/Reducers/UserAnswers";
+import {
+  addQuestion,
+  setCurrentQuestion,
+  submitTestCompleted,
+} from "@/Redux/Reducers/UserAnswers";
 import { RootState } from "@/Redux/Store";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+// import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
 import { MdClose } from "react-icons/md";
 import { FaImage } from "react-icons/fa";
+import "katex/dist/katex.min.css";
+import { BlockMath, InlineMath } from "react-katex";
+import { string } from "yup";
 
 interface IntegerQuestionProps {
   selectQuestion: {
@@ -33,6 +40,7 @@ interface IntegerQuestionProps {
   negativeMarking: number;
   positiveMarking: number;
   settestCounter: React.Dispatch<React.SetStateAction<number>>;
+  testCounter: number;
 }
 
 const SelecQuestion: React.FC<IntegerQuestionProps> = ({
@@ -42,25 +50,70 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
   negativeMarking,
   positiveMarking,
   settestCounter,
+  testCounter,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [modal, setModal] = useState({
     text1: "",
     text2: "",
     descriptionImage: "",
   });
+
+  const renderTextWithLatex = (text: string) => {
+    const parts = text.split(/(\\\[.*?\\\])/g); // Splits into plain text and LaTeX parts
+
+    return parts.map((part, index) => {
+      if (part.startsWith("\\[")) {
+        const latex = part.slice(2, -2); // Remove \[ and \]
+        return <InlineMath key={index} math={latex} />;
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
   const [showImageModal, setShowImageModal] = useState(false);
   const start = Date.now();
-  const handleCheckboxChange = (option: string) => {
-    setSelectedOptions(
-      (prev) =>
-        prev.includes(option)
-          ? prev.filter((item) => item !== option) // Remove if already selected
-          : [...prev, option] // Add if not already selected
-    );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const handleCheckboxChange = (option: string | null) => {
+    if (!option || option === "null") return; // ignore null or "null" strings
+
+    setSelectedOptions((prevOptions) => {
+      let updatedOptions = prevOptions.includes(option)
+        ? prevOptions.filter((item) => item !== option)
+        : [...prevOptions, option];
+
+      // Clean up any garbage entries
+      updatedOptions = updatedOptions.filter(
+        (item) =>
+          (item && item !== "null" && item.length === 1) || item === option
+      );
+
+      return updatedOptions;
+    });
   };
 
+  useEffect(() => {
+    console.log("Updated selectedOptions:", selectedOptions);
+  }, [selectedOptions]);
+
   const user = useSelector((state: any) => state.user);
+  const question = useSelector((state: any) => state.answer.questions);
+  const [alreadySelectedAnswer, setaAlreadySelectedAnswer] = useState([]);
+  // console.log(question);
+  useEffect(() => {
+    question.forEach((item: any) => {
+      if (item.questionId === selectQuestion._id) {
+        if (item.userAnswer) {
+          setSelectedOptions(item?.selectedOptions ?? [""]);
+          // console.log(item.selectedOptions);
+
+          return;
+        }
+        // setaAlreadySelectedAnswer([...item.userAnswer]);
+      }
+    });
+  }, []);
+  // console.log(alreadySelectedAnswer);
+
   const dispatch = useDispatch();
 
   function saveTheAnswer(color: string, action: string) {
@@ -68,6 +121,9 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
 
     const arr1 = selectQuestion.correctAnswer;
     const arr2 = selectedOptions;
+
+    // console.log(arr1);
+    // console.log(arr2);
 
     const countOccurrences = (arr: any) => {
       return arr.reduce((acc: any, char: string) => {
@@ -112,12 +168,17 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
       type: selectQuestion.type,
       subject: selectQuestion.subject,
       timeTaken: Date.now() - start,
+      selectedOptions: selectedOptions,
     };
 
     dispatch(addQuestion(respone));
-    console.log(respone);
+    // console.log(respone);
     if (test.Questions.length - 1 > index) {
       settestCounter((prev) => prev + 1);
+      // add the next question id from here
+      // console.log(test.Questions);
+
+      dispatch(setCurrentQuestion(test.Questions[index + 1].questionId));
     } else {
       toast.success("No next question...", {
         position: "top-center",
@@ -137,36 +198,18 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
         // }}
       >
         <div className="mb-3 text-center">
-          <label className="form-label">Subject</label>
+          <label className="form-label text-primary fs-5">Subject</label>
           {selectQuestion.subject && (
-            <p className="form-control-plaintext">{selectQuestion.subject}</p>
+            <p className="form-control-plaintext fs-5">
+              {selectQuestion.subject}
+            </p>
           )}
         </div>
-        <div className="mb-3 text-center">
-          <label className="form-label">Topic</label>
-          <p className="form-control-plaintext">{selectQuestion.topic}</p>
-        </div>
-        {/* <div className="mb-3 text-center">
-          <label className="form-label">Subtopic</label>
-          <p className="form-control-plaintext">{selectQuestion.subtopic}</p>
-        </div> */}
 
         <div className="mb-3 text-center">
-          <label className="form-label">Level</label>
-          <p className="form-control-plaintext">{selectQuestion.level}</p>
+          <label className="form-label text-primary fs-5">Level</label>
+          <p className="form-control-plaintext fs-5">{selectQuestion.level}</p>
         </div>
-        {/* <div className="mb-3 text-center">
-          <label className="form-label">Type</label>
-          <p className="form-control-plaintext">{selectQuestion.type}</p>
-        </div> */}
-        {/* <div className="mb-3 text-center">
-          <label className="form-label">Selection Mode</label>
-          <p className="form-control-plaintext">
-            {selectQuestion.correctAnswer.length > 1
-              ? "Multi Select"
-              : "Single Select"}
-          </p>
-        </div> */}
       </section>
 
       <div
@@ -181,15 +224,13 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
             borderBottom: "2px dashed",
           }}
         >
-          <h4 className="">Description</h4>
+          <h4 className="text-primary">Q. {testCounter + 1}</h4>
           <div className="d-flex flex-row justify-content-center align-items-center gap-3">
-            <p
-              className="fw-bold m-0 p-0"
-              dangerouslySetInnerHTML={{
-                __html: selectQuestion.description,
-              }}
-            />
-            {selectQuestion.descriptionImage && (
+            {/* <InlineMath math={selectQuestion.description} /> */}
+            <p className="fs-5">
+              {renderTextWithLatex(selectQuestion.description)}
+            </p>
+            {/* {selectQuestion.descriptionImage && (
               <FaImage
                 // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
                 // alt={`Left Option ${item.option}`}
@@ -206,18 +247,23 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
               >
                 View Image
               </FaImage>
-            )}
+            )} */}
           </div>
-          {/* {selectQuestion.descriptionImage && (
+          {selectQuestion.descriptionImage && (
             <div className="text-center mb-3">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.descriptionImage}`}
                 alt="Description"
                 className="img-fluid"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src =
+                    "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                }}
                 style={{ maxWidth: "400px" }}
               />
             </div>
-          )} */}
+          )}
         </div>
 
         <div className="p-3">
@@ -225,12 +271,12 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
           <div className="row g-2">
             <div className="col-6 mb-3">
               <div className="d-flex flex-row gap-2 align-items-center">
-                <h6 className="m-0 p-0">A.</h6>
-                {selectQuestion.imageOptionsA && (
+                <h6 className="m-0 p-0 text-primary fs-5">A.</h6>
+                {/* {selectQuestion.imageOptionsA && (
                   <FaImage
                     // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
                     // alt={`Left Option ${item.option}`}
-                    className="img-fluid cursor-pointer"
+                    className="img-fluid cursor-pointer fs-5"
                     style={{ maxWidth: "150px" }}
                     onClick={() => {
                       setModal({
@@ -243,27 +289,35 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   >
                     View Image
                   </FaImage>
-                )}
+                )} */}
               </div>
               <div className={`w-auto`} style={{ cursor: "pointer" }}>
-                <p
+                {/* <p
                   className="p-0 m-0"
                   dangerouslySetInnerHTML={{
                     __html: selectQuestion.textOptionsA,
                   }}
-                />
+                /> */}
+                <p className="fs-5">
+                  {renderTextWithLatex(selectQuestion.textOptionsA)}
+                </p>
 
-                {/* {selectQuestion.imageOptionsA && (
+                {selectQuestion.imageOptionsA && (
                   <img
                     // src={`${process.env.NEXT_PUBLIC_BASE_URL}/${selectQuestion.imageOptionsA}`}
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsA}`}
                     alt="Option A"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src =
+                        "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                    }}
                   />
-                )} */}
+                )}
               </div>
-              <div className=" mt-2">
+              {/* <div className=" mt-2">
                 <label htmlFor="optionA" className="form-check-label me-2">
                   Select A
                 </label>
@@ -274,18 +328,18 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   checked={selectedOptions.includes("A")}
                   onChange={() => handleCheckboxChange("A")}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/* Option B */}
             <div className="col-6 mb-3">
               <div className="d-flex flex-row gap-2 align-items-center">
-                <h6 className="m-0 p-0">B.</h6>
-                {selectQuestion.imageOptionsB && (
+                <h6 className="m-0 p-0 text-primary fs-5">B.</h6>
+                {/* {selectQuestion.imageOptionsB && (
                   <FaImage
                     // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
                     // alt={`Left Option ${item.option}`}
-                    className="img-fluid cursor-pointer"
+                    className="img-fluid cursor-pointer fs-5"
                     style={{ maxWidth: "150px" }}
                     onClick={() => {
                       setModal({
@@ -298,24 +352,32 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   >
                     View Image
                   </FaImage>
-                )}
+                )} */}
               </div>
               <div className={``} style={{ cursor: "pointer" }}>
-                <p
+                {/* <p
                   dangerouslySetInnerHTML={{
                     __html: selectQuestion.textOptionsB,
                   }}
-                ></p>
-                {/* {selectQuestion.imageOptionsB && (
+                ></p> */}
+                <p className="fs-5">
+                  {renderTextWithLatex(selectQuestion.textOptionsB)}
+                </p>
+                {selectQuestion.imageOptionsB && (
                   <img
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsB}`}
                     alt="Option B"
                     className="img-fluid "
                     style={{ maxWidth: "200px" }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src =
+                        "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                    }}
                   />
-                )} */}
+                )}
               </div>
-              <div className=" mt-2">
+              {/* <div className=" mt-2">
                 <label htmlFor="optionB" className="form-check-label me-2">
                   Select B
                 </label>
@@ -326,7 +388,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   checked={selectedOptions.includes("B")}
                   onChange={() => handleCheckboxChange("B")}
                 />
-              </div>
+              </div> */}
             </div>
             {/* </div> */}
 
@@ -334,8 +396,8 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
             {/* <div className="d-flex justify-content-center align-items-center flex-row gap-4 flex-wrap"> */}
             <div className="col-6 mb-3">
               <div className="d-flex flex-row gap-2 align-items-center">
-                <h6 className="m-0 p-0">C.</h6>
-                {selectQuestion.imageOptionsC && (
+                <h6 className="m-0 p-0 text-primary fs-5">C.</h6>
+                {/* {selectQuestion.imageOptionsC && (
                   <FaImage
                     // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
                     // alt={`Left Option ${item.option}`}
@@ -352,24 +414,32 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   >
                     View Image
                   </FaImage>
-                )}
+                )} */}
               </div>
               <div className={``} style={{ cursor: "pointer" }}>
-                <p
+                {/* <p
                   dangerouslySetInnerHTML={{
                     __html: selectQuestion.textOptionsC,
                   }}
-                ></p>
-                {/* {selectQuestion.imageOptionsC && (
+                ></p> */}
+                <p className="fs-5">
+                  {renderTextWithLatex(selectQuestion.textOptionsC)}
+                </p>
+                {selectQuestion.imageOptionsC && (
                   <img
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsC}`}
                     alt="Option C"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src =
+                        "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                    }}
                   />
-                )} */}
+                )}
               </div>
-              <div className=" mt-2">
+              {/* <div className=" mt-2">
                 <label htmlFor="optionC" className="form-check-label me-2">
                   Select C
                 </label>
@@ -380,17 +450,16 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   checked={selectedOptions.includes("C")}
                   onChange={() => handleCheckboxChange("C")}
                 />
-              </div>
+              </div> */}
             </div>
 
             {/* Option D */}
             <div className="col-6 mb-3">
               <div className="d-flex flex-row gap-2 align-items-center">
-                <h6 className="m-0 p-0">D.</h6>
-                {selectQuestion.imageOptionsD && (
+                <h6 className="m-0 p-0 text-primary fs-5">D.</h6>
+                {/* {selectQuestion.imageOptionsD && (
                   <FaImage
-                    // src={process.env.NEXT_PUBLIC_BASE_URL + item.image}
-                    // alt={`Left Option ${item.option}`}
+
                     className="img-fluid cursor-pointer"
                     style={{ maxWidth: "150px" }}
                     onClick={() => {
@@ -404,93 +473,101 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                   >
                     View Image
                   </FaImage>
-                )}
+                )} */}
               </div>
-              <div className={``} style={{ cursor: "pointer" }}>
-                <p
+              <div
+                className={`d-flex flex-row gap-3`}
+                style={{ cursor: "pointer" }}
+              >
+                {/* <p
                   dangerouslySetInnerHTML={{
                     __html: selectQuestion.textOptionsD,
                   }}
-                ></p>
-                {/* {selectQuestion.imageOptionsD && (
+                ></p> */}
+                <p className="fs-5">
+                  {renderTextWithLatex(selectQuestion.textOptionsD)}
+                </p>
+                {selectQuestion.imageOptionsD && (
                   <img
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsD}`}
                     alt="Option D"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src =
+                        "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                    }}
                   />
-                )} */}
-              </div>
-              <div className="mt-2">
-                <label htmlFor="optionD" className="form-check-label me-2">
-                  Select D
-                </label>
-                <input
-                  type="checkbox"
-                  id="optionD"
-                  className="form-check-input"
-                  checked={selectedOptions.includes("D")}
-                  onChange={() => handleCheckboxChange("D")}
-                />
+                )}
               </div>
             </div>
           </div>
         </div>
+        {/* Select an option */}
+        <div className="d-flex flex-row gap-3">
+          <div className=" mt-2">
+            <label htmlFor="optionA" className="form-check-label me-2">
+              A
+            </label>
+            <input
+              type="checkbox"
+              id="optionA"
+              value={"A"}
+              className="form-check-input"
+              checked={selectedOptions.includes("A")}
+              onChange={(e) => handleCheckboxChange(e.target.value)}
+            />
+          </div>
+          <div className=" mt-2">
+            <label htmlFor="optionB" className="form-check-label me-2">
+              B
+            </label>
+            <input
+              type="checkbox"
+              id="optionB"
+              value={"B"}
+              className="form-check-input"
+              checked={selectedOptions.includes("B")}
+              onChange={(e) => handleCheckboxChange(e.target.value)}
+            />
+          </div>
+          <div className=" mt-2">
+            <label htmlFor="optionC" className="form-check-label me-2">
+              C
+            </label>
+            <input
+              type="checkbox"
+              id="optionC"
+              className="form-check-input"
+              value={"C"}
+              checked={selectedOptions.includes("C")}
+              onChange={(e) => handleCheckboxChange(e.target.value)}
+            />
+          </div>
+          <div className="mt-2">
+            <label htmlFor="optionD" className="form-check-label me-2">
+              D
+            </label>
+            <input
+              type="checkbox"
+              id="optionD"
+              className="form-check-input"
+              value={"D"}
+              checked={selectedOptions.includes("D")}
+              onChange={(e) => handleCheckboxChange(e.target.value)}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
-        <button
-          style={{
-            fontSize: "10px",
-          }}
-          className="btn btn-success mt-3 timesUp"
-          onClick={() => {
-            saveTheAnswer("green", "SAVE");
-          }}
-        >
-          Save & Next
-        </button>
-        <button
-          style={{
-            fontSize: "10px",
-          }}
-          className="btn btn-primary mt-3 timesUp"
-          onClick={() => {
-            saveTheAnswer("blue", "SAVE-MARK");
-          }}
-        >
-          Save and mark for review
-        </button>
-        <button
-          style={{
-            fontSize: "10px",
-          }}
-          className="btn btn-dark mt-3 timesUp"
-          onClick={() => {
-            saveTheAnswer("white", "CLEAR");
-          }}
-        >
-          Clear response
-        </button>
-        <button
-          style={{
-            fontSize: "10px",
-          }}
-          className="btn btn-warning mt-3 timesUp"
-          onClick={() => {
-            saveTheAnswer("yellow", "REVIEW");
-          }}
-        >
-          Mark for review and next
-        </button>
-      </div> */}
       <div className="container my-2">
         <div className="row g-2">
           <div className="col-5 col-sm-6 col-lg-3">
             <button
               className="btn btn-success w-100 timesUp fs-6"
               style={{ fontSize: "10px", width: "37% !important" }}
-              onClick={() => saveTheAnswer("green", "SAVE")}
+              onClick={() => saveTheAnswer("#00e600", "SAVE")}
             >
               Save & Next
             </button>
@@ -499,7 +576,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
             <button
               className="btn btn-primary w-100 timesUp fs-6"
               style={{ fontSize: "10px", width: "63% !important " }}
-              onClick={() => saveTheAnswer("blue", "SAVE-MARK")}
+              onClick={() => saveTheAnswer("#5097ff", "SAVE-MARK")}
             >
               Save & mark for review
             </button>
@@ -530,42 +607,6 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
           </div>
         </div>
       </div>
-
-      {showImageModal && (
-        <div
-          className="position-absolute top-0 start-0 w-100 h-100  text-black"
-          style={{
-            backgroundColor: "#4e4e4e7d !important",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div
-            onClick={() => {
-              setShowImageModal(false);
-            }}
-            className="my-3 mx-3"
-          >
-            <MdClose />
-          </div>
-          <div className="mx-3">
-            <h3 className="text-black">{modal.text1}</h3>
-            <h6 dangerouslySetInnerHTML={{ __html: modal.text2 }} />
-          </div>
-          <div className="mx-10 d-flex justify-content-center">
-            <img
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${modal.descriptionImage}`}
-              className="w-100 h-auto d-flex justify-content-center"
-              style={{ maxWidth: "400px" }}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src =
-                  "https://as2.ftcdn.net/jpg/10/46/43/33/1000_F_1046433335_5UVtQKp5On8zbytuOVv0pXh8lmyUAz3t.webp";
-              }}
-              alt="description image"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { RootState } from "@/Redux/Store";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+// import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
 import { FaEye, FaImage } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 

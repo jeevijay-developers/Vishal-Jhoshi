@@ -9,15 +9,17 @@ import MatchTheColumn from "./MatchTheColumn";
 import {
   addQuestion,
   resetQuestions,
+  setCurrentQuestion,
   submitTestCompleted,
 } from "@/Redux/Reducers/UserAnswers";
 import Info from "./Info";
 import SubjectButtons from "./SubjectButtons";
 import { resetAttending } from "@/Redux/Reducers/AttendStatus";
 import { resetAttendFormData } from "@/Redux/Reducers/AttendSlice";
-import CameraView from "@/Components/slider/CameraView";
+import "./buttonstyles.css";
 import { SlMenu } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
+import Aside from "./Aside";
 
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
@@ -100,26 +102,10 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
   const test = useSelector((state: RootState) => state.attend);
   const user = useSelector((state: any) => state.user);
 
-  // Check if the screen size is mobile
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(window.innerWidth < 992); // Bootstrap lg breakpoint
-  //   };
-
-  //   // Initial check
-  //   checkIfMobile();
-
-  //   // Add event listener
-  //   window.addEventListener("resize", checkIfMobile);
-
-  //   // Clean up
-  //   return () => window.removeEventListener("resize", checkIfMobile);
-  // }, []);
-
   const dispatch = useDispatch();
   useEffect(() => {
     test.Questions.forEach((SingleTest, index) => {
-      console.log(SingleTest);
+      // console.log(SingleTest);
       const respone = {
         color: "white",
         questionIndex: index,
@@ -150,6 +136,9 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
       if (action === "INCREMENT") {
         if (testCounter < test.Questions.length - 1) {
           settestCounter((prev) => prev + 1);
+          dispatch(
+            setCurrentQuestion(test.Questions[testCounter + 1].questionId)
+          );
         } else {
           toast.error("You have reached the last question.", {
             position: "top-center",
@@ -158,6 +147,9 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
       } else if (action === "DECREMENT") {
         if (testCounter > 0) {
           settestCounter((prev) => prev - 1);
+          dispatch(
+            setCurrentQuestion(test.Questions[testCounter - 1].questionId)
+          );
         } else {
           toast.error("You are already at the first question.", {
             position: "top-center",
@@ -209,18 +201,6 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
 
   return (
     <div className="w-100 bg-white">
-      <div
-        className="d-flex justify-content-center align-items-center flex-row gap-2 p-2"
-        style={{}}
-      >
-        <p className="p-0 m-0 d-flex flex-row justify-content-start fs-4 align-items-center gap-3 w-75">
-          Test : <b>{test.category}</b>
-        </p>
-        <div>
-          <CameraView />
-        </div>
-      </div>
-
       {/* Desktop and Mobile Layout */}
       <div className="bg-white text-dark w-100">
         {/* Desktop Layout */}
@@ -244,6 +224,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
                 negativeMarking={Number(test.negativeMarking)}
                 positiveMarking={Number(test.positiveMarking)}
                 settestCounter={settestCounter}
+                testCounter={testCounter}
               />
             ) : (
               <MatchTheColumn
@@ -329,6 +310,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
                   negativeMarking={Number(test.negativeMarking)}
                   positiveMarking={Number(test.positiveMarking)}
                   settestCounter={settestCounter}
+                  testCounter={testCounter}
                 />
               ) : (
                 <MatchTheColumn
@@ -341,7 +323,8 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
                 />
               )}
 
-              <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
+              {/*?  here */}
+              <div className="mt-4 prevNextSubmitButton  gap-4">
                 <button
                   className="btn btn-info mx-2 timesUp"
                   onClick={() => {
@@ -372,44 +355,14 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
             </div>
 
             {/* Mobile Sidebar - Slides in from right */}
-            <aside
-              className={`sidebar position-fixed top-0 end-0 h-100 bg-white shadow p-3 transition-all ${
-                sidebarOpen ? "show" : "hide"
-              }`}
-              style={{
-                width: "300px",
-                transform: sidebarOpen ? "translateX(0)" : "translateX(100%)",
-                transition: "transform 0.3s ease-in-out",
-                zIndex: 1000,
-                borderLeft: "1px solid #dee2e6",
-                overflowY: "auto",
-              }}
-            >
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="m-0">Test Information</h5>
-                <button
-                  className="btn btn-sm btn-outline-dark"
-                  onClick={toggleSidebar}
-                  aria-label="Close sidebar"
-                >
-                  <IoMdClose size={18} />
-                </button>
-              </div>
-              <Info />
-              <SubjectButtons settestCounter={settestCounter} />
-            </aside>
+
+            <Aside
+              toggleSidebar={toggleSidebar}
+              sidebarOpen={sidebarOpen}
+              settestCounter={settestCounter}
+            />
 
             {/* Backdrop for mobile */}
-            {sidebarOpen && (
-              <div
-                className="position-fixed top-0 start-0 w-100 h-100"
-                style={{
-                  backgroundColor: "rgba(0,0,0,0.5)",
-                  zIndex: 999,
-                }}
-                onClick={toggleSidebar}
-              ></div>
-            )}
           </main>
         </span>
         {/* )} */}

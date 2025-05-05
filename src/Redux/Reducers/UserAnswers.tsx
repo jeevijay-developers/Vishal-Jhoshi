@@ -1,11 +1,13 @@
 // Import necessary functions from Redux Toolkit
 import { submitTest } from "@/server/tests";
 import { createSlice } from "@reduxjs/toolkit";
+import { set } from "lodash";
 
 // Initial state
 const initialState = {
   questions: [
     {
+      _id: "",
       questionIndex: 0,
       questionId: "",
       testId: "",
@@ -18,8 +20,10 @@ const initialState = {
       type: "",
       color: "red",
       timeTaken: 0,
+      selectedOptions: [],
     },
   ],
+  currentQuestion: "",
 };
 
 // Create a slice
@@ -51,6 +55,7 @@ const questionSlice = createSlice({
     resetQuestions: (state) => {
       state.questions = [
         {
+          _id: "",
           questionIndex: 0,
           questionId: "",
           testId: "",
@@ -63,15 +68,23 @@ const questionSlice = createSlice({
           type: "",
           color: "",
           timeTaken: 0,
+          selectedOptions: [],
         },
       ];
+    },
+    setCurrentQuestion: (state, action) => {
+      state.currentQuestion = action.payload;
     },
   },
 });
 
 // Export actions
-export const { addQuestion, submitTestCompleted, resetQuestions } =
-  questionSlice.actions;
+export const {
+  addQuestion,
+  submitTestCompleted,
+  resetQuestions,
+  setCurrentQuestion,
+} = questionSlice.actions;
 
 // Export reducer
 export default questionSlice.reducer;

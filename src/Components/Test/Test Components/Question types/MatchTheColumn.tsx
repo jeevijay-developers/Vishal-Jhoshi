@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { addMatchTheColumnQuestion } from "@/server/tests";
 import { RootState } from "@/Redux/Store";
 import {

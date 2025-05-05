@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+// import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
 import { addQuestion } from "@/Redux/Reducers/UserAnswers";
