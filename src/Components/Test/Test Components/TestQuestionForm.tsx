@@ -7,6 +7,7 @@ import { RootState } from "@/Redux/Store";
 import { setTestId } from "@/Redux/Reducers/TestCounterSlice";
 import { updateTestAttempt } from "@/server/tests";
 import BulkUpload from "./bulk upload select/BulkUpload";
+import AdvanceBulkUpload from "./bulk upload JEE advance/AdvanceBulkUpload";
 
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
@@ -88,6 +89,7 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
               <option value="integer">Integer</option>
               <option value="match">Match the Column</option>
               <option value="bulk">Upload in bulk</option>
+              <option value="jee-adv-bulk">JEE Advance Bulk Upload</option>
             </select>
           </div>
 
@@ -138,6 +140,12 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
         {/* {type === "bulk" && <BulkUpload  setTes{}, */}
         {type === "bulk" && (
           <BulkUpload setTest={setTest} setcreatedTest={setcreatedTest} />
+        )}
+        {type === "jee-adv-bulk" && (
+          <AdvanceBulkUpload
+            setTest={setTest}
+            setcreatedTest={setcreatedTest}
+          />
         )}
       </div>
     </div>
