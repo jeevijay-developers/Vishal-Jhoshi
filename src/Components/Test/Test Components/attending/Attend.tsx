@@ -20,6 +20,7 @@ import "./buttonstyles.css";
 import { SlMenu } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
 import Aside from "./Aside";
+import BooleanQuestion from "./BooleanQuestions";
 
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
@@ -36,6 +37,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
     type: "integer",
     description: "",
     correctAnswer: "",
+    marks: null,
     _id: "",
   });
   //* select type question
@@ -57,6 +59,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
     imageOptionsC: "",
     imageOptionsD: "",
     correctAnswer: [],
+    marks: null,
     _id: "",
   });
   //* match the column
@@ -169,9 +172,11 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
 
     getQuestion(questionId, type)
       .then((data) => {
-        if (type === "integer") {
+        console.log(data);
+
+        if (type === "integer" || type === "boolean") {
           setintegerQuestion(data);
-        } else if (type === "select") {
+        } else if (type === "single_choice" || type === "multiple_choice") {
           setmultiSelectQuestion(data);
         } else {
           setmatchTheColumn(data);
@@ -199,6 +204,60 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
     return <div className="text-center p-5">Loading...</div>;
   }
 
+  const renderQuestionComponent = () => {
+    const type = test.Questions[testCounter].questionType;
+    console.log(type);
+
+    if (type === "integer" || type === "boolean") {
+      if (type === "integer") {
+        return (
+          <IntegerQuestion
+            integerQuestion={integerQuestion}
+            index={testCounter}
+            testId={test._id}
+            negativeMarking={Number(integerQuestion?.marks?.correct ?? 0)}
+            positiveMarking={Number(integerQuestion?.marks?.incorrect ?? 0)}
+            settestCounter={settestCounter}
+          />
+        );
+      } else {
+        return (
+          <BooleanQuestion
+            booleanQuestion={integerQuestion}
+            index={testCounter}
+            testId={test._id}
+            negativeMarking={Number(integerQuestion?.marks?.correct ?? 0)}
+            positiveMarking={Number(integerQuestion?.marks?.incorrect ?? 0)}
+            settestCounter={settestCounter}
+          />
+        );
+      }
+    } else if (type === "single_choice" || type === "multiple_choice") {
+      return (
+        <SelecQuestion
+          selectQuestion={multiSelectQuestion}
+          index={testCounter}
+          testId={test._id}
+          negativeMarking={Number(multiSelectQuestion?.marks?.correct ?? 0)}
+          positiveMarking={Number(multiSelectQuestion?.marks?.incorrect ?? 0)}
+          settestCounter={settestCounter}
+          testCounter={testCounter}
+        />
+      );
+    } else {
+      return (
+        <MatchTheColumn
+          matchTheColumnQuestions={matchTheColumn}
+          index={testCounter}
+          testId={test._id}
+          negativeMarking={Number(test.negativeMarking)}
+          positiveMarking={Number(test.positiveMarking)}
+          settestCounter={settestCounter}
+        />
+      );
+    }
+  };
+
   return (
     <div className="w-100 bg-white">
       {/* Desktop and Mobile Layout */}
@@ -207,35 +266,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
         {/* {!isMobile ? ( */}
         <div className="d-flex d-none d-md-flex justify-content-between align-items-start flex-row w-100 p-2 gap-3">
           <div className="question-container" style={{ width: "70%" }}>
-            {test.Questions[testCounter].questionType === "integer" ? (
-              <IntegerQuestion
-                integerQuestion={integerQuestion}
-                index={testCounter}
-                testId={test._id}
-                negativeMarking={Number(test.negativeMarking)}
-                positiveMarking={Number(test.positiveMarking)}
-                settestCounter={settestCounter}
-              />
-            ) : test.Questions[testCounter].questionType === "select" ? (
-              <SelecQuestion
-                selectQuestion={multiSelectQuestion}
-                index={testCounter}
-                testId={test._id}
-                negativeMarking={Number(test.negativeMarking)}
-                positiveMarking={Number(test.positiveMarking)}
-                settestCounter={settestCounter}
-                testCounter={testCounter}
-              />
-            ) : (
-              <MatchTheColumn
-                matchTheColumnQuestions={matchTheColumn}
-                index={testCounter}
-                testId={test._id}
-                negativeMarking={Number(test.negativeMarking)}
-                positiveMarking={Number(test.positiveMarking)}
-                settestCounter={settestCounter}
-              />
-            )}
+            {renderQuestionComponent()}
             <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
               <button
                 className="btn btn-info mx-2 timesUp"
@@ -293,35 +324,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
             </div>
 
             <div className="question-container">
-              {test.Questions[testCounter].questionType === "integer" ? (
-                <IntegerQuestion
-                  integerQuestion={integerQuestion}
-                  index={testCounter}
-                  testId={test._id}
-                  negativeMarking={Number(test.negativeMarking)}
-                  positiveMarking={Number(test.positiveMarking)}
-                  settestCounter={settestCounter}
-                />
-              ) : test.Questions[testCounter].questionType === "select" ? (
-                <SelecQuestion
-                  selectQuestion={multiSelectQuestion}
-                  index={testCounter}
-                  testId={test._id}
-                  negativeMarking={Number(test.negativeMarking)}
-                  positiveMarking={Number(test.positiveMarking)}
-                  settestCounter={settestCounter}
-                  testCounter={testCounter}
-                />
-              ) : (
-                <MatchTheColumn
-                  matchTheColumnQuestions={matchTheColumn}
-                  index={testCounter}
-                  testId={test._id}
-                  negativeMarking={Number(test.negativeMarking)}
-                  positiveMarking={Number(test.positiveMarking)}
-                  settestCounter={settestCounter}
-                />
-              )}
+              {renderQuestionComponent()}
 
               {/*?  here */}
               <div className="mt-4 prevNextSubmitButton  gap-4">

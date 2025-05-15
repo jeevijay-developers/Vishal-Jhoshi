@@ -86,9 +86,9 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
               required
             >
               <option value="select">Select</option>
-              <option value="integer">Integer</option>
+              {/* <option value="integer">Integer</option>
               <option value="match">Match the Column</option>
-              <option value="bulk">Upload in bulk</option>
+              <option value="bulk">Upload in bulk</option> */}
               <option value="jee-adv-bulk">JEE Advance Bulk Upload</option>
             </select>
           </div>

@@ -84,22 +84,9 @@ const IntegerQuestion: React.FC<IntegerQuestionProps> = ({
             <p className="form-control-plaintext">{integerQuestion.subject}</p>
           </div>
           <div className="mb-3 text-center">
-            <label className="form-label">Topic</label>
-            <p className="form-control-plaintext">{integerQuestion.topic}</p>
-          </div>
-          {/* <div className="mb-3 text-center">
-            <label className="form-label">Subtopic</label>
-            <p className="form-control-plaintext">{integerQuestion.subtopic}</p>
-          </div> */}
-
-          <div className="mb-3 text-center">
             <label className="form-label">Level</label>
             <p className="form-control-plaintext">{integerQuestion.level}</p>
           </div>
-          {/* <div className="mb-3 text-center">
-            <label className="form-label">Type</label>
-            <p className="form-control-plaintext">{integerQuestion.type}</p>
-          </div> */}
         </section>
         <div
           className="bg-white p-3 rounded-4"

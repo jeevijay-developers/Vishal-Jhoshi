@@ -119,11 +119,13 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
   function saveTheAnswer(color: string, action: string) {
     let ansStatus = false;
 
-    const arr1 = selectQuestion.correctAnswer;
+    const arr1 = selectQuestion.correctAnswer[0]
+      .split(",")
+      .map((item) => item.trim());
     const arr2 = selectedOptions;
 
-    // console.log(arr1);
-    // console.log(arr2);
+    console.log(arr1);
+    console.log(arr2);
 
     const countOccurrences = (arr: any) => {
       return arr.reduce((acc: any, char: string) => {
@@ -147,6 +149,8 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
     if (arr1.length !== arr2.length) {
       ansStatus = false; // Different lengths mean arrays can't match.
     }
+
+    console.log(ansStatus);
 
     const respone = {
       color: color,

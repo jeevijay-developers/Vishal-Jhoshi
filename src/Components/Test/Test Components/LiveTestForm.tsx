@@ -51,14 +51,14 @@ const formats = [
 
 interface FormDataType {
   testName: string;
-  description: string;
   timeDuration: string;
   time: string;
   date: string;
   category: string;
-  instructions: string;
-  positiveMarking: number;
-  negativeMarking: number;
+  // instructions: string;
+  // description: string;
+  // positiveMarking: number;
+  // negativeMarking: number;
   canAttempt: boolean;
 }
 
@@ -68,14 +68,14 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
 }) => {
   const [formData, setFormData] = useState<FormDataType>({
     testName: "",
-    description: "",
     timeDuration: "",
     time: "",
     date: "",
     category: "",
-    instructions: "",
-    positiveMarking: 0,
-    negativeMarking: 0,
+    // description: "",
+    // instructions: "",
+    // positiveMarking: 0,
+    // negativeMarking: 0,
     canAttempt: false,
   });
 
@@ -131,7 +131,7 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
         </div>
 
         {/* Description */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="description" className="form-label">
             Description
           </label>
@@ -143,7 +143,7 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
             modules={modules}
             formats={formats}
           />
-        </div>
+        </div> */}
 
         {/* Time Duration */}
         <div className="mb-3">
@@ -215,7 +215,7 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
         </div>
 
         {/* Instructions */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="instructions" className="form-label">
             Instructions
           </label>
@@ -228,10 +228,10 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
             onChange={handleChange}
             required
           ></textarea>
-        </div>
+        </div> */}
 
         {/* Positive Marking */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="positiveMarking" className="form-label">
             Positive Marking (per question)
           </label>
@@ -245,10 +245,10 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
 
         {/* Negative Marking */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="negativeMarking" className="form-label">
             Negative Marking (per question)
           </label>
@@ -262,7 +262,7 @@ const LiveTestForm: React.FC<LiveTestFormProps> = ({
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
 
         {/* Submit Button */}
         <div className="text-center">
