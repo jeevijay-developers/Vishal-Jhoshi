@@ -6,6 +6,7 @@ import ConfigDB from "@/Config/ThemeConfig";
 import dynamic from "next/dynamic";
 import BannerSlider from "../home/BannerSlider";
 import Leaderboard from "../home/leaderboard/leaderboard";
+import PieChart from "../home/Piechart";
 import Information from "../home/Information";
 
 // Dynamically importing components to prevent SSR issues
@@ -32,9 +33,39 @@ const StudentDashboard = () => {
         <TopTests />
         <MentorsList /> */}
       </section>
-      <section>
-        <Leaderboard />
+      <section className="d-flex flex-row flex-wrap gap-4 justify-content-center align-items-center">
+        <section className="my-4">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "2rem",
+            }}
+          >
+            <PieChart
+              title="Test Scores Distribution"
+              data={[80, 70, 90]}
+              labels={["Physics", "Chemistry", "Maths"]}
+            />
+            <PieChart
+              title="Study Time Distribution"
+              data={[40, 30, 50]}
+              labels={["Physics", "Chemistry", "Maths"]}
+            />
+          </div>
+        </section>
+        <div
+          style={{
+            minWidth: "400px",
+          }}
+        >
+          <Leaderboard />
+        </div>
       </section>
+
       <section className="my-4">
         <Information />
         <TestBarGraph />

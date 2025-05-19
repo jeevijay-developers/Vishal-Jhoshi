@@ -17,6 +17,7 @@ const Leaderboard: React.FC = () => {
               left: "-60px",
               padding: "10px 20px",
               background: "white",
+              border: "3px solid #fec001",
               borderRadius: "20px",
               color: "#00000082",
             }}
@@ -51,6 +52,7 @@ const Leaderboard: React.FC = () => {
               padding: "10px 20px",
               background: "white",
               borderRadius: "20px",
+              border: "3px solid #fec001",
               color: "#00000082",
             }}
           >
