@@ -1,0 +1,47 @@
+.leaderboardcontainer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.leaderboardheading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.leaderboardbox {
+  background-color: #028b9b;
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  max-width: 300px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.label {
+  background-color: #fff;
+  color: #444;
+  padding: 0.4rem 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0.5rem auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ol {
+  list-style-position: inside;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+li {
+  text-align: left;
+  margin: 0.2rem 0;
+  font-weight: 500;
+} */
