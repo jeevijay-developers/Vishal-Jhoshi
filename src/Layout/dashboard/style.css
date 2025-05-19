@@ -18,3 +18,28 @@
     right: 260px;
   }
 }
+
+.profile-pic-wrapper {
+  position: absolute;
+  bottom: -65px;
+  left: 4.25rem;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 130px;
+}
+
+.profile-pic-wrapper img {
+  object-fit: cover;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  cursor: pointer;
+}
+
