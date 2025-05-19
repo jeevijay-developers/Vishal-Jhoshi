@@ -4,6 +4,7 @@ import ConfigDB from "@/Config/ThemeConfig";
 
 // Dynamic imports for components
 import dynamic from "next/dynamic";
+import BannerSlider from "../home/BannerSlider";
 
 // Dynamically importing components to prevent SSR issues
 const ProfileCard = dynamic(() => import("./ProfileCard"), { ssr: false });
@@ -21,10 +22,13 @@ const secondary = ConfigDB.color.secondary_color || "var(--theme-secondary)";
 const StudentDashboard = () => {
   return (
     <main className="">
+      {/* Left Section */}
       <section className="d-flex flex-row flex-wrap gap-4 justify-content-center align-items-center">
-        <ProfileCard />
+        <BannerSlider />
+        {/* <ProfileCard />
+        
         <TopTests />
-        <MentorsList />
+        <MentorsList /> */}
       </section>
       <section className="my-4">
         <TestBarGraph />

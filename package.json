@@ -25,6 +25,7 @@
     "@react-google-maps/api": "^2.19.3",
     "@reactour/tour": "^3.6.2",
     "@reduxjs/toolkit": "^2.2.3",
+    "@splidejs/react-splide": "^0.7.12",
     "@tiptap/extension-bold": "^2.10.3",
     "@tiptap/extension-highlight": "^2.10.3",
     "@tiptap/extension-italic": "^2.10.3",

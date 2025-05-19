@@ -23,6 +23,26 @@ import imageOne from "../../../public/assets/images/logo/logo1.png";
 import imageTwo from "../../../public/assets/images/logo/logo-dark.png";
 import { signUp } from "@/server/auth";
 import { signIn } from "next-auth/react";
+// import SelecQuestion from "../Test/Test Components/attending/SelecQuestion";
+
+const targetClass = [
+  {
+    index: 0,
+    targetClass: "Select Target Course",
+  },
+  {
+    index: 1,
+    targetClass: "JEE Mains",
+  },
+  {
+    index: 2,
+    targetClass: "JEE Advanced",
+  },
+  {
+    index: 3,
+    targetClass: "NEET",
+  },
+];
 
 export const UserForm = () => {
   const [show, setShow] = useState(false);
@@ -31,6 +51,7 @@ export const UserForm = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [target, setTarget] = useState("");
 
   const router = useRouter();
   // old code
@@ -80,13 +101,14 @@ export const UserForm = () => {
 
     try {
       if (signUpCheck) {
-        const result = await signUp(email, password, name);
+        const result = await signUp(email, password, name, target);
         if (result?.status === "success") {
           setSignUp(false);
           toast.success("Success...");
         } else {
           toast.error("Invalid Data...");
         }
+        console.log({ email, password, name, target });
       } else {
         const result = await signIn("credentials", {
           email,
@@ -138,14 +160,35 @@ export const UserForm = () => {
             {signUpCheck ? SignUpAccount : SignInToAccount}
           </h2>
           {signUpCheck && (
-            <FormGroup>
-              <Label className="col-form-label">Name</Label>
-              <Input
-                defaultValue={name}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="User name"
-              />
-            </FormGroup>
+            <>
+              <FormGroup>
+                <Label className="col-form-label">Name</Label>
+                <Input
+                  defaultValue={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="User name"
+                />
+              </FormGroup>{" "}
+              {/* <br /> */}
+              <FormGroup>
+                <Label className="col-form-label">{EmailAddressLogIn}</Label>
+                <Input
+                  type="select"
+                  defaultValue={""}
+                  onChange={(event) => {
+                    console.log(event.target.value);
+
+                    setTarget(event.target.value);
+                  }}
+                >
+                  {targetClass.map((item, index) => (
+                    <option key={index} value={item.targetClass}>
+                      {item.targetClass}
+                    </option>
+                  ))}
+                </Input>
+              </FormGroup>
+            </>
           )}
           <FormGroup>
             <Label className="col-form-label">{EmailAddressLogIn}</Label>
@@ -170,6 +213,7 @@ export const UserForm = () => {
               </div>
             </div>
           </FormGroup>
+
           {!signUpCheck ? (
             <FormGroup className="mb-0 checkbox-checked">
               <FormGroup className="checkbox-solid-info" check>
@@ -202,7 +246,7 @@ export const UserForm = () => {
             <FormGroup className="mb-0 checkbox-checked">
               <div className="text-end mt-3">
                 <Button type="submit" color="primary" block disabled={loading}>
-                 {loading ? (
+                  {loading ? (
                     <>
                       <span
                         className="spinner-border spinner-border-sm me-2"

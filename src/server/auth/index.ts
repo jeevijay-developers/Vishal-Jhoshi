@@ -1,6 +1,11 @@
 import axios from "axios";
 // Sign Up API Call
-export const signUp = async (email: string, password: string, name: string) => {
+export const signUp = async (
+  email: string,
+  password: string,
+  name: string,
+  target: string
+) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signup`,
@@ -8,6 +13,7 @@ export const signUp = async (email: string, password: string, name: string) => {
         email,
         password,
         name,
+        target,
       }
     );
     return response.data;
