@@ -1,10 +1,21 @@
-import React from "react";
-import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Card,
+  Button,
+  Form,
+  Modal,
+} from "react-bootstrap";
+import { FaPencilAlt } from "react-icons/fa";
 import "./style.css";
 
 const UserProfile = () => {
-  // Dummy user data based on the schema
-  const userData = {
+  const [showModal, setShowModal] = useState(false);
+
+  const [userData, setUserData] = useState({
     name: "Jane Doe",
     email: "jane.doe@example.com",
     password: "********",
@@ -13,11 +24,39 @@ const UserProfile = () => {
     birthDate: "1995-07-12",
     image_url: "https://randomuser.me/api/portraits/women/5.jpg",
     bannerImage: "https://placehold.co/1500x1500",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // Placeholder functions for update and delete actions
-  const handleUpdate = () => {
-    alert("Update profile functionality to be implemented.");
+  const handleImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    key: "image_url" | "bannerImage"
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUserData((prev) => ({
+          ...prev,
+          [key]: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowModal(false);
+    console.log("Updated user data:", userData);
+    // TODO: Send updated data to backend
   };
 
   const handleDelete = () => {
@@ -25,44 +64,64 @@ const UserProfile = () => {
   };
 
   return (
-    <div>
-      {/* Banner Image */}
-      <div
-        style={{
-          backgroundImage: `url(${userData.bannerImage})`,
-          height: "300px",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+    <>
+      {/* Cover and Profile Image with Edit Icons */}
+      <div className="position-relative">
+        <div
+          style={{
+            backgroundImage: `url(${userData.bannerImage})`,
+            height: "250px",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
 
-      <Container className="mt-5">
+        {/* Cover Image Edit */}
+        <label
+          htmlFor="bannerImageInput"
+          className="position-absolute top-0 end-0 m-3 bg-white p-2 rounded-circle shadow"
+          style={{ cursor: "pointer" }}
+        >
+          <FaPencilAlt />
+        </label>
+        <input
+          type="file"
+          id="bannerImageInput"
+          accept="image/*"
+          onChange={(e) => handleImageChange(e, "bannerImage")}
+          style={{ display: "none" }}
+        />
+
+        {/* Profile Image Overlapping */}
+        <div className="profile-pic-wrapper">
+          <Image
+            src={userData.image_url}
+            alt="Profile"
+            width="130"
+            height="130"
+            roundedCircle
+            className="border border-white shadow"
+          />
+          <label
+            htmlFor="profileImageInput"
+            className="edit-icon bg-white rounded-circle shadow"
+          >
+            <FaPencilAlt size={14} />
+          </label>
+          <input
+            type="file"
+            id="profileImageInput"
+            accept="image/*"
+            onChange={(e) => handleImageChange(e, "image_url")}
+            style={{ display: "none" }}
+          />
+        </div>
+      </div>
+
+      {/* Profile Info */}
+      <Container className="mt-5 pt-5">
         <Row>
-          {/* Profile Image */}
-          <Col md={4} className="text-center">
-            <div
-              className="profilePicture"
-              style={{
-                borderRadius: "50%",
-                overflow: "hidden",
-                width: "150px",
-                height: "150px",
-                border: "5px solid white",
-                position: "relative",
-                margin: "auto",
-              }}
-            >
-              <Image
-                src={userData.image_url}
-                alt="Profile"
-                roundedCircle
-                width="150"
-              />
-            </div>
-          </Col>
-
-          {/* User Info */}
-          <Col md={8} className="mt-4 mt-md-0 profileData">
+          <Col md={{ span: 8, offset: 2 }}>
             <Card className="mb-4 shadow-sm">
               <Card.Body>
                 <h2>{userData.name}</h2>
@@ -79,9 +138,8 @@ const UserProfile = () => {
                     : "Not provided"}
                 </p>
 
-                {/* Buttons for Update and Delete */}
                 <div className="d-flex justify-content-between">
-                  <Button variant="primary" onClick={handleUpdate}>
+                  <Button variant="primary" onClick={() => setShowModal(true)}>
                     Update
                   </Button>
                   <Button variant="danger" onClick={handleDelete}>
@@ -93,7 +151,67 @@ const UserProfile = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+
+      {/* Modal for Update Form */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSave}>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={userData.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="bio"
+                rows={3}
+                value={userData.bio}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Birth Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="birthDate"
+                value={userData.birthDate}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={userData.location}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <div className="d-flex justify-content-end gap-2">
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="success" type="submit">
+                Save Changes
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 
