@@ -6,6 +6,7 @@ import ConfigDB from "@/Config/ThemeConfig";
 import dynamic from "next/dynamic";
 import BannerSlider from "../home/BannerSlider";
 import Leaderboard from "../home/leaderboard/leaderboard";
+import Information from "../home/Information";
 
 // Dynamically importing components to prevent SSR issues
 const ProfileCard = dynamic(() => import("./ProfileCard"), { ssr: false });
@@ -35,6 +36,7 @@ const StudentDashboard = () => {
         <Leaderboard />
       </section>
       <section className="my-4">
+        <Information />
         <TestBarGraph />
       </section>
       <section className="my-4">
