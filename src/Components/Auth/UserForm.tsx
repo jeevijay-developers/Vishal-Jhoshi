@@ -171,7 +171,7 @@ export const UserForm = () => {
               </FormGroup>{" "}
               {/* <br /> */}
               <FormGroup>
-                <Label className="col-form-label">{EmailAddressLogIn}</Label>
+                <Label className="col-form-label">Select Target</Label>
                 <Input
                   type="select"
                   defaultValue={""}

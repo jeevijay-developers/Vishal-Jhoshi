@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -11,20 +11,44 @@ import {
 } from "react-bootstrap";
 import { FaPencilAlt } from "react-icons/fa";
 import "./style.css";
-
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/Store";
+import { updateUser, updateUserImage } from "@/server/user";
+import { PropagateLoader } from "react-spinners";
+import { toast } from "react-toastify";
 const UserProfile = () => {
   const [showModal, setShowModal] = useState(false);
 
+  // user info
+  const user = useSelector((state: any) => state.user);
+
+  const [updatingUser, setUpdatingUser] = useState(false);
+
+  console.log(user);
+
   const [userData, setUserData] = useState({
-    name: "Jane Doe",
-    email: "jane.doe@example.com",
-    password: "********",
-    bio: "A passionate web developer!",
-    location: "San Francisco, CA",
-    birthDate: "1995-07-12",
-    image_url: "https://randomuser.me/api/portraits/women/5.jpg",
-    bannerImage: "https://placehold.co/1500x1500",
+    name: user.name,
+    email: user.email,
+    bio: user.bio || "",
+    location: user.location,
+    birthDate: user.birthDate || "",
+    image_url:
+      user.image_url || "https://randomuser.me/api/portraits/women/5.jpg",
+    bannerImage: user.bannerImage || "https://placehold.co/1500x1500",
   });
+
+  useEffect(() => {
+    setUserData({
+      name: user.name,
+      email: user.email,
+      bio: user.bio || "",
+      location: user.location,
+      birthDate: user.birthDate || "",
+      image_url:
+        user.image_url || "https://randomuser.me/api/portraits/women/5.jpg",
+      bannerImage: user.bannerImage || "https://placehold.co/1500x1500",
+    });
+  }, [user]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,14 +73,35 @@ const UserProfile = () => {
         }));
       };
       reader.readAsDataURL(e.target.files[0]);
+      // upload image ->
+      const form = new FormData();
+      form.append("image", e.target.files[0]);
+
+      updateUserImage(form, key, user._id)
+        .then((res) => {
+          toast.success("Image updated successfully!", {
+            position: "top-left",
+          });
+          console.log(res);
+        })
+        .catch((err) => {
+          toast.error("Failed to update image. Try again.", {
+            position: "top-left",
+          });
+        });
     }
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowModal(false);
-    console.log("Updated user data:", userData);
-    // TODO: Send updated data to backend
+    setUpdatingUser(true);
+    updateUser(userData, user._id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setUpdatingUser(false);
+      });
   };
 
   const handleDelete = () => {
@@ -180,15 +225,17 @@ const UserProfile = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Birth Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="birthDate"
-                value={userData.birthDate}
-                onChange={handleChange}
-              />
-            </Form.Group>
+            <Form.Control
+              type="date"
+              name="birthDate"
+              value={
+                userData.birthDate &&
+                !isNaN(new Date(userData.birthDate).getTime())
+                  ? new Date(userData.birthDate).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={handleChange}
+            />
 
             <Form.Group className="mb-3">
               <Form.Label>Location</Form.Label>
@@ -204,9 +251,16 @@ const UserProfile = () => {
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 Cancel
               </Button>
-              <Button variant="success" type="submit">
+              {updatingUser ? (
+                <PropagateLoader color="#308e87" />
+              ) : (
+                <Button variant="success" type="submit">
+                  Save Changes
+                </Button>
+              )}
+              {/* <Button variant="success" type="submit">
                 Save Changes
-              </Button>
+              </Button> */}
             </div>
           </Form>
         </Modal.Body>

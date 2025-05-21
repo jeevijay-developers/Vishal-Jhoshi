@@ -16,6 +16,33 @@ export const startStudySession = async (userId: string, subject: string) => {
   }
 };
 
+export const updateUser = async (data: any, userId: string) => {
+  try {
+    const response = await apiClient.put(`/api/v1/update-user/${userId}`, {
+      data,
+    });
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const updateUserImage = async (
+  obj: any,
+  target: string,
+  userId: string
+) => {
+  try {
+    const response = await apiClient.put(
+      `/api/v1/update-image-url/${userId}/${target}`,
+      obj
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+
 export const stopStudySession = async (data: any) => {
   try {
     const response = await axios.post(
