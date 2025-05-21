@@ -54,7 +54,7 @@ const Sessions = () => {
       ) : test === "ATTENDING" ? (
         <Wrapper setTest={setTest} />
       ) : test === "RESULT" ? (
-        <Result setTest={setTest} />
+        <div>sdfsdf</div>
       ) : null}
     </div>
   );

@@ -22,7 +22,7 @@ const DashboardWrapper = () => {
       ) : (
         <div className="row">
           <DsbSidebar show={show} setShow={setShow} />
-          <StudentMain show={show} />
+          <StudentMain show={show} setShow={setShow} />
         </div>
       )}
     </div>

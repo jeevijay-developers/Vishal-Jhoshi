@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { signOut } from "next-auth/react";
 
 type Props = {
   show: string;
@@ -153,14 +154,16 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Settings
               </a>
             </li> */}
-            <li className="nav-item">
-              <a
-                className="nav-link d-flex align-items-center gap-2 text-primary"
-                href="#"
+            <li className="nav-item mx-auto">
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  signOut();
+                }}
               >
                 <i className="bi bi-door-closed"></i>
                 Sign out
-              </a>
+              </button>
             </li>
           </ul>
         </div>

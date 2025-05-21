@@ -5,6 +5,7 @@ import { GiStopwatch } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import gsap from "gsap";
 import "./result.css";
+import { FcQuestions } from "react-icons/fc";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 interface QUESTIONS {
@@ -125,13 +126,27 @@ const QuestionData: React.FC = () => {
 
   return (
     <div className="question-list-container bg-white text-dark w-100">
-      <h3 className="title">Question-wise analysis</h3>
+      <h3
+        className="title d-flex justify-content-center align-items-center py-2 px-5 w-fit mx-auto my-3"
+        style={{
+          borderRadius: "20px",
+          // border: "2px solid yellow",
+          // boxShadow:
+          //   "2px 2px 5px #ee6a0066, inset -3px -3px 3px #ae9090c9, -3px -3px 3px #e1e1e16e, inset 3px 3px 2px #ff96001c",
+        }}
+      >
+        {" "}
+        <FcQuestions /> Question-wise analysis
+      </h3>
       <div className="d-flex flex-lg-row flex-column flex-wrap gap-4 justify-content-center gy-5 align-items-center question-list">
         {question.length > 0 ? (
           question.map((q, index) => (
             <div
               key={q.questionId}
-              className="w-full m-auto d-flex justify-content-center align-items-center position-relative"
+              className="w-full m-auto d-flex justify-content-center align-items-center position-relative my-4"
+              style={{
+                maxWidth: "500px",
+              }}
               ref={(el) => {
                 if (el) {
                   questionRefs.current[index] = el;
@@ -144,25 +159,22 @@ const QuestionData: React.FC = () => {
                   dangerouslySetInnerHTML={{ __html: q.description }}
                 ></h6>
                 <div
-                  className="d-flex justify-content-center align-items-center flex-row"
-                  style={{ backgroundColor: "green" }}
+                  className="d-flex justify-content-center align-items-center bg-primary flex-row"
+                  // style={{ backgroundColor: "green" }}
                 >
-                  <div className="question-details sms-info-bg w-75">
-                    <p>
+                  <div className="d-flex justify-content-center align-items-center flex-row flex-wrap gap-3 w-75 bg-primary">
+                    <p className="m-0 p-0 d-flex flex-row gap-3 justify-content-center align-items-center">
                       <strong className="text-white">Subject:</strong>{" "}
                       <span style={{ color: "yellow" }}>{q.subject}</span>
                     </p>
-                    <p>
-                      <strong className="text-white">Level:</strong>{" "}
-                      <span style={{ color: "yellow" }}>{q.level}</span>
-                    </p>
-                    <p>
+
+                    <p className="m-0 p-0 d-flex flex-row gap-3 justify-content-center align-items-center">
                       <strong className="text-white">Status:</strong>{" "}
                       <span style={{ color: "yellow" }}>
                         {q.questionStatus}
                       </span>
                     </p>
-                    <p>
+                    <p className="m-0 p-0 d-flex flex-row gap-3 justify-content-center align-items-center">
                       <strong className="text-white">Marks:</strong>{" "}
                       <span style={{ color: "yellow" }}>{q.marks}</span>
                     </p>

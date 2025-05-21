@@ -17,9 +17,6 @@ import html2pdf from "html2pdf.js";
 // import SliderWithTicks from "@/Components/slider/SliderWithTicks";
 import { FaPrint, FaFilePdf } from "react-icons/fa";
 import Aos from "aos";
-interface LiveTestFormProps {
-  setTest: React.Dispatch<React.SetStateAction<any>>;
-}
 
 interface SubjectData {
   totalQuestions: number;
@@ -35,7 +32,7 @@ interface ChartData {
   questionStatus: "INIT" | "CORRECT" | "INCORRECT"; // Status of the question
 }
 
-const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
+const Result = memo(() => {
   const chart = useSelector((state: RootState) => state.chart);
 
   const [subjectsData, setSubjectsData] = useState<{
@@ -154,7 +151,7 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
         ref={cardRef}
         className="w-100 h-auto d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 position-relative"
       >
-        <FaArrowLeft
+        {/* <FaArrowLeft
           style={{
             position: "absolute",
             top: "0px",
@@ -164,7 +161,7 @@ const Result: React.FC<LiveTestFormProps> = memo(({ setTest }) => {
           onClick={() => {
             setTest("TEST-LIST");
           }}
-        />
+        /> */}
         {/* <RulerSlider /> <br /> */}
         {/* <SliderWithTicks /> */}
         {/* <div>{Math.floor(Math.random() * 100000) + 1}</div> */}
