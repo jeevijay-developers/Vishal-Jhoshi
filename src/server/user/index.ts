@@ -135,3 +135,33 @@ export const fetchAllStudySessions = async (userId: string) => {
     return error.response?.data || { message: "Something went wrong" };
   }
 };
+
+export const getAllMentors = async () => {
+  try {
+    const response = await apiClient.get(`/api/v1/mentors`);
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getMentorshipDetails = async (userId: string) => {
+  try {
+    const response = await apiClient.get(`/api/v1/get-mentorship/${userId}`);
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const createMentorship = async (data: any, userId: string) => {
+  try {
+    const response = await apiClient.post(
+      `/api/v1/create-mentorship/${userId}`,
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};

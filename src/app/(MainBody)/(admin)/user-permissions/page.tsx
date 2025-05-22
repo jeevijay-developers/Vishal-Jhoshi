@@ -1,11 +1,14 @@
 "use client";
+import UpdateUser from "@/Components/update/UpdateUser";
 import { getAllUsers, updateRole } from "@/server/users";
 import React, { useEffect, useState } from "react";
 import { Card, CardFooter, CardHeader, Table } from "reactstrap";
 
 const Page = () => {
   const [users, setUsers] = useState([]);
-  const roleOptions = ["student", "mentor", "admin"];
+  const roleOptions = ["student", "mentor"];
+  // const [updateUser, setUpdateUser] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
   const getAllUserFunc = async () => {
     try {
@@ -16,18 +19,18 @@ const Page = () => {
     }
   };
 
-  const handleRoleChange = async (userId: string, newRole: string) => {
-    try {
-      await updateRole(userId, newRole);
-      setUsers((prevUsers: any) =>
-        prevUsers.map((user: any) =>
-          user._id === userId ? { ...user, role: newRole } : user
-        )
-      );
-    } catch (error) {
-      console.error("Error updating user role:", error);
-    }
-  };
+  // const handleRoleChange = async (userId: string) => {
+  //   try {
+  //     // await updateRole(userId, newRole);
+  //     // setUsers((prevUsers: any) =>
+  //     //   prevUsers.map((user: any) =>
+  //     //     user._id === userId ? { ...user, role: newRole } : user
+  //     //   )
+  //     // );
+  //   } catch (error) {
+  //     console.error("Error updating user role:", error);
+  //   }
+  // };
 
   useEffect(() => {
     getAllUserFunc();
@@ -43,7 +46,7 @@ const Page = () => {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
@@ -54,7 +57,7 @@ const Page = () => {
                   <td>{user?.name}</td>
                   <td>{user?.email}</td>
                   <td>
-                    <select
+                    {/* <select
                       value={user.role}
                       onChange={(e) =>
                         handleRoleChange(user._id, e.target.value)
@@ -65,7 +68,15 @@ const Page = () => {
                           {role}
                         </option>
                       ))}
-                    </select>
+                    </select> */}
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        setSelectedUser(user);
+                      }}
+                    >
+                      Update User
+                    </button>
                   </td>
                 </tr>
               ))
@@ -77,7 +88,9 @@ const Page = () => {
               </tr>
             )}
           </tbody>
-        </Table>
+        </Table>{" "}
+        {selectedUser != null && <UpdateUser user={selectedUser} />}
+        {/* <UpdateUser user={user} /> */}
         <CardFooter className="text-center">
           {users.length} users found
         </CardFooter>

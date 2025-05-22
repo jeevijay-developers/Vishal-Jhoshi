@@ -50,7 +50,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Dashboard
               </a>
             </li>
-            <li className="nav-item" onClick={() => setShow("TEST_RESULT")}>
+            {/* <li className="nav-item" onClick={() => setShow("TEST_RESULT")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "TEST_RESULT" ? "active bg-white" : ""
@@ -61,7 +61,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-file-earmark"></i>
                 Test Results
               </a>
-            </li>
+            </li> */}
             <li className="nav-item" onClick={() => setShow("MENTOR_LIST")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
@@ -74,18 +74,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Mentor List
               </a>
             </li>
-            {/* <li className="nav-item" onClick={() => setShow("SCORE_GRAPH")}>
-              <a
-                className={`nav-link d-flex align-items-center gap-2 ${
-                  show === "SCORE_GRAPH" ? "active bg-white" : ""
-                } active text-primary`}
-                aria-current="page"
-                href="#"
-              >
-                <i className="bi bi-graph-up"></i>
-                Score graph
-              </a>
-            </li> */}
+
             <li
               className="nav-item"
               onClick={() => setShow("STUDY_REPORT_GRAPH")}
@@ -103,7 +92,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
             </li>
           </ul>
 
-          <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+          {/* <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
             <span>Saved reports</span>
             <a
               className="link-secondary"
@@ -112,8 +101,8 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
             >
               <i className="bi bi-plus-circle"></i>
             </a>
-          </h6>
-
+          </h6> */}
+          {/* 
           <ul className="nav flex-column mb-auto">
             <li className="nav-item" onClick={() => setShow("TEST_PAPERS")}>
               <a
@@ -163,19 +152,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Create Questions
               </a>
             </li>
-            {/* <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
-                <i className="bi bi-file-earmark-text"></i>
-                Social engagement
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
-                <i className="bi bi-file-earmark-text"></i>
-                Year-end sale
-              </a>
-            </li> */}
-          </ul>
+          </ul> */}
 
           <hr className="my-3" />
 
