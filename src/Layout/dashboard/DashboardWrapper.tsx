@@ -17,7 +17,7 @@ const DashboardWrapper = () => {
       {user.role === "admin" ? (
         <div className="row">
           <AdminSidebar show={show} setShow={setShow} />
-          <AdminMain show={show} />
+          <AdminMain show={show} setShow={setShow} />
         </div>
       ) : (
         <div className="row">

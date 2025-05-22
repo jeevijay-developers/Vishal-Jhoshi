@@ -9,7 +9,12 @@ import ReAttendGrid from "../test/ReAttendGrid";
 import ReScheduleGridAdmin from "./ReScheduleGridAdmin";
 import CreateQuestionWrapper from "./CreateQuestionWrapper";
 
-const AdminMain = ({ show }: { show: string }) => {
+type Props = {
+  show: string;
+  setShow: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const AdminMain: React.FC<Props> = ({ show, setShow }) => {
   return (
     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -18,7 +23,7 @@ const AdminMain = ({ show }: { show: string }) => {
 
       <div className="table-responsive small">
         {show === "PROFILE" && <UserProfile />}
-        {show === "TEST_RESULT" && <TestCardWrapper />}
+        {show === "TEST_RESULT" && <TestCardWrapper setShow={setShow} />}
         {show === "MENTOR_LIST" && <MentorCardGrid />}
         {show === "SCORE_GRAPH" && <TestScoreGraph />}
         {show === "TEST_PAPERS" && <TestInfoGrid />}
