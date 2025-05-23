@@ -2,11 +2,18 @@ import React from "react";
 import MessageContainer from "./MessageContainer";
 import { IoChevronBackCircle } from "react-icons/io5";
 type Props = {
-  selectedUser: string;
+  selectedUser: User;
   handleGoBack: () => void;
   isSmallDevice: boolean;
   showIcon: boolean;
 };
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  image_url: string;
+}
 const NewChatMessageBox: React.FC<Props> = ({
   selectedUser,
   handleGoBack,
@@ -21,7 +28,7 @@ const NewChatMessageBox: React.FC<Props> = ({
             width={35}
             height={35}
             className="rounded-circle ms-3"
-            src={`https://randomuser.me/api/portraits/men/${100}.jpg`}
+            src={`${selectedUser?.image_url}`}
             style={{
               border: "1px solid white",
             }}
@@ -32,8 +39,8 @@ const NewChatMessageBox: React.FC<Props> = ({
           />
         </div>
         <div className=" d-flex flex-row gap-2">
-          <p className="p-0 m-0 fw-semibold">{selectedUser}</p>
-          {" : "}
+          <p className="p-0 m-0 fw-semibold">{selectedUser?.name ?? "User"}</p>
+
           <span></span>
         </div>
         {isSmallDevice && showIcon && (

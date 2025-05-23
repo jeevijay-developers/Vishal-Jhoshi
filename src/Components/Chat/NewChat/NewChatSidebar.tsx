@@ -10,8 +10,8 @@ interface User {
 }
 
 type Props = {
-  handleUserSelect: (user: string) => void;
-  selectedUser: string;
+  handleUserSelect: (user: User) => void;
+  selectedUser: User;
 };
 
 const NewChatSidebar: React.FC<Props> = memo(
@@ -50,9 +50,9 @@ const NewChatSidebar: React.FC<Props> = memo(
                   return (
                     <li
                       className={`nav-item d-flex flex-row  gap-2 py-3 ms-1 ${
-                        selectedUser === users.name ? "bg-primary" : ""
+                        selectedUser?.name === users?.name ? "bg-primary" : ""
                       }  cursor-pointer ps-2`}
-                      onClick={() => handleUserSelect(users._id)}
+                      onClick={() => handleUserSelect(users)}
                       style={{
                         borderBottom: "1px solid lightgray",
                       }}
@@ -74,7 +74,9 @@ const NewChatSidebar: React.FC<Props> = memo(
                         />
                       </div>
                       <div className=" d-flex flex-row gap-2 flex-wrap ">
-                        <p className="p-0 m-0 fw-semibold">{users.name}</p>
+                        <p className="p-0 m-0 fw-semibold">
+                          {users?.name ?? "User"}
+                        </p>
                       </div>
                     </li>
                   );

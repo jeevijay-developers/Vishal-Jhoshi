@@ -5,12 +5,17 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
 import NewChatMessageBox from "./NewChatMessageBox";
-
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  image_url: string;
+}
 const NewChatComp = () => {
   const sidebarRef = useRef(null);
   const chatRef = useRef(null);
   const mainRef = useRef(null);
-  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isSmallDevice, setIsSmallDevice] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
 
@@ -38,7 +43,7 @@ const NewChatComp = () => {
     };
   }, []);
 
-  const handleUserSelect = useCallback((user: string) => {
+  const handleUserSelect = useCallback((user: User) => {
     setSelectedUser(user);
     const sidebar = sidebarRef.current as HTMLDivElement | null;
     const chat = chatRef.current as HTMLDivElement | null;
@@ -64,7 +69,7 @@ const NewChatComp = () => {
   return (
     <div className="">
       {/* <DasbBoardHeader /> */}
-      <div ref={mainRef} className="d-flex flex-row ">
+      <div ref={mainRef} className="d-flex align-items-start flex-row ">
         <div ref={sidebarRef} className="">
           <NewChatSidebar
             handleUserSelect={handleUserSelect}
