@@ -40,10 +40,12 @@ const UpdateMentorDetails = ({ user }: { user: any }) => {
       setMentorshipData({
         ...mentorshipData,
         [name]:
-          name === "ranking" || name === "menteesCount"
+          name === "ranking"
             ? Number(value) > 5
-              ? 0
+              ? 5
               : Number(value)
+            : name === "menteesCount"
+            ? Number(value)
             : value,
       });
     }

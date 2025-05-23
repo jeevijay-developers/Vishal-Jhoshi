@@ -147,13 +147,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
 
           <hr className="my-3" />
 
-          <ul className="nav flex-column mb-auto">
-            {/* <li className="nav-item">
-              <a className="nav-link d-flex align-items-center gap-2" href="#">
-                <i className="bi bi-gear-wide-connected"></i>
-                Settings
-              </a>
-            </li> */}
+          {/* <ul className="nav flex-column mb-auto">
             <li className="nav-item mx-auto">
               <button
                 className="btn btn-danger"
@@ -165,7 +159,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Sign out
               </button>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>

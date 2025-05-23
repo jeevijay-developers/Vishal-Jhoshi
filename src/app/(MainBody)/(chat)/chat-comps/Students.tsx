@@ -14,6 +14,7 @@ import { RootState } from "@/Redux/Store";
 import { getChats, removeSeen } from "@/server/chats";
 import { setChats, setSelectedUser } from "@/Redux/Reducers/ChatSlice";
 import { WiMoonAltNew } from "react-icons/wi";
+import Image from "next/image";
 
 interface Student {
   id: number;
@@ -60,7 +61,7 @@ const Students = () => {
       }}
     >
       {selectedUser === null ? (
-        students.map((student, i) => {
+        students.map((student: any, i) => {
           console.log(unseen.includes(student._id));
 
           return (
@@ -91,8 +92,26 @@ const Students = () => {
                 border: "1px solid #00000029",
               }}
             >
-              <p className="p-0 m-0 fw-semibold">{student.name}</p>
-              <p className="p-0 m-0">{student.email}</p>
+              <div className="d-flex flex-row gap-2">
+                <div>
+                  <img
+                    width={42}
+                    height={42}
+                    className="rounded-circle"
+                    src={`${student.image_url}`}
+                    alt=""
+                    onError={(
+                      err: React.SyntheticEvent<HTMLImageElement, Event>
+                    ) => {
+                      err.currentTarget.src = "https://placehold.co/600x400";
+                    }}
+                  />
+                </div>
+                <div>
+                  <p className="p-0 m-0 fw-semibold">{student.name}</p>
+                  <p className="p-0 m-0">{student.email}</p>
+                </div>
+              </div>
               {unseen.includes(student._id) ? (
                 <WiMoonAltNew
                   id={`s-u-${student._id}`}

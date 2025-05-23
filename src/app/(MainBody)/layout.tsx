@@ -60,7 +60,8 @@ export default function RootLayout({
     if (socketRef.current && user) {
       socketRef.current.on("connect", () => {
         // Determine roomId based on the user's role
-        const roomId = user.role === "admin" ? "admin" : user._id;
+        // const roomId = user.role === "admin" ? "admin" : user._id;
+        const roomId = user.role === user._id;
         dispatchSocket(setSocket(socketRef.current));
         // Emit joinRoom event
         if (socketRef.current) {

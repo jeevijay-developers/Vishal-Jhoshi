@@ -46,6 +46,7 @@ const Page = () => {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Update</th>
             </tr>
           </thead>
@@ -56,6 +57,7 @@ const Page = () => {
                   <th scope="row">{index + 1}</th>
                   <td>{user?.name}</td>
                   <td>{user?.email}</td>
+                  <td>{user?.role}</td>
                   <td>
                     {/* <select
                       value={user.role}

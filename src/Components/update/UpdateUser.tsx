@@ -40,6 +40,9 @@ const UpdateUser = ({ user }: { user: any }) => {
   return (
     <div>
       <div className="d-flex justify-content-center align-items-center gap-3">
+        <div>
+          <button className="btn btn-outline-danger">Close</button>
+        </div>
         <div className="d-flex justify-content-center align-items-center gap-3">
           <p className="m-0 p-0">Change role for {user?.name}</p>
           <select
