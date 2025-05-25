@@ -16,7 +16,7 @@ const TestResultCardAdmin: React.FC<Props> = ({ test, setShow }) => {
   const getTestData = (_id: string) => {
     const userId = user._id;
 
-    getTestDataFromBackend(_id, "67b6c89e3755244a830bfd14")
+    getTestDataFromBackend(_id, userId)
       .then((data) => {
         console.log(data);
         dispatch(setChartData(data?.data));

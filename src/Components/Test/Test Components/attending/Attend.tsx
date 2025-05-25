@@ -21,6 +21,8 @@ import { SlMenu } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
 import Aside from "./Aside";
 import BooleanQuestion from "./BooleanQuestions";
+import ExamInstructions from "./Instruction";
+import TestSubmissionPage from "./TestSubmissionPage";
 
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
@@ -37,6 +39,8 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
     type: "integer",
     description: "",
     correctAnswer: "",
+    descriptionImage: "",
+
     marks: null,
     _id: "",
   });
@@ -104,7 +108,8 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
   const [isMobile, setIsMobile] = useState(false);
   const test = useSelector((state: RootState) => state.attend);
   const user = useSelector((state: any) => state.user);
-
+  const [showInstruction, setShowInstruction] = useState(true);
+  const [showSubmission, setShowSubmission] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     test.Questions.forEach((SingleTest, index) => {
@@ -195,9 +200,11 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
   };
 
   function submitTest() {
-    attendTestNow(test._id, user._id);
+    // attendTestNow(test._id, user._id);
     dispatch(submitTestCompleted());
     dispatch(resetAttending());
+    // submitTest();
+    setTest("TEST-LIST");
   }
 
   if (loading) {
@@ -259,75 +266,21 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
   };
 
   return (
-    <div className="w-100 bg-white">
+    <div className="w-100 bg-white position-relative">
       {/* Desktop and Mobile Layout */}
-      <div className="bg-white text-dark w-100">
-        {/* Desktop Layout */}
-        {/* {!isMobile ? ( */}
-        <div className="d-flex d-none d-md-flex justify-content-between align-items-start flex-row w-100 p-2 gap-3">
-          <div className="question-container" style={{ width: "70%" }}>
-            {renderQuestionComponent()}
-            <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
-              <button
-                className="btn btn-info mx-2 timesUp"
-                onClick={() => {
-                  updateIndex("DECREMENT");
-                }}
-              >
-                Previous
-              </button>
-              <button
-                className="btn btn-info mx-2 timesUp"
-                onClick={() => {
-                  updateIndex("INCREMENT");
-                }}
-              >
-                Next
-              </button>
-
-              <button
-                onClick={() => {
-                  submitTest();
-                  setTest("TEST-LIST");
-                }}
-                className="btn btn-danger mx-2"
-              >
-                Submit Test
-              </button>
-            </div>
-          </div>
-
-          {/* Desktop Sidebar - Fixed on page */}
-          <aside
-            style={{
-              borderLeft: "2px solid black",
-              width: "30%",
-            }}
-            className="ps-3 h-100"
-          >
-            <Info />
-            <SubjectButtons settestCounter={settestCounter} />
-          </aside>
+      {showInstruction ? (
+        <div>
+          <ExamInstructions setShowInstruction={setShowInstruction} />
+          {/* <TestSubmissionPage /> */}
         </div>
-        {/* ) : ( */}
-        {/* Mobile Layout */}
-        <span className="d-block d-md-none">
-          <main className="d-flex flex-column w-100 p-2">
-            <div className="d-flex justify-content-end mb-2">
-              <button
-                className="btn btn-sm btn-outline-dark"
-                onClick={toggleSidebar}
-                aria-label="Toggle sidebar"
-              >
-                <SlMenu size={18} />
-              </button>
-            </div>
-
-            <div className="question-container">
+      ) : (
+        <div className="bg-white text-dark w-100">
+          {/* Desktop Layout */}
+          {/* {!isMobile ? ( */}
+          <div className="d-flex d-none d-md-flex justify-content-between align-items-start flex-row w-100 p-2 gap-3">
+            <div className="question-container" style={{ width: "70%" }}>
               {renderQuestionComponent()}
-
-              {/*?  here */}
-              <div className="mt-4 prevNextSubmitButton  gap-4">
+              <div className="mt-4 d-flex justify-content-center align-items-center gap-4">
                 <button
                   className="btn btn-info mx-2 timesUp"
                   onClick={() => {
@@ -347,8 +300,7 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
 
                 <button
                   onClick={() => {
-                    submitTest();
-                    setTest("TEST-LIST");
+                    setShowSubmission(true);
                   }}
                   className="btn btn-danger mx-2"
                 >
@@ -357,19 +309,81 @@ const Attend: React.FC<LiveTestFormProps> = ({ setTest }) => {
               </div>
             </div>
 
-            {/* Mobile Sidebar - Slides in from right */}
+            {/* Desktop Sidebar - Fixed on page */}
+            <aside
+              style={{
+                borderLeft: "2px solid black",
+                width: "30%",
+              }}
+              className="ps-3 h-100"
+            >
+              <Info />
+              <SubjectButtons settestCounter={settestCounter} />
+            </aside>
+          </div>
+          {/* ) : ( */}
+          {/* Mobile Layout */}
+          <span className="d-block d-md-none">
+            <main className="d-flex flex-column w-100 p-2">
+              <div className="d-flex justify-content-end mb-2">
+                <button
+                  className="btn btn-sm btn-outline-dark"
+                  onClick={toggleSidebar}
+                  aria-label="Toggle sidebar"
+                >
+                  <SlMenu size={18} />
+                </button>
+              </div>
 
-            <Aside
-              toggleSidebar={toggleSidebar}
-              sidebarOpen={sidebarOpen}
-              settestCounter={settestCounter}
-            />
+              <div className="question-container">
+                {renderQuestionComponent()}
 
-            {/* Backdrop for mobile */}
-          </main>
-        </span>
-        {/* )} */}
-      </div>
+                {/*?  here */}
+                <div className="mt-4 prevNextSubmitButton  gap-4">
+                  <button
+                    className="btn btn-info mx-2 timesUp"
+                    onClick={() => {
+                      updateIndex("DECREMENT");
+                    }}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    className="btn btn-info mx-2 timesUp"
+                    onClick={() => {
+                      updateIndex("INCREMENT");
+                    }}
+                  >
+                    Next
+                  </button>
+
+                  <button onClick={() => {}} className="btn btn-danger mx-2">
+                    Submit Test
+                  </button>
+                </div>
+              </div>
+
+              {/* Mobile Sidebar - Slides in from right */}
+
+              <Aside
+                toggleSidebar={toggleSidebar}
+                sidebarOpen={sidebarOpen}
+                settestCounter={settestCounter}
+              />
+
+              {/* Backdrop for mobile */}
+            </main>
+          </span>
+          {/* )} */}
+        </div>
+      )}
+
+      {showSubmission && (
+        <TestSubmissionPage
+          setShowSubmission={setShowSubmission}
+          submitTest={submitTest}
+        />
+      )}
     </div>
   );
 };

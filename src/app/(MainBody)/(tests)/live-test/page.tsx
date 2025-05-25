@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"; // Import dynamic from next/dynamic
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "@/Redux/Store";
+import TestSubmissionPage from "@/Components/Test/Test Components/attending/TestSubmissionPage";
 
 // Dynamically import components
 const TestLists = dynamic(
@@ -53,8 +54,6 @@ const Sessions = () => {
         <TestQuestionForm setTest={setTest} setcreatedTest={setcreatedTest} />
       ) : test === "ATTENDING" ? (
         <Wrapper setTest={setTest} />
-      ) : test === "RESULT" ? (
-        <div>sdfsdf</div>
       ) : null}
     </div>
   );

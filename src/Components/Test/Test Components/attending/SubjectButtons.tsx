@@ -76,9 +76,9 @@ const SubjectButtons: React.FC<Props> = ({ settestCounter }) => {
                         : "1px solid black"
                     }`,
                     padding: "0",
-                    height: "20px",
-                    width: "20px",
-                    fontSize: "10px",
+                    height: "30px",
+                    width: "30px",
+                    fontSize: "20px",
                   }}
                   key={question.questionId}
                   className="p-1 btn timesUp m-0 p-0"

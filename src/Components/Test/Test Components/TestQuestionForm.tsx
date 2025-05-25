@@ -88,8 +88,8 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
               <option value="select">Select</option>
               {/* <option value="integer">Integer</option>
               <option value="match">Match the Column</option> */}
-              <option value="bulk">Upload in bulk</option>
-              <option value="jee-adv-bulk">JEE Advance Bulk Upload</option>
+              {/* <option value="bulk">Upload in bulk</option> */}
+              <option value="jee-adv-bulk">Bulk Upload</option>
             </select>
           </div>
 
@@ -134,13 +134,13 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
         ) : (
           <MatchTheColumn type={"match"} />
         )} */}
-        {type === "integer" && <Integer type={"integer"} />}
+        {/* {type === "integer" && <Integer type={"integer"} />}
         {type === "select" && <MultiSelect type={"select"} />}
-        {type === "match" && <MatchTheColumn type={"match"} />}
+        {type === "match" && <MatchTheColumn type={"match"} />} */}
         {/* {type === "bulk" && <BulkUpload  setTes{}, */}
-        {type === "bulk" && (
+        {/* {type === "bulk" && (
           <BulkUpload setTest={setTest} setcreatedTest={setcreatedTest} />
-        )}
+        )} */}
         {type === "jee-adv-bulk" && (
           <AdvanceBulkUpload
             setTest={setTest}

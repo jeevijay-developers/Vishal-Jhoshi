@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SelectAndAssertionType from "./questions/JEEAdvanceQuestions";
 import { assert } from "console";
+import { BlockMath, InlineMath } from "react-katex";
+
 interface LiveTestFormProps {
   setTest: React.Dispatch<React.SetStateAction<any>>;
   setcreatedTest: React.Dispatch<React.SetStateAction<any>>;
@@ -23,6 +25,19 @@ const AdvanceBulkUpload: React.FC<LiveTestFormProps> = ({
   const liveTestId = useSelector(
     (state: RootState) => state.testCounter.testId
   );
+
+  const renderTextWithLatex = (text: string) => {
+    const parts = text.split(/(\\\[.*?\\\])/g); // Splits into plain text and LaTeX parts
+
+    return parts.map((part, index) => {
+      if (part.startsWith("\\[")) {
+        const latex = part.slice(2, -2); // Remove \[ and \]
+        return <InlineMath key={index} math={latex} />;
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !file.name.endsWith(".docx")) {

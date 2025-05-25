@@ -20,7 +20,7 @@ const TestCardWrapper = ({
   const user = useSelector((state: any) => state.user);
   const [attendedTests, setAttendedTests] = React.useState<AttendedTests[]>([]);
   useEffect(() => {
-    getAllAttendedTests("67b6c89e3755244a830bfd14")
+    getAllAttendedTests(user._id)
       .then((res) => {
         if (res.data && res.data.length > 0) {
           const tests = res.data.filter(

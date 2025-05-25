@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
 import { addQuestion } from "@/Redux/Reducers/UserAnswers";
 import { toast } from "react-toastify";
+import { BlockMath, InlineMath } from "react-katex";
 
 interface IntegerQuestionProps {
   integerQuestion: {
@@ -14,6 +15,7 @@ interface IntegerQuestionProps {
     type: string; // Keep "integer" as a specific value
     description: string;
     correctAnswer: string;
+    descriptionImage?: string;
     _id: string;
   };
   index: number;
@@ -37,6 +39,18 @@ const IntegerQuestion: React.FC<IntegerQuestionProps> = ({
   const user = useSelector((state: any) => state.user);
   const test = useSelector((state: RootState) => state.attend);
 
+  const renderTextWithLatex = (text: string) => {
+    const parts = text.split(/(\\\[.*?\\\])/g); // Splits into plain text and LaTeX parts
+
+    return parts.map((part, index) => {
+      if (part.startsWith("\\[")) {
+        const latex = part.slice(2, -2); // Remove \[ and \]
+        return <InlineMath key={index} math={latex} />;
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
   const saveTheAnswer = (color: string, action: string) => {
     const userANS = answer?.toString;
     const status =
@@ -99,10 +113,26 @@ const IntegerQuestion: React.FC<IntegerQuestionProps> = ({
             {/* <label className="form-label">Description</label> */}
             <p
               className="form-control-plaintext"
-              dangerouslySetInnerHTML={{ __html: integerQuestion.description }}
+              // dangerouslySetInnerHTML={{ __html: integerQuestion.description }}
             >
+              {renderTextWithLatex(integerQuestion.description)}
               {/* {integerQuestion.description} */}
             </p>
+            {integerQuestion.descriptionImage && (
+              <div className="text-center mb-3">
+                <img
+                  src={`${integerQuestion.descriptionImage}`}
+                  alt="Description"
+                  className="img-fluid"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src =
+                      "https://imgs.search.brave.com/a1FMQyNdOc5gyx3b4vvRAg3wHarjMLHcLQXJ4FJqU0g/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly80ZGRp/Zy50ZW5vcnNoYXJl/LmNvbS9pbWFnZXMv/cGhvdG8tcmVjb3Zl/cnkvaW1hZ2VzLW5v/dC1mb3VuZC5qcGc";
+                  }}
+                  style={{ maxWidth: "400px" }}
+                />
+              </div>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="correctAnswer" className="form-label">

@@ -1,4 +1,6 @@
 import React from "react";
+import { BlockMath, InlineMath } from "react-katex";
+
 type Question = {
   description: string;
   questionHindi?: string;
@@ -40,8 +42,19 @@ type ImageFieldKeys =
   | "imageOptionsC"
   | "imageOptionsD";
 const JEEAdvanceQuestions = ({ questions, setQuestions }: Props) => {
-  console.log(questions);
+  // console.log(questions);
+  const renderTextWithLatex = (text: string) => {
+    const parts = text.split(/(\\\[.*?\\\])/g); // Splits into plain text and LaTeX parts
 
+    return parts.map((part, index) => {
+      if (part.startsWith("\\[")) {
+        const latex = part.slice(2, -2); // Remove \[ and \]
+        return <InlineMath key={index} math={latex} />;
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
   const subjectCounts = questions.slice(1).reduce((acc, q) => {
     acc.set(q.subject, (acc.get(q.subject) || 0) + 1);
     return acc;
@@ -102,11 +115,12 @@ const JEEAdvanceQuestions = ({ questions, setQuestions }: Props) => {
         <li key={i} className="border rounded p-4 shadow">
           <h3 className="font-bold text-lg mb-1">Q{i + 1}:</h3>
           <p>
-            <strong>Question:</strong> {q.description}
+            <strong>Question:</strong> {renderTextWithLatex(q.description)}
           </p>
           {q.assertionEnglish && (
             <p>
-              <strong>Assertion English : </strong> {q.assertionEnglish}
+              <strong>Assertion English : </strong>{" "}
+              {renderTextWithLatex(q.assertionEnglish)}
             </p>
           )}
           {/* <p>
@@ -128,6 +142,9 @@ const JEEAdvanceQuestions = ({ questions, setQuestions }: Props) => {
                 <img
                   src={q.descriptionImage}
                   alt={`Q${i + 1} image`}
+                  style={{
+                    maxWidth: "400px",
+                  }}
                   className="max-w-xs mt-2 border rounded"
                 />
                 <button
@@ -158,7 +175,7 @@ const JEEAdvanceQuestions = ({ questions, setQuestions }: Props) => {
                   <div key={idx} className="mb-3">
                     <p>
                       <strong>{optionLabel}:</strong>{" "}
-                      {q[`textOptions${optionLabel}`]}
+                      {renderTextWithLatex(q[`textOptions${optionLabel}`])}
                     </p>
                     <input
                       type="file"
@@ -171,6 +188,9 @@ const JEEAdvanceQuestions = ({ questions, setQuestions }: Props) => {
                           src={q[imageField] as string}
                           alt={`Option ${optionLabel} image`}
                           className="max-w-xs mt-2 border rounded"
+                          style={{
+                            maxWidth: "250px",
+                          }}
                         />
                         <button
                           onClick={() => handleImageRemove(i, imageField)}

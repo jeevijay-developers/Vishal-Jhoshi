@@ -256,7 +256,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
           {selectQuestion.descriptionImage && (
             <div className="text-center mb-3">
               <img
-                src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.descriptionImage}`}
+                src={`${selectQuestion.descriptionImage}`}
                 alt="Description"
                 className="img-fluid"
                 onError={(e) => {
@@ -309,7 +309,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                 {selectQuestion.imageOptionsA && (
                   <img
                     // src={`${process.env.NEXT_PUBLIC_BASE_URL}/${selectQuestion.imageOptionsA}`}
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsA}`}
+                    src={`${selectQuestion.imageOptionsA}`}
                     alt="Option A"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
@@ -369,7 +369,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                 </p>
                 {selectQuestion.imageOptionsB && (
                   <img
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsB}`}
+                    src={`${selectQuestion.imageOptionsB}`}
                     alt="Option B"
                     className="img-fluid "
                     style={{ maxWidth: "200px" }}
@@ -431,7 +431,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                 </p>
                 {selectQuestion.imageOptionsC && (
                   <img
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsC}`}
+                    src={`${selectQuestion.imageOptionsC}`}
                     alt="Option C"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
@@ -493,7 +493,7 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
                 </p>
                 {selectQuestion.imageOptionsD && (
                   <img
-                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${selectQuestion.imageOptionsD}`}
+                    src={`${selectQuestion.imageOptionsD}`}
                     alt="Option D"
                     className="img-fluid"
                     style={{ maxWidth: "200px" }}
