@@ -14,6 +14,9 @@ const TestSubmissionPage: React.FC<Props> = ({
   const test = useSelector((state: RootState) => state.attend);
   const user = useSelector((state: any) => state.user);
   const questions = useSelector((state: RootState) => state.answer.questions);
+  const testName = useSelector((state: RootState) => state.liveTest.testName);
+  const category = useSelector((state: RootState) => state.liveTest.category);
+
   // console.log(test);
   const [testStats, setTestStats] = useState({
     startTime: "",
@@ -43,8 +46,8 @@ const TestSubmissionPage: React.FC<Props> = ({
           endTime: data?.data?.endTime?.split(" ")[0] || "",
           totalQuestions: data?.data?.liveTestId?.Questions?.length || 0,
           attendedQuestions: correctCount + incorrectCount,
-          category: data?.data?.liveTestId?.category || "",
-          testName: data?.data?.liveTestId?.testName || "",
+          category: category || "",
+          testName: testName || "",
         });
       })
       .catch((err) => {
@@ -83,12 +86,12 @@ const TestSubmissionPage: React.FC<Props> = ({
             <li className="list-group-item">
               <strong>Category:</strong> {testStats.category || "N/A"}
             </li>
-            <li className="list-group-item">
+            {/* <li className="list-group-item">
               <strong>Start Time:</strong> {testStats.startTime || "N/A"}
             </li>
             <li className="list-group-item">
               <strong>End Time:</strong> {testStats.endTime || "N/A"}
-            </li>
+            </li> */}
             <li className="list-group-item">
               <strong>Total Questions:</strong> {testStats.totalQuestions}
             </li>

@@ -1,3 +1,5 @@
+"use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { Card, Badge, ListGroup } from "react-bootstrap";
 
@@ -13,6 +15,7 @@ const MentorCard = () => {
     availability: "Mon–Fri, 5 PM – 9 PM",
     menteesCount: 1200,
   };
+  const router = useRouter();
 
   return (
     <Card className="shadow-sm h-100">
@@ -47,6 +50,14 @@ const MentorCard = () => {
           <ListGroup.Item>
             <strong>Total Mentees:</strong>{" "}
             <Badge bg="info">{mentor.menteesCount}</Badge>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            <button
+              className="btn btn-primary"
+              onClick={() => router.push("/message")}
+            >
+              Chat with mentor
+            </button>
           </ListGroup.Item>
         </ListGroup>
       </Card.Body>

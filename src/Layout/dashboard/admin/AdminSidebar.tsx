@@ -26,7 +26,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
         </div>
         <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
           <ul className="nav flex-column">
-            <li className="nav-item" onClick={() => setShow("PROFILE")}>
+            {/* <li className="nav-item" onClick={() => setShow("PROFILE")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "PROFILE" ? "active bg-white" : ""
@@ -37,7 +37,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-house-fill"></i>
                 Profile
               </a>
-            </li>
+            </li> */}
             <li className="nav-item" onClick={() => setShow("PROFILE")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
@@ -62,7 +62,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Test Results
               </a>
             </li> */}
-            <li className="nav-item" onClick={() => setShow("MENTOR_LIST")}>
+            {/* <li className="nav-item" onClick={() => setShow("MENTOR_LIST")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "MENTOR_LIST" ? "active bg-white" : ""
@@ -73,7 +73,7 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-people"></i>
                 Mentor List
               </a>
-            </li>
+            </li> */}
 
             <li
               className="nav-item"

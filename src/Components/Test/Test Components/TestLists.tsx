@@ -271,7 +271,10 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
 
       {/* Render Available Tests or Attended Tests based on selection */}
       {/* {selectedType === "AVAILABLE" ? ( */}
-      <div className="accordion w-100 " id="accordionExample">
+      <div
+        className="accordion w-100 d-flex justify-content-start align-items-start flex-wrap flex-row gap-4 "
+        id="accordionExample"
+      >
         {tests && tests.length === 0 ? (
           <NotAttended message="Ops no tests available yet 🥲🥲" />
         ) : (

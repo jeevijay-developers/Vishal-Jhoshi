@@ -30,7 +30,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
         </div>
         <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
           <ul className="nav flex-column">
-            <li className="nav-item" onClick={() => setShow("PROFILE")}>
+            {/* <li className="nav-item" onClick={() => setShow("PROFILE")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "PROFILE" ? "active bg-white" : ""
@@ -41,7 +41,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-house-fill"></i>
                 Profile
               </a>
-            </li>
+            </li> */}
             <li className="nav-item" onClick={() => setShow("TEST_RESULT")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
@@ -54,7 +54,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Test Result
               </a>
             </li>
-            <li className="nav-item" onClick={() => setShow("MENTOR_LIST")}>
+            {/* <li className="nav-item" onClick={() => setShow("MENTOR_LIST")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "MENTOR_LIST" ? "active bg-white" : ""
@@ -65,7 +65,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-people"></i>
                 Mentor List
               </a>
-            </li>
+            </li> */}
             <li className="nav-item" onClick={() => setShow("SCORE_GRAPH")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
@@ -119,7 +119,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 Test Papers
               </a>
             </li>
-            <li className="nav-item" onClick={() => setShow("REATTEND_TEST")}>
+            {/* <li className="nav-item" onClick={() => setShow("REATTEND_TEST")}>
               <a
                 className={`nav-link d-flex align-items-center gap-2 ${
                   show === "REATTEND_TEST" ? "active bg-white" : ""
@@ -130,7 +130,7 @@ const DsbSidebar: React.FC<Props> = ({ show, setShow }) => {
                 <i className="bi bi-file-earmark-text"></i>
                 Reattend test
               </a>
-            </li>
+            </li> */}
             {/* <li className="nav-item">
               <a className="nav-link d-flex align-items-center gap-2" href="#">
                 <i className="bi bi-file-earmark-text"></i>

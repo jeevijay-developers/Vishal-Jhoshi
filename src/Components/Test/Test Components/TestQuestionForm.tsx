@@ -93,7 +93,7 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
             </select>
           </div>
 
-          <div>
+          {/* <div>
             <div>
               <p>
                 Maths : <b>{maths}</b>
@@ -114,7 +114,7 @@ const TestQuestionForm: React.FC<LiveTestFormProps> = ({
                 Chemistry : <b>{chem}</b>
               </p>
             </div>
-          </div>
+          </div> */}
 
           <button
             type="submit"

@@ -165,3 +165,16 @@ export const createMentorship = async (data: any, userId: string) => {
     return error.response?.data || { message: "Something went wrong" };
   }
 };
+
+export const createNewMentor = async (data: any) => {
+  console.log(data);
+
+  try {
+    const response = await apiClient.post(`/api/v1/create-new-mentor`, data);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+// /create-new-mentor

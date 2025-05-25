@@ -14,6 +14,14 @@ export const StudentMenuList: MenuItem[] | undefined = [
     lanClass: "lan-1",
     Items: [
       {
+        title: "Profile",
+        id: 1,
+        icon: "mdi:account", // ✅ Correct icon for a user/profile
+        path: "/profile",
+        type: "link",
+        lanClass: "lan-3",
+      },
+      {
         title: "Dashboard",
         id: 1,
         icon: "si:insights-line",
@@ -25,7 +33,7 @@ export const StudentMenuList: MenuItem[] | undefined = [
         title: "Your Mentor",
         id: 2,
         icon: "mdi:chat-outline",
-        path: "/chat-mentor",
+        path: "/your-mentor",
         type: "link",
         lanClass: "lan-3",
       },
@@ -130,6 +138,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
     lanClass: "lan-1",
     Items: [
       {
+        title: "Profile",
+        id: 1,
+        icon: "mdi:account", // ✅ Correct icon for a user/profile
+        path: "/profile",
+        type: "link",
+        lanClass: "lan-3",
+      },
+      {
         title: "Dashboard",
         id: 1,
         icon: "si:insights-line",
@@ -198,6 +214,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
         lanClass: "lan-3",
       },
       {
+        title: "Add Mentor",
+        id: 2,
+        icon: "mdi:chat-outline",
+        path: "/add-mentor",
+        type: "link",
+        lanClass: "lan-3",
+      },
+      {
         title: "Messages",
         id: 2,
         icon: "mdi:chat-outline",
@@ -228,6 +252,14 @@ export const MentorMenuList: MenuItem[] | undefined = [
     title: "General",
     lanClass: "lan-1",
     Items: [
+      {
+        title: "Profile",
+        id: 1,
+        icon: "mdi:account", // ✅ Correct icon for a user/profile
+        path: "/profile",
+        type: "link",
+        lanClass: "lan-3",
+      },
       {
         title: "Dashboard",
         id: 1,

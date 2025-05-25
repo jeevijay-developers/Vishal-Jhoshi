@@ -101,6 +101,7 @@ const AdvanceBulkUpload: React.FC<LiveTestFormProps> = ({
     });
   };
 
+  const [questionUploaded, setQuestionUploaded] = useState(0);
   const handleSubmit = async () => {
     // uploadBulkQuestion(JSON.stringify(questions), liveTestId)
     //   .then((data) => {
@@ -120,6 +121,9 @@ const AdvanceBulkUpload: React.FC<LiveTestFormProps> = ({
           })
           .catch((err) => {
             console.error(err);
+          })
+          .finally(() => {
+            setQuestionUploaded((prev) => prev + 1);
           });
       } else if (question.type === "INTEGER" || question.type === "BOOLEAN") {
         addIntegerQuestion(question, liveTestId)
@@ -128,6 +132,9 @@ const AdvanceBulkUpload: React.FC<LiveTestFormProps> = ({
           })
           .catch((err) => {
             console.error(err);
+          })
+          .finally(() => {
+            setQuestionUploaded((prev) => prev + 1);
           });
       }
     });
@@ -169,7 +176,9 @@ const AdvanceBulkUpload: React.FC<LiveTestFormProps> = ({
               onClick={handleSubmit}
               className="mb-6 px-4 py-2 bg-success text-white rounded hover:bg-green-700"
             >
-              Upload All to Backend
+              {questionUploaded > 0 && questionUploaded < questions.length - 1
+                ? `Questions ${questionUploaded} Uploaded`
+                : " Upload All to Backend"}
             </button>
 
             {questions && questions.length > 0 && (

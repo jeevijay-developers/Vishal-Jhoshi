@@ -40,7 +40,10 @@ const Sessions = () => {
   return (
     <div className="mt-1 d-flex flex-column w-100 h-100 align-items-center justify-content-center p-3">
       {user.role === "admin" && testId === "" ? (
-        <button className="btn btn-primary primary" onClick={handleCreateTest}>
+        <button
+          className="btn btn-primary primary my-3"
+          onClick={handleCreateTest}
+        >
           Create New
         </button>
       ) : (
