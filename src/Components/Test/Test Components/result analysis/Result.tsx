@@ -17,6 +17,7 @@ import html2pdf from "html2pdf.js";
 // import SliderWithTicks from "@/Components/slider/SliderWithTicks";
 import { FaPrint, FaFilePdf } from "react-icons/fa";
 import Aos from "aos";
+import MarksSlider from "./card/MarksSlider";
 
 interface SubjectData {
   totalQuestions: number;
@@ -45,6 +46,7 @@ const Result = memo(() => {
   const [totalPositiveMarks, setTotalPositiveMarks] = useState<number>(0);
   const [totalNegativeMarks, setTotalNegativeMarks] = useState<number>(0);
   const [totalTime, setTotalTime] = useState<number>(0);
+  const [marks, setMarks] = useState<number>(0);
 
   const safeChart = chart as unknown as ChartData[];
 
@@ -147,6 +149,14 @@ const Result = memo(() => {
           </button>
         </div>
       </div>
+      <div
+        className="d-flex flex-column align-items-center justify-content-center text-center"
+        style={{ minHeight: "100px" }}
+      >
+        <h1 className="h4 fw-bold">Result Slider</h1>
+        <MarksSlider marks={marks} setMarks={setMarks} />
+      </div>
+
       <div
         ref={cardRef}
         className="w-100 h-auto d-flex justify-content-center align-items-center flex-row flex-wrap gap-4 position-relative"
