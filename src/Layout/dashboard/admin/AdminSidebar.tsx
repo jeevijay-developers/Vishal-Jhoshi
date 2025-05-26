@@ -75,6 +75,19 @@ const AdminSidebar: React.FC<Props> = ({ show, setShow }) => {
               </a>
             </li> */}
 
+            <li className="nav-item" onClick={() => setShow("VIEW_ASSIGNMENT")}>
+              <a
+                className={`nav-link d-flex align-items-center gap-2 ${
+                  show === "VIEW_ASSIGNMENT" ? "active bg-white" : ""
+                } active text-primary`}
+                aria-current="page"
+                href="#"
+              >
+                <i className="bi bi-journal-text"></i>
+                Assignment
+              </a>
+            </li>
+
             <li
               className="nav-item"
               onClick={() => setShow("STUDY_REPORT_GRAPH")}

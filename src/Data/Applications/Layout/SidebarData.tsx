@@ -1,5 +1,6 @@
 import { MenuItem } from "@/Types/LayoutTypes";
 
+
 export const UserListData = [
   {
     icon: "Profile",
@@ -81,6 +82,14 @@ export const StudentMenuList: MenuItem[] | undefined = [
       //   id: 2,
       //   icon: "uil:analysis",
       //   path: "/practice-test",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
+      // {
+      //   title: "Assignment",
+      //   id: 2,
+      //   icon: "uil:analysis",
+      //   path: "/assignment",
       //   type: "link",
       //   lanClass: "lan-3",
       // },

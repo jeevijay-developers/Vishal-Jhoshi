@@ -8,6 +8,7 @@ import BannerSlider from "../home/BannerSlider";
 import Leaderboard from "../home/leaderboard/leaderboard";
 import PieChart from "../home/Piechart";
 import Information from "../home/Information";
+import AssignmentTabs from "./Assignment/admin/AssignmentTabs";
 
 // Dynamically importing components to prevent SSR issues
 const ProfileCard = dynamic(() => import("./ProfileCard"), { ssr: false });
@@ -73,6 +74,9 @@ const StudentDashboard = () => {
       <section className="my-4">
         <SubjectTimeChart />
       </section>
+      {/* <section className="my-4">
+        <AssignmentTabs />
+      </section> */}
     </main>
   );
 };
