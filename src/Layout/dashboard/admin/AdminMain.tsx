@@ -8,7 +8,7 @@ import StudySessionGraph from "../test/StudySessionGraph";
 import ReAttendGrid from "../test/ReAttendGrid";
 import ReScheduleGridAdmin from "./ReScheduleGridAdmin";
 import CreateQuestionWrapper from "./CreateQuestionWrapper";
-
+import AssignmentTabs from "../../../Components/Dashboard/Assignment/admin/AssignmentTabs";
 type Props = {
   show: string;
   setShow: React.Dispatch<React.SetStateAction<string>>;
@@ -28,6 +28,7 @@ const AdminMain: React.FC<Props> = ({ show, setShow }) => {
         {show === "SCORE_GRAPH" && <TestScoreGraph />}
         {show === "TEST_PAPERS" && <TestInfoGrid />}
         {show === "STUDY_REPORT_GRAPH" && <StudySessionGraph />}
+        {show === "VIEW_ASSIGNMENT" && <AssignmentTabs/>}
         {show === "REATTEND_TEST" && <ReScheduleGridAdmin />}
         {show === "CREATE_QUESTION" && <CreateQuestionWrapper />}
       </div>
