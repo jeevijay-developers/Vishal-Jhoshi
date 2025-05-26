@@ -43,7 +43,9 @@ const CreateAssignment: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting Todos:", todos);
+    console.log("Heading:", heading);
+    console.log(" Todos:", todos);
+
     alert("Todos submitted successfully!");
   };
 
