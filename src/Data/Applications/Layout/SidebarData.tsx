@@ -1,5 +1,5 @@
 import { MenuItem } from "@/Types/LayoutTypes";
-import { FcTodoList } from "react-icons/fc";
+
 
 export const UserListData = [
   {
@@ -85,14 +85,14 @@ export const StudentMenuList: MenuItem[] | undefined = [
       //   type: "link",
       //   lanClass: "lan-3",
       // },
-      {
-        title: "Assignment",
-        id: 2,
-        icon: "uil:analysis",
-        path: "/assignment",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Assignment",
+      //   id: 2,
+      //   icon: "uil:analysis",
+      //   path: "/assignment",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
     ],
   },
   {
