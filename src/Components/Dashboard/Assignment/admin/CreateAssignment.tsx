@@ -15,11 +15,17 @@ const CreateAssignment: React.FC = () => {
     endDate: "",
   });
 
+  const [heading, setHeading] = useState<string>("");
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setNewTodo((prev) => ({ ...prev, [name]: value }));
+    if (name === "heading") {
+      setHeading(value);
+    } else {
+      setNewTodo((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const addTodo = () => {
@@ -51,6 +57,22 @@ const CreateAssignment: React.FC = () => {
         <p className="text-muted">Plan your tasks with start and end dates</p>
       </div>
 
+      {/* Heading Input */}
+      <div className="text-center align-items-center justify-content-center mb-4">
+        <div className="col-md-4 mx-auto">
+          <label className="form-label fw-semibold">Todo Heading</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter todo heading"
+            name="heading"
+            value={heading}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      {/* New Todo Form */}
       <div className="card shadow p-4 mb-4 border-0 rounded-4">
         <div className="row gy-3 align-items-end">
           <div className="col-md-4">
@@ -92,9 +114,13 @@ const CreateAssignment: React.FC = () => {
         </div>
       </div>
 
+      {/* Todo List */}
       {todos.length > 0 && (
         <div className="card shadow-sm mb-4 border-0 rounded-4">
           <div className="card-body">
+            {heading && (
+              <h4 className="text-center text-success mb-3">{heading}</h4>
+            )}
             <h5 className="card-title text-primary mb-3">Todo List</h5>
             <ul className="list-group list-group-flush">
               {todos.map((todo, index) => (
@@ -121,6 +147,7 @@ const CreateAssignment: React.FC = () => {
         </div>
       )}
 
+      {/* Submit Button */}
       <div className="text-center">
         <button
           className="btn btn-success px-4 py-2 rounded-pill"
