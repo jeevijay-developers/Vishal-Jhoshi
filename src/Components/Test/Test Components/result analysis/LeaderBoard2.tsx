@@ -74,7 +74,7 @@ const Leaderboard2: React.FC<{ leaderboardData: TestStats[] }> = ({
               <p>
                 Marks: {data.obtainedMarks} / {data.mark}
               </p>
-              <p>Accuracy: {data.accuracy}%</p>
+              <p>Accuracy: {data.accuracy.toFixed(2)}%</p>
               <p>Correct Answers: {data.correctCount}</p>
               <p>Unanswered: {data.unansweredCount}</p>
             </div>
