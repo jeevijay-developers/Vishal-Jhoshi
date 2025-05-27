@@ -80,7 +80,8 @@ const Page: React.FC<{ params: { id: string } }> = ({ params }) => {
 
   return (
     <div className="h-6">
-      <h1>Test Result: {id}</h1>
+      <h1 className="text-center text-primary ">Test Result</h1>
+      <h2 className="text-center text-secondary">Test id: {id}</h2>
 
       {/* Display the top 3 scorers */}
       <div className="w-100 d-flex justify-content-center align-items-center flex-row flex-wrap">
