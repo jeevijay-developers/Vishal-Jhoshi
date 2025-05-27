@@ -5,6 +5,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
 import NewChatMessageBox from "./NewChatMessageBox";
+import { useDispatch } from "react-redux";
+import { setSelectedUser } from "@/Redux/Reducers/ChatSlice";
 interface User {
   _id: string;
   name: string;
@@ -15,9 +17,10 @@ const NewChatComp = () => {
   const sidebarRef = useRef(null);
   const chatRef = useRef(null);
   const mainRef = useRef(null);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setselectedUser] = useState<User | null>(null);
   const [isSmallDevice, setIsSmallDevice] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScreenResize = () => {
@@ -40,11 +43,13 @@ const NewChatComp = () => {
     handleScreenResize();
     return () => {
       window.removeEventListener("resize", handleScreenResize);
+      dispatch(setSelectedUser(null));
     };
   }, []);
 
   const handleUserSelect = useCallback((user: User) => {
-    setSelectedUser(user);
+    setselectedUser(user);
+    dispatch(setSelectedUser(user));
     const sidebar = sidebarRef.current as HTMLDivElement | null;
     const chat = chatRef.current as HTMLDivElement | null;
 
@@ -58,7 +63,8 @@ const NewChatComp = () => {
   const handleGoBack = useCallback(() => {
     const sidebar = sidebarRef.current as HTMLDivElement | null;
     const chat = chatRef.current as HTMLDivElement | null;
-
+    dispatch(setSelectedUser(null));
+    setselectedUser(null);
     if (window.innerWidth < 768 && sidebar && chat) {
       sidebar.style.width = "100%";
       chat.style.width = "0%";
