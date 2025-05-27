@@ -1,5 +1,5 @@
 import { MenuItem } from "@/Types/LayoutTypes";
-import { FcTodoList } from "react-icons/fc";
+
 
 export const UserListData = [
   {
@@ -25,16 +25,16 @@ export const StudentMenuList: MenuItem[] | undefined = [
       {
         title: "Dashboard",
         id: 1,
-        icon: "si:insights-line",
+        icon: "mdi:account",
         path: "/dashboard",
         type: "link",
         lanClass: "lan-3",
       },
       {
-        title: "Your Mentor",
+        title: "My Mentor",
         id: 2,
         icon: "mdi:chat-outline",
-        path: "/your-mentor",
+        path: "/my-mentor",
         type: "link",
         lanClass: "lan-3",
       },
@@ -85,14 +85,14 @@ export const StudentMenuList: MenuItem[] | undefined = [
       //   type: "link",
       //   lanClass: "lan-3",
       // },
-      {
-        title: "Assignment",
-        id: 2,
-        icon: "uil:analysis",
-        path: "/assignment",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Assignment",
+      //   id: 2,
+      //   icon: "uil:analysis",
+      //   path: "/assignment",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
     ],
   },
   {
@@ -219,6 +219,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
         id: 2,
         icon: "mdi:chat-outline",
         path: "/chat-mentor",
+        type: "link",
+        lanClass: "lan-3",
+      },
+      {
+        title: "Our Mentors",
+        id: 1,
+        icon: "mdi:account", // ✅ Correct icon for a user/profile
+        path: "/our-mentors",
         type: "link",
         lanClass: "lan-3",
       },

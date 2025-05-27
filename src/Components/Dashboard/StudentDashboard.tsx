@@ -74,9 +74,9 @@ const StudentDashboard = () => {
       <section className="my-4">
         <SubjectTimeChart />
       </section>
-      <section className="my-4">
+      {/* <section className="my-4">
         <AssignmentTabs />
-      </section>
+      </section> */}
     </main>
   );
 };

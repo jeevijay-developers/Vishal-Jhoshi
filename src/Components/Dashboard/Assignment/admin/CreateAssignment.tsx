@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaPlus, FaTrashAlt, FaClipboardList } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface Todo {
   title: string;
@@ -43,8 +44,21 @@ const CreateAssignment: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting Todos:", todos);
-    alert("Todos submitted successfully!");
+    const obj ={
+      heading: heading,
+      todos: todos
+    }
+if(!obj.heading || obj.todos.length === 0) {
+      toast.error("Please fill the heading and add at least one todo");
+      return;
+    }
+    if (todos.some(todo => !todo.title || !todo.startDate || !todo.endDate)) {  
+      toast.error("Please fill all fields for each todo");
+      return;
+    }
+    console.log("todos:", obj);
+
+    toast.success("Todos submitted successfully!");
   };
 
   return (
