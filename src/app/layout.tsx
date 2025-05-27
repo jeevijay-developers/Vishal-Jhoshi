@@ -1,6 +1,6 @@
 import NoSsr from "@/utils/NoSsr";
 import type { Metadata } from "next";
-import { Nunito_Sans } from "next/font/google";
+import { Nunito } from "next/font/google"; // Changed here
 import "../../src/index.scss";
 import MainProvider from "./MainProvider";
 import { I18nProvider } from "./i18n/i18n-context";
@@ -18,17 +18,8 @@ import {
   mantineHtmlProps,
 } from "@mantine/core";
 
-const nunito = Nunito_Sans({
-  weight: [
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900", // ✅ Keep this
-  ],
+const nunito = Nunito({
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["italic", "normal"],
   subsets: ["latin"],
   display: "swap",
@@ -38,6 +29,7 @@ const nunito = Nunito_Sans({
 export const metadata: Metadata = {
   title: "Vj sir classes",
 };
+
 export default async function RootLayout({
   children,
 }: {
@@ -66,8 +58,7 @@ export default async function RootLayout({
             href="https://fonts.gstatic.com"
             crossOrigin=""
           />
-          {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" /> */}
+          {/* Keep only League Spartan because you use the class in body */}
           <link
             href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
             rel="stylesheet"
