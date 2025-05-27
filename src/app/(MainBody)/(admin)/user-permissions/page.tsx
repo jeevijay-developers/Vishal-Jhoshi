@@ -1,40 +1,60 @@
 "use client";
 import UpdateUser from "@/Components/update/UpdateUser";
-import { getAllUsers, updateRole } from "@/server/users";
+import {
+  assignMentors,
+  getAllUsers,
+  getAllUsersAndMentors,
+  updateRole,
+} from "@/server/users";
 import React, { useEffect, useState } from "react";
 import { Card, CardFooter, CardHeader, Table } from "reactstrap";
 
 const Page = () => {
-  const [users, setUsers] = useState([]);
+  const [allMentors, setMentors] = useState([]);
+  const [students, setStudents] = useState([]);
   const roleOptions = ["student", "mentor"];
   // const [updateUser, setUpdateUser] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
-  const getAllUserFunc = async () => {
+  const GetAllUsersAndMentors = async () => {
     try {
-      const data = await getAllUsers();
-      setUsers(data);
+      const data = await getAllUsersAndMentors();
+      // setUsers(data);
+      console.log(data);
+      setMentors(data.mentors);
+      setStudents(data.students);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
 
-  // const handleRoleChange = async (userId: string) => {
-  //   try {
-  //     // await updateRole(userId, newRole);
-  //     // setUsers((prevUsers: any) =>
-  //     //   prevUsers.map((user: any) =>
-  //     //     user._id === userId ? { ...user, role: newRole } : user
-  //     //   )
-  //     // );
-  //   } catch (error) {
-  //     console.error("Error updating user role:", error);
-  //   }
-  // };
-
   useEffect(() => {
-    getAllUserFunc();
+    GetAllUsersAndMentors();
   }, []);
+
+  const alreadyAssignedMentor = (mentorId: string): string => {
+    if (!allMentors || allMentors.length === 0) return "Open this select menu";
+
+    const mentor = allMentors.find((mentor) => mentor._id === mentorId);
+    return mentor ? mentor.name : "Open this select menu";
+  };
+
+  const handleMentorChange = async (studentId: string, newMentorId: string) => {
+    try {
+      const saved = await assignMentors(studentId, newMentorId);
+      console.log(saved);
+
+      setStudents((prev) =>
+        prev.map((student) =>
+          student._id === studentId
+            ? { ...student, mentors: newMentorId }
+            : student
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -47,38 +67,38 @@ const Page = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
-              <th>Update</th>
+              <th>Mentor</th>
+              <th>Assign Mentor</th>
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user: any, index) => (
+            {students.length > 0 ? (
+              students.map((user: any, index) => (
                 <tr key={user?._id}>
                   <th scope="row">{index + 1}</th>
                   <td>{user?.name}</td>
                   <td>{user?.email}</td>
                   <td>{user?.role}</td>
+                  <td>{user?.mentors?.name ?? "Not assigned"}</td>
                   <td>
-                    {/* <select
-                      value={user.role}
-                      onChange={(e) =>
-                        handleRoleChange(user._id, e.target.value)
-                      }
-                    >
-                      {roleOptions.map((role) => (
-                        <option key={role} value={role}>
-                          {role}
-                        </option>
-                      ))}
-                    </select> */}
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        setSelectedUser(user);
+                    <select
+                      className="form-select w-fit"
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        handleMentorChange(user._id, e.target.value);
                       }}
                     >
-                      Update User
-                    </button>
+                      <option selected>
+                        {user.mentors === null
+                          ? "Open this select menu"
+                          : alreadyAssignedMentor(user.mentors)}
+                      </option>
+                      {allMentors.map((ment) => (
+                        <option key={ment._id} value={ment._id}>
+                          {ment.name}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                 </tr>
               ))
@@ -94,7 +114,7 @@ const Page = () => {
         {selectedUser != null && <UpdateUser user={selectedUser} />}
         {/* <UpdateUser user={user} /> */}
         <CardFooter className="text-center">
-          {users.length} users found
+          {students.length} Students found
         </CardFooter>
       </Card>
     </div>

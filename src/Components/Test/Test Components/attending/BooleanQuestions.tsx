@@ -67,7 +67,12 @@ const BooleanQuestion: React.FC<BooleanQuestionProps> = ({
       questionStatus: status,
       type: booleanQuestion.type,
       subject: booleanQuestion.subject,
-      marks: status === "CORRECT" ? positiveMarking : negativeMarking,
+      marks:
+        status === "CORRECT"
+          ? positiveMarking
+          : negativeMarking < 0
+          ? negativeMarking
+          : -Number(negativeMarking),
       timeTaken: Date.now() - start,
     };
 

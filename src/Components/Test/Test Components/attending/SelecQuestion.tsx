@@ -168,7 +168,11 @@ const SelecQuestion: React.FC<IntegerQuestionProps> = ({
           ? ""
           : "",
       questionStatus: ansStatus ? "CORRECT" : "INCORRECT",
-      marks: ansStatus ? positiveMarking : negativeMarking,
+      marks: ansStatus
+        ? positiveMarking
+        : negativeMarking < 0
+        ? negativeMarking
+        : -Number(negativeMarking),
       type: selectQuestion.type,
       subject: selectQuestion.subject,
       timeTaken: Date.now() - start,
