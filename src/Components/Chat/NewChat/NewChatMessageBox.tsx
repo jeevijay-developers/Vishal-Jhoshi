@@ -37,13 +37,19 @@ const NewChatMessageBox: React.FC<Props> = ({
 
     getChats(CURRENT_USER._id, selectedUser._id)
       .then((data) => {
+        console.log(data);
+
         setMessages(data);
       })
       .catch((err) => console.log(err));
 
     return () => {
-      console.log("deleting messages");
+      // console.log("deleting messages");
       setMessages([]);
+      const elm = document.getElementsByClassName("hvt");
+      while (elm.length > 0) {
+        elm[0].remove(); // removes the first element until none are left
+      }
     };
   }, [SELECTED_USER]);
 

@@ -18,7 +18,7 @@ import { getMyProfile } from "@/server/user";
 import { setSocket } from "../../Redux/Reducers/SocketSlice";
 
 import { io, Socket } from "socket.io-client";
-import { setMoveToBottom } from "@/Redux/Reducers/ChatSlice";
+import { setMoveToBottom, setUpdate } from "@/Redux/Reducers/ChatSlice";
 import { toast } from "react-toastify";
 import style from "./layout.module.css";
 // import the depen
@@ -75,11 +75,17 @@ export default function RootLayout({
             const SENDER = MESSAGE.sender;
 
             if (selectedUser && SENDER === selectedUser._id) {
-              // let data = [...chats, MESSAGE];
-              onChatReceiveAppendElement(MESSAGE);
-              dispatch(setMoveToBottom());
               updateMessageSentBySelectedUser(MESSAGE, selectedUser);
               // dispatch(setChats(data));
+              // update seen status seen by both
+              updateSeen(user._id, selectedUser._id, user._id)
+                .then((data) => {
+                  console.log(data);
+                  dispatch(setUpdate());
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             } else {
               toast.success(`You got a new message`);
             }

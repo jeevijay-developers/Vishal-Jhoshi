@@ -11,6 +11,7 @@ const initialState: ChatSliceType = {
   currentUser: null,
   selectedUser: null,
   moveToBottom: 0,
+  update: 1,
 };
 
 export const fetchChatMemberApiData = createAsyncThunk<
@@ -51,6 +52,9 @@ const ChatSlice = createSlice({
     },
     setChats: (state, action) => {
       state.chats = action.payload;
+    },
+    setUpdate: (state) => {
+      state.update = state.update + 1;
     },
     // pushMessage: (state, action) => {
     //   const newMessage = action.payload; // Extract the new message from the payload
@@ -187,6 +191,7 @@ export const {
   setAllStudents,
   setAllMentors,
   setMoveToBottom,
+  setUpdate,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

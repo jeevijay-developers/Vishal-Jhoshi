@@ -24,11 +24,15 @@ export const removeSeen = async (userId: string, selectedUser: String) => {
     return error || { message: "Something went wrong" };
   }
 };
-export const updateSeen = async (userId: string, selectedUser: String) => {
+export const updateSeen = async (
+  first: string,
+  second: string,
+  seen: string
+) => {
   try {
     // alert("sending");
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/update/${userId}/${selectedUser}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/update/${first}/${second}/${seen}`
     );
     const data = await response.data;
     return data;

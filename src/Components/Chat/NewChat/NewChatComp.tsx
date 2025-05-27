@@ -5,13 +5,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
 import NewChatMessageBox from "./NewChatMessageBox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSelectedUser } from "@/Redux/Reducers/ChatSlice";
+import { updateSeen } from "@/server/chats";
 interface User {
   _id: string;
   name: string;
   email: string;
   image_url: string;
+  seenBy: string[];
 }
 const NewChatComp = () => {
   const sidebarRef = useRef(null);
@@ -21,6 +23,7 @@ const NewChatComp = () => {
   const [isSmallDevice, setIsSmallDevice] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
   const dispatch = useDispatch();
+  const USER = useSelector((state: any) => state.user);
 
   useEffect(() => {
     const handleScreenResize = () => {
@@ -50,6 +53,17 @@ const NewChatComp = () => {
   const handleUserSelect = useCallback((user: User) => {
     setselectedUser(user);
     dispatch(setSelectedUser(user));
+    // console.log(user);
+    // console.log(USER);
+
+    updateSeen(USER._id, user._id, USER._id)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return;
+      });
     const sidebar = sidebarRef.current as HTMLDivElement | null;
     const chat = chatRef.current as HTMLDivElement | null;
 

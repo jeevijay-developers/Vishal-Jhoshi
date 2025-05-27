@@ -69,6 +69,7 @@ export interface ChatSliceType {
   students: Students[];
   mentors: Mentors[];
   moveToBottom: number;
+  update: number;
 }
 
 export interface DropClassTypes {

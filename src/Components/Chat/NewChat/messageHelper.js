@@ -2,11 +2,11 @@ export const updateMessageSentByLoggedInUser = (MESSAGE, CURRENT_USER) => {
   const messageUl = document.getElementById("message-ul");
   if (messageUl) {
     const li = document.createElement("li");
-    li.className = "d-flex flex-column message align-self-end";
+    li.className = "hvt d-flex flex-column message align-self-end";
     li.style.maxWidth = "65%";
 
     li.innerHTML = `
-      <div class="d-flex flex-row flex-row-reverse align-items-end gap-2">
+      <div class=" d-flex flex-row flex-row-reverse align-items-end gap-2">
         <div>
           <img class="rounded-circle" height="25" width="25" src="${
             CURRENT_USER.image_url
@@ -33,7 +33,7 @@ export const updateMessageSentBySelectedUser = (MESSAGE, SELECTED_USER) => {
   const messageUl = document.getElementById("message-ul");
   if (messageUl) {
     const li = document.createElement("li");
-    li.className = "d-flex flex-column message align-self-end";
+    li.className = "hvt d-flex flex-column message align-self-end";
     li.style.maxWidth = "65%";
 
     li.innerHTML = `
