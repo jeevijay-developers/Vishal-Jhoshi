@@ -144,7 +144,7 @@ const LiveTestResults: React.FC<ResultProps> = ({ name, data }) => {
                 <ListGroup.Item className="d-flex justify-content-between align-items-center">
                   Accuracy
                   <Badge pill bg="info">
-                    {data.accuracy}%
+                    {data?.accuracy?.toFixed(2)}%
                   </Badge>
                 </ListGroup.Item>
               </ListGroup>

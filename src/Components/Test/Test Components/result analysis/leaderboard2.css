@@ -1,42 +1,44 @@
-/* Container styling */
 .leaderboard-container {
   padding: 20px;
-  background: linear-gradient(135deg, #0e6660, #0a4c48);
-  border-radius: 15px;
+  background: linear-gradient(135deg, #092e33, #144e4a);
+  border-radius: 20px;
   max-width: 750px;
   margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .leaderboard-header {
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #e9a558;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffcc70;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-/* Cards container */
+/* Card container */
 .leaderboard-cards {
   display: flex;
-  flex-direction: row;
-  gap: 7px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-/* Individual leaderboard card */
+/* Leaderboard card */
 .leaderboard-card {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.6)
-  );
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,39 +46,48 @@
 
 .leaderboard-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Rank styling */
 .rank {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #e5e911;
+  color: #ffd700;
   margin-bottom: 10px;
+  text-align: center;
 }
 
-/* User details styling */
-.user-details {
-  margin-bottom: 15px;
+/* Special ranks */
+.rank::before {
+  content: "🥇 ";
+}
+.leaderboard-card:nth-child(2) .rank::before {
+  content: "🥈 ";
+}
+.leaderboard-card:nth-child(3) .rank::before {
+  content: "🥉 ";
 }
 
 .user-details h3 {
   font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
   color: #ffffff;
 }
 
 .user-details p {
-  font-size: 1rem;
-  margin: 5px 0;
-  color: #b2bec3;
+  font-size: 0.95rem;
+  color: #d1d1d1;
+  margin: 3px 0;
 }
 
-/* Footer of the card */
 .card-footer {
   font-size: 0.9rem;
-  color: #dfe6e9;
-  margin-top: 10px;
+  color: #c9c9c9;
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 10px;
+  margin-top: 10px;
 }
 
 .card-footer p {
@@ -86,7 +97,7 @@
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .leaderboard-container {
-    padding: 10px;
+    padding: 20px 10px;
   }
 
   .leaderboard-cards {

@@ -68,13 +68,13 @@ const Leaderboard2: React.FC<{ leaderboardData: TestStats[] }> = ({
             key={data.userId}
             className="leaderboard-card col-md-4 mx-auto h-100"
           >
-            <div className="rank">#{index + 1}</div>
+            <div className="rank">{index + 1}</div>
             <div className="user-details">
               <h3>{userNames[data.userId] || "Loading..."}</h3>
               <p>
                 Marks: {data.obtainedMarks} / {data.mark}
               </p>
-              <p>Accuracy: {data.accuracy.toFixed(2)}%</p>
+              <p>Accuracy: {data?.accuracy?.toFixed(2)}%</p>
               <p>Correct Answers: {data.correctCount}</p>
               <p>Unanswered: {data.unansweredCount}</p>
             </div>
