@@ -1,8 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { Tab, Nav, Card, Row, Col } from "react-bootstrap";
-import ViewAssignment from "./ViewAssignment";
-import CreateAssignment from "./CreateAssignment";
+
+const ViewAssignment = dynamic(() => import("./ViewAssignment"), {
+  ssr: false,
+});
+const CreateAssignment = dynamic(() => import("./CreateAssignment"), {
+  ssr: false,
+});
+
+// import ViewAssignment from "./ViewAssignment";
+// import CreateAssignment from "./CreateAssignment";
+import dynamic from "next/dynamic";
 
 const AssignAssignment: React.FC = () => {
   const [activeKey, setActiveKey] = useState<string>("list");
