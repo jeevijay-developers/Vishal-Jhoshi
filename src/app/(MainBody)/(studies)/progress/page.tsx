@@ -13,11 +13,7 @@ const ProgressAreaWrapper = dynamic(
 const ProgressPage: React.FC = () => {
   const user = useSelector((state: any) => state.user);
 
-  return (
-    <>
-      <ProgressAreaWrapper />
-    </>
-  );
+  return <>{/* <ProgressAreaWrapper /> */}</>;
 };
 
 export default ProgressPage;
