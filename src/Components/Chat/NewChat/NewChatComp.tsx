@@ -1,13 +1,18 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import NewChatSidebar from "./NewChatSidebar";
+// import NewChatSidebar from "./NewChatSidebar";
+const NewChatSidebar = dynamic(() => import("./NewChatSidebar"), {
+  ssr: false,
+});
+const NewChatMessageBox = dynamic(() => import("./NewChatMessageBox"), {
+  ssr: false,
+});
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
-import NewChatMessageBox from "./NewChatMessageBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedUser } from "@/Redux/Reducers/ChatSlice";
 import { updateSeen } from "@/server/chats";
+import dynamic from "next/dynamic";
 interface User {
   _id: string;
   name: string;
