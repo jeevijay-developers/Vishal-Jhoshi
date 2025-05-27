@@ -4,6 +4,7 @@ import Leaderboard2 from "@/Components/Test/Test Components/result analysis/Lead
 import { getTestLeaderBoard } from "@/server/tests";
 import { getOtherUserProfile } from "@/server/user";
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 export interface TestStats {
   userId: string;
@@ -36,8 +37,8 @@ const defaultTestStats: TestStats = {
 const Page: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
   const [leaderboardData, setLeaderBoardData] = useState<TestStats[]>([]);
-  const [topScorers, setTopScorers] = useState<TestStats[]>([]); // Store top 3 scorers
-  const [userNames, setUserNames] = useState<Record<string, string>>({}); // Store user names
+  const [topScorers, setTopScorers] = useState<TestStats[]>([]);
+  const [userNames, setUserNames] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,14 +84,18 @@ const Page: React.FC<{ params: { id: string } }> = ({ params }) => {
       <h1 className="text-center text-primary ">Test Result</h1>
       <h2 className="text-center text-secondary">Test id: {id}</h2>
 
-      {/* Display the top 3 scorers */}
-      <div className="w-100 d-flex justify-content-center align-items-center flex-row flex-wrap">
+      <Row className="g-4 justify-content-center">
         {topScorers.map((data) => {
-          const name = userNames[data.userId] || "Loading..."; // Retrieve name from state
-          return <LiveTestResults key={data.userId} name={name} data={data} />;
+          const name = userNames[data.userId] || "Loading...";
+          return (
+            <Col key={data.userId} xs={12} md={6}>
+              <LiveTestResults name={name} data={data} />
+            </Col>
+          );
         })}
-      </div>
-      <div>
+      </Row>
+
+      <div className="mt-5">
         <Leaderboard2 leaderboardData={leaderboardData} />
       </div>
     </div>
