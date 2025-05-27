@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { getChats } from "@/server/chats";
 import { selectSocket } from "@/Redux/Reducers/SocketSlice";
 import { Message } from "@/Types/Message";
-import { updateMessageSentByLoggedInUser } from "./messageHelper";
+// import { updateMessageSentByLoggedInUser } from "./messageHelper";
 type Props = {
   selectedUser: User;
   handleGoBack: () => void;
@@ -66,7 +66,7 @@ const NewChatMessageBox: React.FC<Props> = ({
       message,
     };
     try {
-      updateMessageSentByLoggedInUser(MESSAGE, CURRENT_USER);
+      // updateMessageSentByLoggedInUser(MESSAGE, CURRENT_USER);
     } catch (err) {
       console.log(err);
     }

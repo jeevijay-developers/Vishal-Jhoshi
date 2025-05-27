@@ -24,7 +24,7 @@ import style from "./layout.module.css";
 // import the depen
 import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
 import { updateSeen } from "@/server/chats";
-import { updateMessageSentBySelectedUser } from "@/Components/Chat/NewChat/messageHelper";
+// import { updateMessageSentBySelectedUser } from "@/Components/Chat/NewChat/messageHelper";
 
 // In video call, set mode to "rtc"
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -75,7 +75,7 @@ export default function RootLayout({
             const SENDER = MESSAGE.sender;
 
             if (selectedUser && SENDER === selectedUser._id) {
-              updateMessageSentBySelectedUser(MESSAGE, selectedUser);
+              // updateMessageSentBySelectedUser(MESSAGE, selectedUser);
               // dispatch(setChats(data));
               // update seen status seen by both
               updateSeen(user._id, selectedUser._id, user._id)
