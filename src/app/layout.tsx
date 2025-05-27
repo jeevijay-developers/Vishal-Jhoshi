@@ -19,7 +19,17 @@ import {
 } from "@mantine/core";
 
 const nunito = Nunito_Sans({
-  weight: ["200", "300", "400", "500", "600", "700", "800", "900", "1000"],
+  weight: [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900", // ✅ Keep this
+    // "1000", ❌ REMOVE THIS
+  ],
   style: ["italic", "normal"],
   subsets: ["latin"],
   display: "swap",
