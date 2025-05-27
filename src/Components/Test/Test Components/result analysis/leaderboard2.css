@@ -1,9 +1,9 @@
 /* Container styling */
 .leaderboard-container {
   padding: 20px;
-  background: linear-gradient(45deg, #1e3c72, #2a5298);
+  background: linear-gradient(135deg, #0e6660, #0a4c48);
   border-radius: 15px;
-  max-width: 900px;
+  max-width: 750px;
   margin: 0 auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   color: #ffffff;
@@ -14,7 +14,7 @@
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  color: #00f2fe;
+  color: #e9a558;
   margin-bottom: 20px;
   letter-spacing: 1px;
 }
@@ -22,14 +22,18 @@
 /* Cards container */
 .leaderboard-cards {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-direction: row;
+  gap: 7px;
 }
 
 /* Individual leaderboard card */
 .leaderboard-card {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.6)
+  );
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -47,7 +51,7 @@
 .rank {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ff007d;
+  color: #e5e911;
   margin-bottom: 10px;
 }
 

@@ -5,23 +5,23 @@ import {
   Row,
   Col,
   Card,
-  CardBody,
-  CardTitle,
+  Spinner,
+  ListGroup,
+  Badge,
 } from "react-bootstrap";
 import Chart from "react-apexcharts";
 import styled from "styled-components";
 
-// Styled Card with modern look
 const StyledCard = styled(Card)`
-  background-color: #ffffff; // White background for modern look
+  background-color: #fff;
   border: none;
   border-radius: 15px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-10px); // Hover effect for lifting card
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); // Lifting effect on hover
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -46,14 +46,13 @@ interface ResultProps {
 
 const LiveTestResults: React.FC<ResultProps> = ({ name, data }) => {
   const [score, setScore] = useState(0);
-  const [totalQuestions, setTotalQuestions] = useState(300);
+  const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
-  const [skippedQuestions, setSkippedQuestions] = useState(75);
-  const [loading, setLoading] = useState(false);
+  const [skippedQuestions, setSkippedQuestions] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from your backend or API here
     setLoading(true);
     setScore(data.obtainedMarks);
     setTotalQuestions(
@@ -67,20 +66,18 @@ const LiveTestResults: React.FC<ResultProps> = ({ name, data }) => {
 
   const chartOptions = {
     labels: ["Correct", "Incorrect", "Skipped"],
-    colors: ["#28a745", "#dc3545", "#6c757d"], // Bootstrap colors
+    colors: ["#28a745", "#dc3545", "#6c757d"],
     chart: {
-      type: "donut" as "donut", // Explicitly casting to "donut" type
+      type: "donut" as "donut",
+    },
+    legend: {
+      position: "bottom" as const,
     },
     responsive: [
       {
         breakpoint: 480,
         options: {
-          chart: {
-            width: 200,
-          },
-          legend: {
-            position: "bottom",
-          },
+          chart: { width: 250 },
         },
       },
     ],
@@ -89,64 +86,69 @@ const LiveTestResults: React.FC<ResultProps> = ({ name, data }) => {
   const chartSeries = [correctAnswers, incorrectAnswers, skippedQuestions];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="text-center my-5">
+        <Spinner animation="border" variant="primary" />
+      </Container>
+    );
   }
 
   return (
-    <Container
-      fluid
-      className="p-4"
-      style={{
-        width: "fit-content",
-      }}
-    >
+    <Container className="py-5">
       <Row className="justify-content-center">
-        <Col md={8}>
-          <StyledCard>
-            <CardBody>
-              <CardTitle className="text-center mb-4">
-                <span className="fw-bold" style={{ fontSize: "1.5rem" }}>
-                  {name}
-                </span>
-              </CardTitle>
-              <div className="text-center chart-container mb-4">
-                <Chart
-                  options={chartOptions}
-                  series={chartSeries}
-                  type="donut"
-                  width={300}
-                />
-                <h5 className="mt-3">Score: {score}</h5>
-                <p>
-                  Out of{" "}
+        <Col md={10} lg={8}>
+          <StyledCard className="p-4">
+            <h3 className="text-center mb-4 text-primary fw-semibold">
+              {name}
+            </h3>
+            <div className="text-center mb-4">
+              <Chart
+                options={chartOptions}
+                series={chartSeries}
+                type="donut"
+                width={320}
+              />
+              <h5 className="mt-4 text-dark fw-bold">
+                Score: {score}
+                <small className="text-muted ms-2">
+                  out of{" "}
                   {data.mark *
                     (data.correctCount +
                       data.incorrectCount +
                       data.unansweredCount)}
-                </p>
-              </div>
+                </small>
+              </h5>
+            </div>
 
-              <div className="summary-container">
-                <h6 className="mb-3">Test Summary</h6>
-                <ul className="list-unstyled">
-                  <li>
-                    <span className="fw-bold">Correct:</span> {correctAnswers}/
-                    {totalQuestions}
-                  </li>
-                  <li>
-                    <span className="fw-bold">Incorrect:</span>{" "}
+            <div className="px-3">
+              <h5 className="mb-3">Test Summary</h5>
+              <ListGroup variant="flush">
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  Correct
+                  <Badge pill bg="success">
+                    {correctAnswers}/{totalQuestions}
+                  </Badge>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  Incorrect
+                  <Badge pill bg="danger">
                     {incorrectAnswers}/{totalQuestions}
-                  </li>
-                  <li>
-                    <span className="fw-bold">Skipped:</span> {skippedQuestions}
-                    /{totalQuestions}
-                  </li>
-                  <li>
-                    <span className="fw-bold">Accuracy:</span> {data.accuracy}%
-                  </li>
-                </ul>
-              </div>
-            </CardBody>
+                  </Badge>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  Skipped
+                  <Badge pill bg="secondary">
+                    {skippedQuestions}/{totalQuestions}
+                  </Badge>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  Accuracy
+                  <Badge pill bg="info">
+                    {data.accuracy}%
+                  </Badge>
+                </ListGroup.Item>
+              </ListGroup>
+            </div>
           </StyledCard>
         </Col>
       </Row>

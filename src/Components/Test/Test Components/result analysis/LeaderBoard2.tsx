@@ -62,16 +62,19 @@ const Leaderboard2: React.FC<{ leaderboardData: TestStats[] }> = ({
     <div className="leaderboard-container">
       <h2 className="leaderboard-header">Leaderboard</h2>
 
-      <div className="leaderboard-cards">
+      <div className="leaderboard-cards row justify-content-center">
         {sortedData.map((data, index) => (
-          <div key={data.userId} className="leaderboard-card">
+          <div
+            key={data.userId}
+            className="leaderboard-card col-md-4 mx-auto h-100"
+          >
             <div className="rank">#{index + 1}</div>
             <div className="user-details">
               <h3>{userNames[data.userId] || "Loading..."}</h3>
               <p>
                 Marks: {data.obtainedMarks} / {data.mark}
               </p>
-              <p>Accuracy: {data.accuracy}%</p>
+              <p>Accuracy: {data.accuracy.toFixed(2)}%</p>
               <p>Correct Answers: {data.correctCount}</p>
               <p>Unanswered: {data.unansweredCount}</p>
             </div>
