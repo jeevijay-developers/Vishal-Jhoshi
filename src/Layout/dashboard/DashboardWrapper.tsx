@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 // import DsbSidebar from "./DsbSidebar";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import dynamic from "next/dynamic";
 const DsbSidebar = dynamic(() => import("./DsbSidebar"), { ssr: false });
