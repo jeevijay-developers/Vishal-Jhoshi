@@ -108,30 +108,61 @@ export default function RootLayout({
   );
   const dispatch = useAppDispatch();
 
-  const updateSidebarBasedOnWidth = () => {
-    const windowWidth = window.innerWidth;
-    if (sidebar_types === "compact-wrapper") {
-      if (windowWidth <= 1200) {
-        dispatch(setSideBarToggle(true));
-      } else {
-        dispatch(setSideBarToggle(false));
-      }
-    } else if (sidebar_types === "horizontal-wrapper") {
-      if (windowWidth <= 992) {
-        dispatch(setSideBarToggle(true));
-        dispatch(addSidebarTypes("compact-wrapper"));
-      } else {
-        dispatch(setSideBarToggle(false));
-        dispatch(addSidebarTypes("horizontal-wrapper"));
-      }
-    }
-  };
+  // const updateSidebarBasedOnWidth = () => {
+  //   const windowWidth = window.innerWidth;
+  //   if (sidebar_types === "compact-wrapper") {
+  //     if (windowWidth <= 1200) {
+  //       dispatch(setSideBarToggle(true));
+  //     } else {
+  //       dispatch(setSideBarToggle(false));
+  //     }
+  //   } else if (sidebar_types === "horizontal-wrapper") {
+  //     if (windowWidth <= 992) {
+  //       dispatch(setSideBarToggle(true));
+  //       dispatch(addSidebarTypes("compact-wrapper"));
+  //     } else {
+  //       dispatch(setSideBarToggle(false));
+  //       dispatch(addSidebarTypes("horizontal-wrapper"));
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateSidebarBasedOnWidth();
+  //   window.addEventListener("resize", () => {
+  //     updateSidebarBasedOnWidth();
+  //   });
+  // }, [sidebar_types]);
+
+  //new code
+
   useEffect(() => {
+    const updateSidebarBasedOnWidth = () => {
+      if (typeof window === "undefined") return;
+
+      const windowWidth = window.innerWidth;
+      if (sidebar_types === "compact-wrapper") {
+        if (windowWidth <= 1200) {
+          dispatch(setSideBarToggle(true));
+        } else {
+          dispatch(setSideBarToggle(false));
+        }
+      } else if (sidebar_types === "horizontal-wrapper") {
+        if (windowWidth <= 992) {
+          dispatch(setSideBarToggle(true));
+          dispatch(addSidebarTypes("compact-wrapper"));
+        } else {
+          dispatch(setSideBarToggle(false));
+          dispatch(addSidebarTypes("horizontal-wrapper"));
+        }
+      }
+    };
+
     updateSidebarBasedOnWidth();
-    window.addEventListener("resize", () => {
-      updateSidebarBasedOnWidth();
-    });
+    window.addEventListener("resize", updateSidebarBasedOnWidth);
+    return () =>
+      window.removeEventListener("resize", updateSidebarBasedOnWidth);
   }, [sidebar_types]);
+  
 
   const { data } = useSession();
 
