@@ -24,7 +24,7 @@ import style from "./layout.module.css";
 // import the depen
 import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
 import { updateSeen } from "@/server/chats";
-import { updateMessageSentBySelectedUser } from "@/Components/Chat/NewChat/messageHelper";
+// import { updateMessageSentBySelectedUser } from "@/Components/Chat/NewChat/messageHelper";
 
 // In video call, set mode to "rtc"
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -75,7 +75,7 @@ export default function RootLayout({
             const SENDER = MESSAGE.sender;
 
             if (selectedUser && SENDER === selectedUser._id) {
-              updateMessageSentBySelectedUser(MESSAGE, selectedUser);
+              // updateMessageSentBySelectedUser(MESSAGE, selectedUser);
               // dispatch(setChats(data));
               // update seen status seen by both
               updateSeen(user._id, selectedUser._id, user._id)
@@ -108,61 +108,30 @@ export default function RootLayout({
   );
   const dispatch = useAppDispatch();
 
-  // const updateSidebarBasedOnWidth = () => {
-  //   const windowWidth = window.innerWidth;
-  //   if (sidebar_types === "compact-wrapper") {
-  //     if (windowWidth <= 1200) {
-  //       dispatch(setSideBarToggle(true));
-  //     } else {
-  //       dispatch(setSideBarToggle(false));
-  //     }
-  //   } else if (sidebar_types === "horizontal-wrapper") {
-  //     if (windowWidth <= 992) {
-  //       dispatch(setSideBarToggle(true));
-  //       dispatch(addSidebarTypes("compact-wrapper"));
-  //     } else {
-  //       dispatch(setSideBarToggle(false));
-  //       dispatch(addSidebarTypes("horizontal-wrapper"));
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   updateSidebarBasedOnWidth();
-  //   window.addEventListener("resize", () => {
-  //     updateSidebarBasedOnWidth();
-  //   });
-  // }, [sidebar_types]);
-
-  //new code
-
-  useEffect(() => {
-    const updateSidebarBasedOnWidth = () => {
-      if (typeof window === "undefined") return;
-
-      const windowWidth = window.innerWidth;
-      if (sidebar_types === "compact-wrapper") {
-        if (windowWidth <= 1200) {
-          dispatch(setSideBarToggle(true));
-        } else {
-          dispatch(setSideBarToggle(false));
-        }
-      } else if (sidebar_types === "horizontal-wrapper") {
-        if (windowWidth <= 992) {
-          dispatch(setSideBarToggle(true));
-          dispatch(addSidebarTypes("compact-wrapper"));
-        } else {
-          dispatch(setSideBarToggle(false));
-          dispatch(addSidebarTypes("horizontal-wrapper"));
-        }
+  const updateSidebarBasedOnWidth = () => {
+    const windowWidth = window.innerWidth;
+    if (sidebar_types === "compact-wrapper") {
+      if (windowWidth <= 1200) {
+        dispatch(setSideBarToggle(true));
+      } else {
+        dispatch(setSideBarToggle(false));
       }
-    };
-
+    } else if (sidebar_types === "horizontal-wrapper") {
+      if (windowWidth <= 992) {
+        dispatch(setSideBarToggle(true));
+        dispatch(addSidebarTypes("compact-wrapper"));
+      } else {
+        dispatch(setSideBarToggle(false));
+        dispatch(addSidebarTypes("horizontal-wrapper"));
+      }
+    }
+  };
+  useEffect(() => {
     updateSidebarBasedOnWidth();
-    window.addEventListener("resize", updateSidebarBasedOnWidth);
-    return () =>
-      window.removeEventListener("resize", updateSidebarBasedOnWidth);
+    window.addEventListener("resize", () => {
+      updateSidebarBasedOnWidth();
+    });
   }, [sidebar_types]);
-  
 
   const { data } = useSession();
 
