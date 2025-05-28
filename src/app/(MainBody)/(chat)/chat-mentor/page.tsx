@@ -1,13 +1,16 @@
 "use client";
 
-import UpcomingFeature from "@/CommonComponent/UpcomingFeature";
-import GroupChatContainer from "@/Components/Chat/GroupChat/GroupChatContainer";
+// import UpcomingFeature from "@/CommonComponent/UpcomingFeature";
+// import GroupChatContainer from "@/Components/Chat/GroupChat/GroupChatContainer";
 import Mentors from "../chat-comps/Mentors";
 import { useDispatch, useSelector } from "react-redux";
 import Students from "../chat-comps/Students";
 import { useEffect } from "react";
-import { getAllStudents } from "@/server/users";
-import { setAllStudents, setSelectedUser } from "@/Redux/Reducers/ChatSlice";
+import { getAllStudents } from "../../../../server/users";
+import {
+  setAllStudents,
+  setSelectedUser,
+} from "../../../../Redux/Reducers/ChatSlice";
 
 const Dashboard = () => {
   // return <GroupChatContainer />;

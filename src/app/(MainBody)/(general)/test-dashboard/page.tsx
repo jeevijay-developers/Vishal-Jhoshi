@@ -1,5 +1,6 @@
-import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
-import DashboardWrapper from "@/Layout/dashboard/DashboardWrapper";
+"use client";
+import DasbBoardHeader from "../../../../Layout/dashboard/DasbBoardHeader";
+import DashboardWrapper from "../../../../Layout/dashboard/DashboardWrapper";
 import React from "react";
 
 const page = () => {

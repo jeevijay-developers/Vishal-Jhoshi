@@ -1,4 +1,4 @@
-import TestBarGraph from "@/Components/Dashboard/TestBarGraph";
+import TestBarGraph from "../../../Components/Dashboard/TestBarGraph";
 import React from "react";
 
 const TestScoreGraph = () => {

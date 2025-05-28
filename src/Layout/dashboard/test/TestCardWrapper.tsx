@@ -2,14 +2,10 @@
 import React, { useEffect } from "react";
 import TestResultCard from "./TestCard";
 import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllAttendedTests, getTestDataFromBackend } from "@/server/tests";
-import {
-  AttemdedTestQuestion,
-  AttendedTests,
-  LiveTestAttempted,
-} from "@/Types/TestTypes";
-import { setChartData } from "@/Redux/Reducers/ChartData";
+import { useSelector } from "react-redux";
+import { getAllAttendedTests } from "../../../server/tests";
+import { AttendedTests } from "../../../Types/TestTypes";
+// import { setChartData } from "@/Redux/Reducers/ChartData";
 // import { Row } from "reactstrap";
 
 const TestCardWrapper = ({

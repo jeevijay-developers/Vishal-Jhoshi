@@ -15,10 +15,10 @@ const ChatWithViajySir = dynamic(
 import { useDispatch, useSelector } from "react-redux";
 // import ChatWithViajySir from "../chat-comps/ChatWithViajySir";
 // import dummyChats from "../../../../../helpers/dummyChats";
-import { getAllStudents } from "@/server/users";
+import { getAllStudents } from "../../../../server/users";
 import { useEffect } from "react";
 // import {setAllS}
-import { setAllStudents } from "@/Redux/Reducers/ChatSlice";
+import { setAllStudents } from "../../../../Redux/Reducers/ChatSlice";
 
 const ChatAdmin = () => {
   const user = useSelector((state: any) => state.user);

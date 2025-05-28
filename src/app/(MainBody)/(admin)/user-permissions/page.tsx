@@ -1,10 +1,6 @@
 "use client";
 
 import { assignMentors, getAllUsersAndMentors } from "@/server/users";
-import dynamic from "next/dynamic";
-const UpdateUser = dynamic(() => import("@/Components/update/UpdateUser"), {
-  ssr: false,
-});
 import React, { useEffect, useState } from "react";
 import { Card, CardFooter, CardHeader, Table } from "reactstrap";
 

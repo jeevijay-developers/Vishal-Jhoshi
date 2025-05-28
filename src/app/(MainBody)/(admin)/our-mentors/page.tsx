@@ -1,8 +1,11 @@
 "use client";
 // import MentorCard from "@/Components/mentors/MentorCard";
-const MentorCard = dynamic(() => import("@/Components/mentors/MentorCard"), {
-  ssr: false,
-});
+const MentorCard = dynamic(
+  () => import("../../../../Components/mentors/MentorCard"),
+  {
+    ssr: false,
+  }
+);
 import { getAllUsersAndMentors } from "@/server/users";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
