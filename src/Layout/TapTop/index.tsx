@@ -2,18 +2,26 @@ import { useEffect, useState } from "react";
 
 const TapTop = () => {
   const [tapTopStyle, setTapTopStyle] = useState("none");
+  
   const executeScroll = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
   };
+
   const handleScroll = () => {
-    if (window.scrollY > 100) setTapTopStyle("block");
-    else setTapTopStyle("none");
+    if (typeof window !== "undefined") {
+      if (window.scrollY > 100) setTapTopStyle("block");
+      else setTapTopStyle("none");
+    }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      handleScroll();
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
   return (
