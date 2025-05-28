@@ -1,6 +1,10 @@
 "use client";
 // import DasbBoardHeader from "@/Layout/dashboard/DasbBoardHeader";
-import DashboardWrapper from "@/Layout/dashboard/DashboardWrapper";
+import dynamic from "next/dynamic";
+const DashboardWrapper = dynamic(
+  () => import("@/Layout/dashboard/DashboardWrapper"),
+  { ssr: false }
+);
 // import DasbBoardHeader from "../../../../Layout/dashboard/DasbBoardHeader";
 // import DashboardWrapper from "../../../../Layout/dashboard/DashboardWrapper";
 import React from "react";
