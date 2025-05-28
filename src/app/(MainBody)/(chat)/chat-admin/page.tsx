@@ -1,14 +1,24 @@
 "use client";
 // import Chat from "../chat-comps/ChatArea";
-import ChatWithStudents from "../chat-comps/ChatWithStudents";
-import Students from "../chat-comps/Students";
+// import ChatWithStudents from "../chat-comps/ChatWithStudents";
+import dynamic from "next/dynamic";
+const Students = dynamic(() => import("../chat-comps/Students"), {
+  ssr: false,
+});
+const ChatWithViajySir = dynamic(
+  () => import("../chat-comps/ChatWithViajySir"),
+  {
+    ssr: false,
+  }
+);
+// import Students from "../chat-comps/Students";
 import { useDispatch, useSelector } from "react-redux";
-import ChatWithViajySir from "../chat-comps/ChatWithViajySir";
-import dummyChats from "../../../../../helpers/dummyChats";
-import { getAllStudents } from "@/server/users";
+// import ChatWithViajySir from "../chat-comps/ChatWithViajySir";
+// import dummyChats from "../../../../../helpers/dummyChats";
+import { getAllStudents } from "../../../../server/users";
 import { useEffect } from "react";
 // import {setAllS}
-import { setAllStudents } from "@/Redux/Reducers/ChatSlice";
+import { setAllStudents } from "../../../../Redux/Reducers/ChatSlice";
 
 const ChatAdmin = () => {
   const user = useSelector((state: any) => state.user);

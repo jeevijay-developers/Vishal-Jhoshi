@@ -1,5 +1,11 @@
 "use client";
-import MentorForm from "@/Components/mentors/MentorForm";
+import dynamic from "next/dynamic";
+const MentorForm = dynamic(
+  () => import("../../../../Components/mentors/MentorForm"),
+  {
+    ssr: false,
+  }
+);
 import React from "react";
 
 const page = () => {

@@ -28,7 +28,7 @@ const Wrapper: React.FC<LiveTestFormProps> = ({ setTest }) => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  });
+  }, []);
   return (
     <>
       <div className="w-100 d-flex justify-content-between align-items-center flex-row bg-primary m-0 p-0">

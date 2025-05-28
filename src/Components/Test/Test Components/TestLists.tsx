@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
@@ -18,7 +19,7 @@ import { setAttending } from "@/Redux/Reducers/AttendStatus";
 import NotAttended from "./NotAttended";
 import RescheduleTest from "./RescheduleTest";
 import { Button, Card } from "react-bootstrap";
-
+import { useRouter } from "next/navigation";
 interface LiveTestFormData {
   _id: string;
   testName: string;
@@ -56,6 +57,7 @@ interface LiveTestFormProps {
 }
 
 const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
+  const router = useRouter();
   const USER = useSelector((state: any) => state.user);
   const [tests, setTests] = useState<LiveTestFormData[]>([]);
   const [attendedTest, setAttendedTest] = useState<AttendedTest[]>([]);
@@ -347,11 +349,52 @@ const TestLists: React.FC<LiveTestFormProps> = ({ setTest }) => {
                     <strong>Time:</strong> {test.time} <br />
                     <strong>Duration:</strong> {test.timeDuration}
                   </Card.Text>
-                  <Button variant="primary" onClick={() => attendTest(test)}>
-                    Attend Test
-                  </Button>
+                  <div className="accordion-body">
+                    {USER.role === "admin" ? (
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          router.push(`/test-result/${test._id}`);
+                        }}
+                      >
+                        View Result
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => attendTest(test)}
+                      >
+                        Attend Test
+                      </button>
+                    )}
+                  </div>
                 </Card.Body>
               </Card>
+
+              // old code
+              // <Card
+              //   className="mb-3 shadow-sm w-fit"
+              //   style={{ width: "fit-content", minWidth: "300px" }}
+              // >
+              //   <Card.Body>
+              //     <Card.Title>
+              //       {" "}
+              //       <h2> {test.testName}</h2>
+              //     </Card.Title>
+              //     <Card.Subtitle className="mb-2 text-muted">
+              //       {test.category}
+              //     </Card.Subtitle>
+              //     <Card.Text>
+              //       <strong>Date:</strong> {test?.date?.split("T")[0] || "N/A"}{" "}
+              //       <br />
+              //       <strong>Time:</strong> {test.time} <br />
+              //       <strong>Duration:</strong> {test.timeDuration}
+              //     </Card.Text>
+              //     <Button variant="primary" onClick={() => attendTest(test)}>
+              //       Attend Test
+              //     </Button>
+              //   </Card.Body>
+              // </Card>
             );
           })
         )}

@@ -18,12 +18,13 @@ import { getMyProfile } from "@/server/user";
 import { setSocket } from "../../Redux/Reducers/SocketSlice";
 
 import { io, Socket } from "socket.io-client";
-import { setMoveToBottom } from "@/Redux/Reducers/ChatSlice";
+import { setMoveToBottom, setUpdate } from "@/Redux/Reducers/ChatSlice";
 import { toast } from "react-toastify";
 import style from "./layout.module.css";
 // import the depen
 import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
 import { updateSeen } from "@/server/chats";
+// import { updateMessageSentBySelectedUser } from "@/Components/Chat/NewChat/messageHelper";
 
 // In video call, set mode to "rtc"
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -61,7 +62,7 @@ export default function RootLayout({
       socketRef.current.on("connect", () => {
         // Determine roomId based on the user's role
         // const roomId = user.role === "admin" ? "admin" : user._id;
-        const roomId = user.role === user._id;
+        const roomId = user._id;
         dispatchSocket(setSocket(socketRef.current));
         // Emit joinRoom event
         if (socketRef.current) {
@@ -71,60 +72,22 @@ export default function RootLayout({
         // handle all received messages
         if (socketRef.current) {
           socketRef.current.on("sendMessage", (MESSAGE) => {
-            const recipient = MESSAGE.sender;
-            // console.log(MESSAGE.sender, selectedUser);
-            // console.log(MESSAGE);
-            let USER =
-              selectedUser === "admin"
-                ? "admin"
-                : selectedUser === null
-                ? null
-                : selectedUser._id;
-            // console.log(selectedUser);
-            // console.log(USER);
-            // console.log(selectedUser);
-            if (recipient === USER) {
-              // let data = [...chats, MESSAGE];
-              onChatReceiveAppendElement(MESSAGE);
-              dispatch(setMoveToBottom());
-              // dispatch(setChats(data));
-            } else {
-              toast.success(`You got a new message from ${MESSAGE.senderName}`);
-              const chatId = `s-u-${MESSAGE.sender}`;
-              const chat = document.getElementById(chatId);
-              // console.log(chat);
+            const SENDER = MESSAGE.sender;
 
-              const USER = user.role === "admin" ? "admin" : user._id;
-              updateSeen(USER, recipient)
+            if (selectedUser && SENDER === selectedUser._id) {
+              // updateMessageSentBySelectedUser(MESSAGE, selectedUser);
+              // dispatch(setChats(data));
+              // update seen status seen by both
+              updateSeen(user._id, selectedUser._id, user._id)
                 .then((data) => {
-                  console.log("HOGYA");
+                  console.log(data);
+                  dispatch(setUpdate());
                 })
                 .catch((err) => {
-                  console.error(err);
+                  console.log(err);
                 });
-
-              let chatBubbles = document.getElementsByClassName("chat-bubble");
-              const senderBubble = document.getElementById(MESSAGE.sender);
-
-              if (chat && senderBubble) {
-                // Make the sender's chat visible and bring it to the top
-                chat.style.visibility = "visible";
-                senderBubble.style.order = "0";
-
-                // Push other chat bubbles to the background
-                Array.from(chatBubbles).forEach((bubble) => {
-                  const chatBubble = bubble as HTMLElement;
-                  if (bubble !== senderBubble) {
-                    chatBubble.style.order = "10";
-                  }
-                });
-
-                // Scroll sender's chat bubble into view
-                senderBubble.scrollIntoView({
-                  behavior: "smooth",
-                  block: "center",
-                });
-              }
+            } else {
+              toast.success(`You got a new message`);
             }
           });
         }

@@ -1,12 +1,14 @@
 import { getAllChatRoomById } from "@/server/chats";
 import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { LiaStarOfLifeSolid } from "react-icons/lia";
 
 interface User {
   _id: string;
   name: string;
   email: string;
   image_url: string;
+  seenBy: string[];
 }
 
 type Props = {
@@ -18,16 +20,21 @@ const NewChatSidebar: React.FC<Props> = memo(
   ({ handleUserSelect, selectedUser }) => {
     const [users, setUsers] = useState<User[] | []>([]);
     const LOGGED_IN_USER = useSelector((state: any) => state.user);
+    const UPDATE = useSelector((state: any) => state.chat.update);
     useEffect(() => {
-      // fethc all the rooms
+      // fetch all the rooms
+      console.log("fetching room");
+
       getAllChatRoomById(LOGGED_IN_USER._id)
         .then((data) => {
+          console.log(data);
+
           setUsers(data);
         })
         .catch((err) => {
           console.log(err);
         });
-    }, [LOGGED_IN_USER]);
+    }, [LOGGED_IN_USER, UPDATE]);
     return (
       <div
         className=" overflow-auto"
@@ -78,6 +85,9 @@ const NewChatSidebar: React.FC<Props> = memo(
                           {users?.name ?? "User"}
                         </p>
                       </div>
+                      {!users.seenBy.includes(LOGGED_IN_USER._id) && (
+                        <LiaStarOfLifeSolid />
+                      )}
                     </li>
                   );
                 })}

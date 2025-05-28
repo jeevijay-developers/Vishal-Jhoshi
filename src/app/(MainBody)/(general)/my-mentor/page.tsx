@@ -1,6 +1,10 @@
 "use client";
-import MentorCard from "@/Components/mentors/MentorCard";
+// import MentorCard from "@/Components/mentors/MentorCard";
+const MentorCard = dynamic(() => import("@/Components/mentors/MentorCard"), {
+  ssr: false,
+});
 import { getMyMentor } from "@/server/users";
+import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Spinner } from "reactstrap";

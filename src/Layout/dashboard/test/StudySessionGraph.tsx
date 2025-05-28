@@ -1,5 +1,4 @@
-import StudySessionsGraph from "@/Components/Dashboard/StudySessionsGraph";
-import StudySessionsCard from "@/Components/StudyMode/StudySessionsCard";
+import StudySessionsGraph from "../../../Components/Dashboard/StudySessionsGraph";
 import React from "react";
 
 const StudySessionGraph = () => {

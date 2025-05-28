@@ -1,11 +1,6 @@
 "use client";
-import UpdateUser from "@/Components/update/UpdateUser";
-import {
-  assignMentors,
-  getAllUsers,
-  getAllUsersAndMentors,
-  updateRole,
-} from "@/server/users";
+
+import { assignMentors, getAllUsersAndMentors } from "@/server/users";
 import React, { useEffect, useState } from "react";
 import { Card, CardFooter, CardHeader, Table } from "reactstrap";
 
@@ -111,7 +106,7 @@ const Page = () => {
             )}
           </tbody>
         </Table>{" "}
-        {selectedUser != null && <UpdateUser user={selectedUser} />}
+        {/* {selectedUser != null && <UpdateUser user={selectedUser} />} */}
         {/* <UpdateUser user={user} /> */}
         <CardFooter className="text-center">
           {students.length} Students found
