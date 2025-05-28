@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
 import DsbSidebar from "./DsbSidebar";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
+import dynamic from "next/dynamic";
+const BootstrapBundle = dynamic(
+  () => import("bootstrap/dist/js/bootstrap.bundle.min.js"),
+  { ssr: false }
+);
 import StudentMain from "./StudentMain";
 import { useSelector } from "react-redux";
 import AdminSidebar from "./admin/AdminSidebar";
@@ -11,6 +17,9 @@ const DashboardWrapper = () => {
   const [show, setShow] = React.useState("PROFILE");
   const user = useSelector((state: any) => state.user);
   console.log(user);
+  React.useEffect(() => {
+    BootstrapBundle;
+  }, []);
 
   return (
     <div className="container-fluid">
