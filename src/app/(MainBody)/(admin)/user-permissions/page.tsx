@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  assignMentors,
-  getAllUsers,
-  getAllUsersAndMentors,
-  updateRole,
-} from "@/server/users";
+import { assignMentors, getAllUsersAndMentors } from "@/server/users";
 import dynamic from "next/dynamic";
 const UpdateUser = dynamic(() => import("@/Components/update/UpdateUser"), {
   ssr: false,
@@ -115,7 +110,7 @@ const Page = () => {
             )}
           </tbody>
         </Table>{" "}
-        {selectedUser != null && <UpdateUser user={selectedUser} />}
+        {/* {selectedUser != null && <UpdateUser user={selectedUser} />} */}
         {/* <UpdateUser user={user} /> */}
         <CardFooter className="text-center">
           {students.length} Students found

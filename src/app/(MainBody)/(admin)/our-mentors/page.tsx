@@ -6,7 +6,6 @@ const MentorCard = dynamic(() => import("@/Components/mentors/MentorCard"), {
 import { getAllUsersAndMentors } from "@/server/users";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import { Hourglass } from "react-loader-spinner";
 
 const page = () => {
   const [allMentors, setMentors] = useState([]);

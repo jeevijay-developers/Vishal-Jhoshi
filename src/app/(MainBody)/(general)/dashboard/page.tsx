@@ -1,10 +1,4 @@
 "use client";
-import React from "react";
-import Breadcrumbs from "@/CommonComponent/Breadcrumbs";
-import { useSelector } from "react-redux";
-import dynamic from "next/dynamic";
-
-// Dynamically import dashboard components without SSR
 const AdminDashboard = dynamic(
   () => import("@/Components/Dashboard/AdminDashoard"),
   { ssr: false }
@@ -13,6 +7,12 @@ const StudentDashboard = dynamic(
   () => import("@/Components/Dashboard/StudentDashboard"),
   { ssr: false }
 );
+import React from "react";
+import Breadcrumbs from "@/CommonComponent/Breadcrumbs";
+import { useSelector } from "react-redux";
+import dynamic from "next/dynamic";
+
+// Dynamically import dashboard components without SSR
 
 const Dashboard = () => {
   const user = useSelector((state: any) => state.user);

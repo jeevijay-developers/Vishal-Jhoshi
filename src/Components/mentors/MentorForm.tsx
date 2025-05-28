@@ -1,3 +1,4 @@
+"use client";
 import { createNewMentor } from "@/server/user";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -15,7 +16,7 @@ type MentorFormData = {
   };
 };
 
-const MentorForm: React.FC = () => {
+const MentorForm = () => {
   const [formData, setFormData] = useState<MentorFormData>({
     name: "",
     email: "",
