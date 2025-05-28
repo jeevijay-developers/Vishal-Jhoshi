@@ -4,10 +4,10 @@ import TestCardWrapper from "./test/TestCardWrapper";
 import MentorCardGrid from "./mentor/MentorCardGrid";
 import TestScoreGraph from "./test/TestScoreGraph";
 import StudySessionGraph from "./test/StudySessionGraph";
-import TestInfoCard from "./test/TestInfoCard";
 import TestInfoGrid from "./test/TestInfoGrid";
 import ReAttendGrid from "./test/ReAttendGrid";
-import Result from "@/Components/Test/Test Components/result analysis/Result";
+// import Result from "@/Components/Test/Test Components/result analysis/Result";
+import Result from "../../Components/Test/Test Components/result analysis/Result";
 
 type Props = {
   show: string;

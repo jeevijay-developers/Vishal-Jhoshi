@@ -13,7 +13,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import "./style.css";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
-import { updateUser, updateUserImage } from "@/server/user";
+import { updateUser, updateUserImage } from "../../server/user";
 import { PropagateLoader } from "react-spinners";
 import { toast } from "react-toastify";
 const UserProfile = () => {

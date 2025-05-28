@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 const NewChatComp = dynamic(
-  () => import("@/Components/Chat/NewChat/NewChatComp"),
+  () => import("../../../Components/Chat/NewChat/NewChatComp"),
   { ssr: false }
 );
 
