@@ -135,6 +135,7 @@ export default function RootLayout({
 
   //new code
 
+  
   useEffect(() => {
     const updateSidebarBasedOnWidth = () => {
       if (typeof window === "undefined") return;
