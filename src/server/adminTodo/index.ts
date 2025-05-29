@@ -6,7 +6,9 @@ interface todo{
         title: string;
         startDate: string;
         endDate: string;
+        status: string;
     }[];
+    createdBy?: string;
 }
 
 export const createAdminTodo = async (data: todo) => {
@@ -17,9 +19,9 @@ export const createAdminTodo = async (data: todo) => {
         return error.response?.data || { message: "Something went wrong" };
     }
 }
-export const getAdminTodo = async (data: todo) => {
+export const getAdminTodo = async () => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/get-todo`, data);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/get-todos`);
         return response.data;
     } catch (error: any) {
         return error.response?.data || { message: "Something went wrong" };

@@ -3,18 +3,26 @@ import React, { useState } from "react";
 import { FaPlus, FaTrashAlt, FaClipboardList } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-interface Todo {
-  title: string;
-  startDate: string;
-  endDate: string;
+interface TodoItem {
+    title: string;
+    startDate: string;
+    endDate: string;
+    status: string;
+}
+
+interface Assignment {
+    heading: string;
+    todos: TodoItem[];
+    createdBy?: string;
 }
 
 const CreateAssignment: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [newTodo, setNewTodo] = useState<Todo>({
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [newTodo, setNewTodo] = useState<TodoItem>({
     title: "",
     startDate: "",
     endDate: "",
+    status: "pending"
   });
 
   const [heading, setHeading] = useState<string>("");
@@ -36,7 +44,7 @@ const CreateAssignment: React.FC = () => {
       return;
     }
     setTodos([...todos, newTodo]);
-    setNewTodo({ title: "", startDate: "", endDate: "" });
+    setNewTodo({ title: "", startDate: "", endDate: "", status: "pending" });
   };
 
   const deleteTodo = (index: number) => {
@@ -45,11 +53,13 @@ const CreateAssignment: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    const obj = {
+    const assignment: Assignment = {
       heading: heading,
-      todos: todos
-    }
-    if (!obj.heading || obj.todos.length === 0) {
+      todos: todos,
+      createdBy: "admin" 
+    };
+
+    if (!assignment.heading || assignment.todos.length === 0) {
       toast.error("Please fill the heading and add at least one todo");
       return;
     }
@@ -58,12 +68,12 @@ const CreateAssignment: React.FC = () => {
       return;
     }
     try {
-      const response = await createAdminTodo(obj);
+      const response = await createAdminTodo(assignment);
       if (response.error) {
         toast.error(response.error);
         return;
       }
-      console.log("Todos submitted successfully:", obj);
+      console.log("Todos submitted successfully:", assignment);
       setTodos([]);
       setHeading("");
       toast.success("Todos submitted successfully!");
