@@ -1,6 +1,5 @@
 import { MenuItem } from "@/Types/LayoutTypes";
 
-
 export const UserListData = [
   {
     icon: "Profile",
@@ -99,22 +98,22 @@ export const StudentMenuList: MenuItem[] | undefined = [
     title: "Chat",
     lanClass: "lan-1",
     Items: [
-      {
-        title: "Chat with VJ sir",
-        id: 1,
-        icon: "mdi:chat-outline",
-        path: "/chat-admin",
-        type: "link",
-        lanClass: "lan-3",
-      },
-      {
-        title: "Chat with Mentor",
-        id: 2,
-        icon: "mdi:chat-outline",
-        path: "/chat-mentor",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Chat with VJ sir",
+      //   id: 1,
+      //   icon: "mdi:chat-outline",
+      //   path: "/chat-admin",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
+      // {
+      //   title: "Chat with Mentor",
+      //   id: 2,
+      //   icon: "mdi:chat-outline",
+      //   path: "/chat-mentor",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
       {
         title: "Messages",
         id: 2,
@@ -206,14 +205,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
     title: "Chat",
     lanClass: "lan-1",
     Items: [
-      {
-        title: "Chats",
-        id: 1,
-        icon: "mdi:chat-outline",
-        path: "/chat-admin",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Chats",
+      //   id: 1,
+      //   icon: "mdi:chat-outline",
+      //   path: "/chat-admin",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
       {
         title: "Mentors",
         id: 2,
@@ -321,22 +320,22 @@ export const MentorMenuList: MenuItem[] | undefined = [
     title: "Chat",
     lanClass: "lan-1",
     Items: [
-      {
-        title: "Chat with VJ sir",
-        id: 1,
-        icon: "mdi:chat-outline",
-        path: "/chat-admin",
-        type: "link",
-        lanClass: "lan-3",
-      },
-      {
-        title: "Chat with Students",
-        id: 2,
-        icon: "mdi:chat-outline",
-        path: "/chat-mentor",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Chat with VJ sir",
+      //   id: 1,
+      //   icon: "mdi:chat-outline",
+      //   path: "/chat-admin",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
+      // {
+      //   title: "Chat with Students",
+      //   id: 2,
+      //   icon: "mdi:chat-outline",
+      //   path: "/chat-mentor",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
       {
         title: "Messages",
         id: 2,
