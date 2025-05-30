@@ -1,17 +1,24 @@
 "use client";
 import React from "react";
-import DsbSidebar from "./DsbSidebar";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import DsbSidebar from "./DsbSidebar";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import dynamic from "next/dynamic";
+const DsbSidebar = dynamic(() => import("./DsbSidebar"), { ssr: false });
+const StudentMain = dynamic(() => import("./StudentMain"), { ssr: false });
+const AdminSidebar = dynamic(() => import("./admin/AdminSidebar"), {
+  ssr: false,
+});
+const AdminMain = dynamic(() => import("./admin/AdminMain"), { ssr: false });
+
 // const BootstrapBundle = dynamic(
 //   () => import("bootstrap/dist/js/bootstrap.bundle.min.js"),
 //   { ssr: false }
 // );
-import StudentMain from "./StudentMain";
+// import StudentMain from "./StudentMain";
 import { useSelector } from "react-redux";
-import AdminSidebar from "./admin/AdminSidebar";
-import AdminMain from "./admin/AdminMain";
+// import AdminSidebar from "./admin/AdminSidebar";
+// import AdminMain from "./admin/AdminMain";
 
 const DashboardWrapper = () => {
   const [show, setShow] = React.useState("PROFILE");
