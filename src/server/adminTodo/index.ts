@@ -27,3 +27,12 @@ export const getAdminTodo = async () => {
         return error.response?.data || { message: "Something went wrong" };
     }
 }
+
+export const getStudentsList = async () => {
+    try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/student/get-students`);
+        return response.data;
+    } catch (error: any) {
+        return error.response?.data || { message: "Something went wrong" };
+    }
+}

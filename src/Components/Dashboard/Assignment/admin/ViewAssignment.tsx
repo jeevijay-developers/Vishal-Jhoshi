@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FaClipboardList, FaCalendarAlt, FaUser, FaClock, FaCheckCircle, FaSpinner, FaExclamationCircle, FaChevronDown, FaChevronUp, FaEye, FaUsers } from 'react-icons/fa'
-import { getAdminTodo } from '@/server/adminTodo'
+import { getAdminTodo, getStudentsList } from '@/server/adminTodo'
 
 interface Todo {
   title: string
@@ -48,40 +48,15 @@ const ViewAssignment = () => {
     try {
       setLoading(true)
 
-      // MOCK DATA
-      // const mockData: Assignment[] = [
-      //   {
-      //     _id: '1',
-      //     heading: 'React Basics',
-      //     createdBy: 'Lakshay',
-      //     createdAt: new Date().toISOString(),
-      //     updatedAt: new Date().toISOString(),
-      //     todos: [
-      //       { title: 'Intro to React', startDate: '2025-05-01', endDate: '2025-05-03', status: 'completed' },
-      //       { title: 'JSX and Props', startDate: '2025-05-04', endDate: '2025-05-06', status: 'in-progress' },
-      //       { title: 'State and Events', startDate: '2025-05-07', endDate: '2025-05-10', status: 'pending' },
-      //     ],
-      //     studentProgress: [] // This will be replaced below
-      //   },
-      //   {
-      //     _id: '2',
-      //     heading: 'Spring Boot Intro',
-      //     createdBy: 'Lakshay',
-      //     createdAt: new Date().toISOString(),
-      //     updatedAt: new Date().toISOString(),
-      //     todos: [
-      //       { title: 'Spring Boot Setup', startDate: '2025-05-01', endDate: '2025-05-02', status: 'completed' },
-      //       { title: 'Creating REST APIs', startDate: '2025-05-03', endDate: '2025-05-04', status: 'in-progress' },
-      //     ],
-      //     studentProgress: [] // This will be replaced below
-      //   },
-      // ]
-
       const response = await getAdminTodo();
-      const transformedData = response.map((assignment: Assignment) => ({
-        ...assignment,
-        studentProgress: generateMockStudentProgress(assignment.todos)
-      }))
+      
+      // Process each assignment with student progress
+      const transformedData = await Promise.all(
+        response.map(async (assignment: Assignment) => ({
+          ...assignment,
+          studentProgress: await generateMockStudentProgress(assignment.todos)
+        }))
+      );
 
       setAssignments(transformedData)
     } catch (err) {
@@ -92,37 +67,36 @@ const ViewAssignment = () => {
     }
   }
 
-  // Mock function to generate student progress - replace with actual API data
-  const generateMockStudentProgress = (todos: Todo[]): StudentProgress[] => {
-    const students = [
-      { id: 'student1', name: 'Alice Johnson' },
-      { id: 'student2', name: 'Bob Smith' },
-      { id: 'student3', name: 'Carol Davis' },
-      { id: 'student4', name: 'David Wilson' },
-      { id: 'student5', name: 'Eva Brown' }
-    ]
+  // Fixed function to handle async getStudentsList
+  const generateMockStudentProgress = async (todos: Todo[]): Promise<StudentProgress[]> => {
+    try {
+      const students = await getStudentsList();
+      console.log(students);      
+      return students.map((student: any) => {
+        const todoStatuses = todos.map(todo => ({
+          title: todo.title,
+          status: ['pending', 'in-progress', 'completed'][Math.floor(Math.random() * 3)] as 'pending' | 'in-progress' | 'completed',
+          startDate: todo.startDate,
+          endDate: todo.endDate
+        }))
 
-    return students.map(student => {
-      const todoStatuses = todos.map(todo => ({
-        title: todo.title,
-        status: ['pending', 'in-progress', 'completed'][Math.floor(Math.random() * 3)] as 'pending' | 'in-progress' | 'completed',
-        startDate: todo.startDate,
-        endDate: todo.endDate
-      }))
+        const completedTodos = todoStatuses.filter(t => t.status === 'completed').length
+        const totalTodos = todoStatuses.length
+        const completionPercentage = Math.round((completedTodos / totalTodos) * 100)
 
-      const completedTodos = todoStatuses.filter(t => t.status === 'completed').length
-      const totalTodos = todoStatuses.length
-      const completionPercentage = Math.round((completedTodos / totalTodos) * 100)
-
-      return {
-        studentId: student.id,
-        studentName: student.name,
-        completedTodos,
-        totalTodos,
-        completionPercentage,
-        todoStatuses
-      }
-    })
+        return {
+          studentId: student.studentId,
+          studentName: student.studentName,
+          completedTodos,
+          totalTodos,
+          completionPercentage,
+          todoStatuses
+        }
+      })
+    } catch (error) {
+      console.error('Error fetching students list:', error)
+      return [] // Return empty array if students fetch fails
+    }
   }
 
   const formatDate = (dateString: string) => {
@@ -381,7 +355,7 @@ const ViewAssignment = () => {
                             {assignment.studentProgress.map((student, index) => (
                               <tr key={student.studentId} className="student-row">
                                 <td>
-                                  <div className="fw-semibold">{student.studentName}</div>
+                                  <div className="fw-semibold">Name: {student.studentName}</div>
                                   <small className="text-muted">ID: {student.studentId}</small>
                                 </td>
                                 <td>

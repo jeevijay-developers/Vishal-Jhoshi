@@ -170,6 +170,28 @@ export const AdminMenuList: MenuItem[] | undefined = [
         type: "link",
         lanClass: "lan-3",
       },
+      {
+        title: "View Assignment",
+        id: 1,
+        icon: "si:insights-line",
+        path: "/view-assignment",
+        type: "link",
+        lanClass: "lan-3",
+      }
+      
+            // <li className="nav-item" onClick={() => setShow("VIEW_ASSIGNMENT")}>
+            //   <a
+            //     className={`nav-link d-flex align-items-center gap-2 ${
+            //       show === "VIEW_ASSIGNMENT" ? "active bg-white" : ""
+            //     } active text-primary`}
+            //     aria-current="page"
+            //     href="#"
+            //   >
+            //     <i className="bi bi-journal-text"></i>
+            //     Assignment
+            //   </a>
+            // </li>
+
       // {
       //   title: "Sessions",
       //   id: 2,
