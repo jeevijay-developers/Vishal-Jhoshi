@@ -17,7 +17,7 @@ const AssignAssignment: React.FC = () => {
   const [activeKey, setActiveKey] = useState<string>("list");
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <Card className="shadow-lg rounded-4 p-3">
         <Tab.Container
           activeKey={activeKey}
