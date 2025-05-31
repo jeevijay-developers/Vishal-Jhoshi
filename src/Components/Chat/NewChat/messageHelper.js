@@ -33,7 +33,7 @@ export const updateMessageSentBySelectedUser = (MESSAGE, SELECTED_USER) => {
   const messageUl = document.getElementById("message-ul");
   if (messageUl) {
     const li = document.createElement("li");
-    li.className = "hvt d-flex flex-column message align-self-end";
+    li.className = "hvt d-flex flex-column message align-self-start";
     li.style.maxWidth = "65%";
 
     li.innerHTML = `
@@ -47,7 +47,7 @@ export const updateMessageSentBySelectedUser = (MESSAGE, SELECTED_USER) => {
           <div style="font-size: 12px;" class="align-self-start">
             You
           </div>
-          <div class="message bg-white rounded-3 py-1 px-3">
+          <div class="message bg-primary rounded-3 py-1 px-3">
             <div>${MESSAGE.message}</div>
             <div style="font-size: 10px;">${new Date().toLocaleString()}</div>
           </div>
