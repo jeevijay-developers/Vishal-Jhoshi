@@ -17,7 +17,7 @@ const DppWrapper = () => {
   return (
     <div>
       {userRole === "admin" && (
-        <div className="">
+        <div className="ms-3 mt-3">
           <button
             onClick={() => router.push("/create-dpp")}
             className="btn btn-primary"
