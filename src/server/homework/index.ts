@@ -58,3 +58,11 @@ export const getAllHomeworks = async () => {
     return error.response?.data || { message: "Something went wrong" };
   }
 };
+export const reportMentor = async (data: any) => {
+  try {
+    const response = await apiClient.post(`/api/v1/report-mentor`, data);
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
