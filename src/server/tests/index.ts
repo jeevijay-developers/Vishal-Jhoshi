@@ -200,43 +200,6 @@ export const addMatchTheColumnQuestion = async (question: any, id: any) => {
   }
 };
 
-// export const submitTestQuestion = async (testQuestionData: any) => {
-//   const formData = new FormData();
-
-//   // Append questions and other data
-//   formData.append("Questions", JSON.stringify(testQuestionData.Questions));
-//   formData.append("category", testQuestionData.category);
-//   formData.append("date", testQuestionData.date);
-//   formData.append("description", testQuestionData.description);
-//   formData.append("instructions", testQuestionData.instructions);
-//   formData.append("negativeMarking", testQuestionData.negativeMarking);
-//   formData.append("positiveMarking", testQuestionData.positiveMarking);
-//   formData.append("testName", testQuestionData.testName);
-//   formData.append("time", testQuestionData.time);
-//   formData.append("timeDuration", testQuestionData.timeDuration);
-
-//   // Append the image if it exists
-//   if (testQuestionData.descriptionImage) {
-//     formData.append("descriptionImage", testQuestionData.descriptionImage[0]);
-//   }
-
-//   try {
-//     const response = await axios.post(
-//       `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/tests/api/create`,
-//       formData,
-//       {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
-//     return response.data;
-//   } catch (error: any) {
-//     console.error("Error:", error);
-//     return error.response?.data || { message: "Something went wrong" };
-//   }
-// };
-
 export const createTest = async (data: any) => {
   try {
     const response = await axios.post(
@@ -304,5 +267,51 @@ export const getTestLeaderBoard = async (testId: string) => {
     return response.data;
   } catch (error: any) {
     return error || { message: "Something went wrong" };
+  }
+};
+
+export const createDppMetaInfo = async (data: any) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/add-dpp-details`,
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+export const createSelectDPPQuestion = async (data: any, id: any) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/create/dpp/select-dpp-question/${id}`,
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+export const createIntegerDPPQuestion = async (data: any, id: any) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/create/dpp/integer-dpp-question/${id}`,
+      data
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
+  }
+};
+export const publishDpp = async (id: any) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/dpp/publish-dpp/${id}`
+    );
+    return response.data;
+  } catch (error: any) {
+    return error.response?.data || { message: "Something went wrong" };
   }
 };

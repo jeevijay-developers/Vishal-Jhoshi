@@ -45,6 +45,22 @@ export const StudentMenuList: MenuItem[] | undefined = [
         type: "link",
         lanClass: "lan-3",
       },
+      // {
+      //   title: "Sessions",
+      //   id: 2,
+      //   icon: "material-symbols:live-tv-outline",
+      //   path: "/sessions",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
+      {
+        title: "DPP's",
+        id: 2,
+        icon: "material-symbols:live-tv-outline",
+        path: "/dpps",
+        type: "link",
+        lanClass: "lan-3",
+      },
     ],
   },
 
@@ -176,21 +192,7 @@ export const AdminMenuList: MenuItem[] | undefined = [
         path: "/view-assignment",
         type: "link",
         lanClass: "lan-3",
-      }
-      
-            // <li className="nav-item" onClick={() => setShow("VIEW_ASSIGNMENT")}>
-            //   <a
-            //     className={`nav-link d-flex align-items-center gap-2 ${
-            //       show === "VIEW_ASSIGNMENT" ? "active bg-white" : ""
-            //     } active text-primary`}
-            //     aria-current="page"
-            //     href="#"
-            //   >
-            //     <i className="bi bi-journal-text"></i>
-            //     Assignment
-            //   </a>
-            // </li>
-
+      },
       // {
       //   title: "Sessions",
       //   id: 2,
@@ -199,6 +201,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
       //   type: "link",
       //   lanClass: "lan-3",
       // },
+      {
+        title: "DPP's",
+        id: 2,
+        icon: "material-symbols:live-tv-outline",
+        path: "/dpps",
+        type: "link",
+        lanClass: "lan-3",
+      },
     ],
   },
   {
@@ -306,14 +316,14 @@ export const MentorMenuList: MenuItem[] | undefined = [
         type: "link",
         lanClass: "lan-3",
       },
-      {
-        title: "Sessions",
-        id: 2,
-        icon: "material-symbols:live-tv-outline",
-        path: "/sessions",
-        type: "link",
-        lanClass: "lan-3",
-      },
+      // {
+      //   title: "Sessions",
+      //   id: 2,
+      //   icon: "material-symbols:live-tv-outline",
+      //   path: "/sessions",
+      //   type: "link",
+      //   lanClass: "lan-3",
+      // },
     ],
   },
   {

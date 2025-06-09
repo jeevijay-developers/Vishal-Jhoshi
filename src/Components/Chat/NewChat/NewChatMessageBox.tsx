@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import { getChats } from "@/server/chats";
 import { selectSocket } from "@/Redux/Reducers/SocketSlice";
 import { Message } from "@/Types/Message";
-import { updateMessageSentByLoggedInUser } from "./messageHelper";
+import {
+  updateMessageSentByLoggedInUser,
+  updateMessageSentBySelectedUser,
+} from "./messageHelper";
 type Props = {
   selectedUser: User;
   handleGoBack: () => void;
@@ -75,6 +78,7 @@ const NewChatMessageBox: React.FC<Props> = ({
     if (socket) {
       socket.emit("receiveMessage", { roomId: selectedUser._id, MESSAGE });
       //append the new message to the message container
+      messageRef.current.value = "";
     }
   };
 
