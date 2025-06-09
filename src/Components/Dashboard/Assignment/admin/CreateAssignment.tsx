@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 interface TodoItem {
     title: string;
-    startDate: string;
-    endDate: string;
-    status: string;
+    startDate: Date;
+    endDate: Date;
+    status: 'pending' | 'in-progress' | 'completed';
 }
 
 interface Assignment {
@@ -17,34 +17,58 @@ interface Assignment {
 }
 
 const CreateAssignment: React.FC = () => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-  const [newTodo, setNewTodo] = useState<TodoItem>({
+  const [todos, setTodos] = useState<TodoItem[]>([]);  const [newTodo, setNewTodo] = useState<TodoItem>({
     title: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date(),
+    endDate: new Date(),
     status: "pending"
   });
 
   const [heading, setHeading] = useState<string>("");
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     if (name === "heading") {
       setHeading(value);
+    } else if (name === "startDate" || name === "endDate") {
+      setNewTodo((prev) => ({ ...prev, [name]: value }));
+      
+      // Validate end date is not before start date
+      if (name === "startDate" && newTodo.endDate && new Date(value) > newTodo.endDate) {
+        setNewTodo(prev => ({ ...prev, endDate: new Date(value) }));
+      } else if (name === "endDate" && newTodo.startDate && new Date(value) < newTodo.startDate) {
+        toast.error("End date cannot be before start date");
+        return;
+      }
     } else {
       setNewTodo((prev) => ({ ...prev, [name]: value }));
     }
   };
-
   const addTodo = () => {
     if (!newTodo.title || !newTodo.startDate || !newTodo.endDate) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
+
+    if (newTodo.startDate > newTodo.endDate) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
+
+    // Check for duplicate title
+    if (todos.some(todo => todo.title.toLowerCase() === newTodo.title.toLowerCase())) {
+      toast.error("A todo with this title already exists");
+      return;
+    }
+
     setTodos([...todos, newTodo]);
-    setNewTodo({ title: "", startDate: "", endDate: "", status: "pending" });
+    setNewTodo({
+      title: "",
+      startDate: newTodo.startDate, // Keep the last used dates
+      endDate: newTodo.endDate,
+      status: "pending"
+    });
   };
 
   const deleteTodo = (index: number) => {
@@ -129,7 +153,7 @@ const CreateAssignment: React.FC = () => {
               type="date"
               className="form-control"
               name="startDate"
-              value={newTodo.startDate}
+              value={newTodo.startDate.toISOString().split('T')[0]}
               onChange={handleChange}
             />
           </div>
@@ -139,7 +163,7 @@ const CreateAssignment: React.FC = () => {
               type="date"
               className="form-control"
               name="endDate"
-              value={newTodo.endDate}
+              value={newTodo.endDate.toISOString().split('T')[0]}
               onChange={handleChange}
             />
           </div>
@@ -168,7 +192,7 @@ const CreateAssignment: React.FC = () => {
                   <div>
                     <h6 className="mb-1">{todo.title}</h6>
                     <small className="text-muted">
-                      {todo.startDate} → {todo.endDate}
+                      {todo.startDate.toISOString().split('T')[0]} → {todo.endDate.toISOString().split('T')[0]}
                     </small>
                   </div>
                   <button

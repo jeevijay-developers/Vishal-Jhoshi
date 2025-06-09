@@ -45,6 +45,14 @@ export const StudentMenuList: MenuItem[] | undefined = [
         type: "link",
         lanClass: "lan-3",
       },
+      {
+        title: "View Assignment",
+        id: 1,
+        icon: "hugeicons:AssignmentsIcon",
+        path: "/assignments",
+        type: "link",
+        lanClass: "lan-3",
+      },
     ],
   },
 
