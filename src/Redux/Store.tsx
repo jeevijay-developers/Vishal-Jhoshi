@@ -14,6 +14,7 @@ import chartData from "./Reducers/ChartData";
 import AttendStatus from "./Reducers/AttendStatus";
 import VideoCall from "./Reducers/VideoCall";
 import isLiveSlice from "./Reducers/isLiveSlice";
+import DppSlice from "./Reducers/DppSlice";
 
 const Store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ const Store = configureStore({
     attending: AttendStatus,
     videoCall: VideoCall,
     isLive: isLiveSlice,
+    dppAnswer: DppSlice,
   },
 });
 

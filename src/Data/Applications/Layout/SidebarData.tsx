@@ -209,6 +209,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
         type: "link",
         lanClass: "lan-3",
       },
+      {
+        title: "Homework",
+        id: 4,
+        icon: "material-symbols:live-tv-outline",
+        path: "/homework",
+        type: "link",
+        lanClass: "lan-3",
+      },
     ],
   },
   {

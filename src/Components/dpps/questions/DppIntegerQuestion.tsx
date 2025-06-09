@@ -5,6 +5,7 @@ import { RootState } from "@/Redux/Store";
 import { addQuestion } from "@/Redux/Reducers/UserAnswers";
 import { toast } from "react-toastify";
 import { BlockMath, InlineMath } from "react-katex";
+import { setQuestions } from "@/Redux/Reducers/DppSlice";
 
 interface IntegerQuestionProps {
   integerQuestion: {
@@ -84,6 +85,12 @@ const DppIntegerQuestion: React.FC<IntegerQuestionProps> = ({
       timeTaken: Date.now() - start,
     };
 
+    dispatch(
+      setQuestions({
+        description: integerQuestion.description,
+        status: status ? "CORRECT" : "INCORRECT",
+      })
+    );
     // dispatch(addQuestion(respone));
     // if (test.Questions.length - 1 > index) {
     //   settestCounter((prev) => prev + 1);
@@ -139,7 +146,7 @@ const DppIntegerQuestion: React.FC<IntegerQuestionProps> = ({
               </div>
             )}
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="correctAnswer" className="form-label">
               Correct Answer
             </label>
@@ -154,7 +161,7 @@ const DppIntegerQuestion: React.FC<IntegerQuestionProps> = ({
               // value={integerQuestion.correctAnswer}
               // onChange={handleInputChange}
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="container my-2">

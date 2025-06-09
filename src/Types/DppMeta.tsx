@@ -18,3 +18,12 @@ export interface DppStatus {
   description: string;
   status: string;
 }
+
+export interface Homework {
+  _id: string;
+  createdAt: string;
+  class: string;
+  subject: string;
+  target: string;
+  link: string;
+}

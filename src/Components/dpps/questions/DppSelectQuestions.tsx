@@ -13,6 +13,7 @@ import { FaImage } from "react-icons/fa";
 import "katex/dist/katex.min.css";
 import { BlockMath, InlineMath } from "react-katex";
 import { string } from "yup";
+import { setQuestions } from "@/Redux/Reducers/DppSlice";
 
 interface IntegerQuestionProps {
   selectQuestion: {
@@ -150,7 +151,7 @@ const DppSelectQuestions: React.FC<IntegerQuestionProps> = ({
       ansStatus = false; // Different lengths mean arrays can't match.
     }
 
-    console.log(ansStatus);
+    // console.log(ansStatus);
 
     const respone = {
       color: color,
@@ -179,7 +180,12 @@ const DppSelectQuestions: React.FC<IntegerQuestionProps> = ({
       selectedOptions: selectedOptions,
     };
 
-    // dispatch(addQuestion(respone));
+    dispatch(
+      setQuestions({
+        description: selectQuestion.description,
+        status: ansStatus ? "CORRECT" : "INCORRECT",
+      })
+    );
     // // console.log(respone);
     // if (test.Questions.length - 1 > index) {
     //   settestCounter((prev) => prev + 1);
@@ -364,7 +370,7 @@ const DppSelectQuestions: React.FC<IntegerQuestionProps> = ({
           </div>
         </div>
         {/* Select an option */}
-        <div className="d-flex flex-row gap-3">
+        {/* <div className="d-flex flex-row gap-3">
           <div className=" mt-2">
             <label htmlFor="optionA" className="form-check-label me-2">
               A
@@ -417,7 +423,7 @@ const DppSelectQuestions: React.FC<IntegerQuestionProps> = ({
               onChange={(e) => handleCheckboxChange(e.target.value)}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="container my-2">
