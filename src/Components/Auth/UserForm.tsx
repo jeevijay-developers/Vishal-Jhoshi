@@ -51,31 +51,31 @@ const classes = [
   },
   {
     index: 1,
-    targetClass: "Class 6",
+    targetClass: "6",
   },
   {
     index: 2,
-    targetClass: "Class 7",
+    targetClass: "7",
   },
   {
     index: 3,
-    targetClass: "Class 8",
+    targetClass: "8",
   },
   {
     index: 4,
-    targetClass: "Class 9",
+    targetClass: "9",
   },
   {
     index: 5,
-    targetClass: "Class 10",
+    targetClass: "10",
   },
   {
     index: 6,
-    targetClass: "Class 11",
+    targetClass: "11",
   },
   {
     index: 7,
-    targetClass: "Class 12",
+    targetClass: "12",
   },
   {
     index: 8,

@@ -25,7 +25,7 @@ const AssignAssignment: React.FC = () => {
         >
           {/* Horizontal Nav Tabs */}
           <Nav variant="pills" className="justify-content-start mb-4 gap-3">
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link
                 eventKey="create"
                 className={`px-3 py-2 ${
@@ -34,7 +34,7 @@ const AssignAssignment: React.FC = () => {
               >
                 ➕ Create
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item>
               <Nav.Link
                 eventKey="list"

@@ -68,7 +68,7 @@ const StudentDashboard = () => {
       </section>
 
       <section className="my-4">
-        <Information />
+        {/* <Information /> */}
         <TestBarGraph />
       </section>
       <section className="my-4">

@@ -1,4 +1,4 @@
-export const Href: string = "";
+export const Href: string = '';
 export const ImagePath: string = "/assets/images";
 export const ThemePrimary: string = "var(--theme-default)";
 

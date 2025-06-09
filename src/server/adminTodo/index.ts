@@ -4,8 +4,8 @@ interface todo{
     heading: string;
     todos: {
         title: string;
-        startDate: string;
-        endDate: string;
+        startDate: Date;
+        endDate: Date;
         status: string;
     }[];
     createdBy?: string;
