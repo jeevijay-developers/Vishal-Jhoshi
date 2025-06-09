@@ -36,37 +36,48 @@ const ViewAssignment = () => {
   const [loading, setLoading] = useState(true);
   
   const studentsPerPage = 10;
-  const user = useSelector((state: any) => state.user)
-
-    useEffect(() => {
+  const user = useSelector((state: any) => state.user);    
+  useEffect(() => {
       if(!user._id) return;
-      fetchAssignments();
-      fetchAllStudents();
+      fetchAllData();
     }, [user])
-    const fetchAssignments = async () => {
-    try {
-      const res = await fetchAllTodos();
-      if (res?.data) {
-        setStudentTodos(res.data);
+
+    const fetchAllData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch both data in parallel
+        const [todosRes, studentsRes] = await Promise.all([
+          fetchAllTodos(),
+          getAllStudents()
+        ]);
+
+        const todoData = todosRes?.data || [];
+        const studentsData = studentsRes?.users || [];
+        console.log("Todo's data: ", todoData);
+        console.log("Student's data: ", studentsData);
+        
+        
+        // Get all student IDs that have todos
+        const studentIdsWithTodos = new Set(todoData.map(todo => todo.studentId));
+
+        // Filter students who:
+        // 1. Have role "student"
+        // 2. AND have todos in todoData
+        const filteredStudents = studentsData.filter(user => 
+          user.role === "student" && 
+          studentIdsWithTodos.has(user._id)
+        );
+
+        setStudentTodos(todoData);
+        setStudents(filteredStudents);
+      } catch (error) {
+        toast.error("Error in fetching data");
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast.error("Error in fetching assignments")
-    } 
-  }
-  const fetchAllStudents = async() => {
-    try {
-      const res = await getAllStudents();
-      if (res?.users) {
-        // Filter only users with role "student"
-        const studentUsers = res.users.filter((user: { role: string; }) => user.role === "student");
-        setStudents(studentUsers);
-      }
-    } catch (error) {
-      toast.error("Error in fetching students");
-    } finally {
-      setLoading(false);
     }
-  }
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -118,7 +129,7 @@ const ViewAssignment = () => {
                 <td>{student.name}</td>
                 <td>{student.studentClass}</td>
                 <td>{student.target}</td>
-                <td>{student.mentorship}</td>
+                <td>{student.mentorship || "No mentor assigned"}</td>
                 <td>
                   <button 
                     className="btn btn-primary btn-sm"
