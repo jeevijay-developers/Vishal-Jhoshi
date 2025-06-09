@@ -4,7 +4,8 @@ export const signUp = async (
   email: string,
   password: string,
   name: string,
-  target: string
+  target: string,
+  studentClass: string
 ) => {
   try {
     const response = await axios.post(
@@ -14,6 +15,7 @@ export const signUp = async (
         password,
         name,
         target,
+        studentClass,
       }
     );
     return response.data;
