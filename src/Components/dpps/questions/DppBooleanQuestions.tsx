@@ -4,6 +4,7 @@ import { RootState } from "@/Redux/Store";
 import { addQuestion } from "@/Redux/Reducers/UserAnswers";
 import { toast } from "react-toastify";
 import { BlockMath, InlineMath } from "react-katex";
+import { setQuestions } from "@/Redux/Reducers/DppSlice";
 
 interface BooleanQuestionProps {
   booleanQuestion: {
@@ -76,6 +77,12 @@ const DppBooleanQuestions: React.FC<BooleanQuestionProps> = ({
       timeTaken: Date.now() - start,
     };
 
+    dispatch(
+      setQuestions({
+        description: booleanQuestion.description,
+        status: status ? "CORRECT" : "INCORRECT",
+      })
+    );
     // dispatch(addQuestion(response));
     // if (test.Questions.length - 1 > index) {
     //   settestCounter((prev) => prev + 1);
@@ -130,7 +137,7 @@ const DppBooleanQuestions: React.FC<BooleanQuestionProps> = ({
           </div>
         </div>
 
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label className="form-label">Select Answer</label>
           <div className="form-check">
             <input
@@ -160,7 +167,7 @@ const DppBooleanQuestions: React.FC<BooleanQuestionProps> = ({
               False
             </label>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="container my-2">
