@@ -44,6 +44,45 @@ const targetClass = [
   },
 ];
 
+const classes = [
+  {
+    index: 0,
+    targetClass: "Select Class",
+  },
+  {
+    index: 1,
+    targetClass: "6",
+  },
+  {
+    index: 2,
+    targetClass: "7",
+  },
+  {
+    index: 3,
+    targetClass: "8",
+  },
+  {
+    index: 4,
+    targetClass: "9",
+  },
+  {
+    index: 5,
+    targetClass: "10",
+  },
+  {
+    index: 6,
+    targetClass: "11",
+  },
+  {
+    index: 7,
+    targetClass: "12",
+  },
+  {
+    index: 8,
+    targetClass: "Dropper",
+  },
+];
+
 export const UserForm = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -52,6 +91,7 @@ export const UserForm = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [target, setTarget] = useState("");
+  const [studentClass, setStudentClass] = useState("");
 
   const router = useRouter();
   // old code
@@ -101,14 +141,20 @@ export const UserForm = () => {
 
     try {
       if (signUpCheck) {
-        const result = await signUp(email, password, name, target);
+        const result = await signUp(
+          email,
+          password,
+          name,
+          target,
+          studentClass
+        );
         if (result?.status === "success") {
           setSignUp(false);
           toast.success("Success...");
         } else {
           toast.error("Invalid Data...");
         }
-        console.log({ email, password, name, target });
+        console.log({ email, password, name, target, studentClass });
       } else {
         const result = await signIn("credentials", {
           email,
@@ -182,6 +228,22 @@ export const UserForm = () => {
                   }}
                 >
                   {targetClass.map((item, index) => (
+                    <option key={index} value={item.targetClass}>
+                      {item.targetClass}
+                    </option>
+                  ))}
+                </Input>
+                <Label className="col-form-label">Select Class</Label>
+                <Input
+                  type="select"
+                  defaultValue={""}
+                  onChange={(event) => {
+                    console.log(event.target.value);
+
+                    setStudentClass(event.target.value);
+                  }}
+                >
+                  {classes.map((item, index) => (
                     <option key={index} value={item.targetClass}>
                       {item.targetClass}
                     </option>
