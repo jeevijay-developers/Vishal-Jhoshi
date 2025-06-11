@@ -27,3 +27,23 @@ export interface Homework {
   target: string;
   link: string;
 }
+
+export interface Mentor {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+}
+
+export interface MentorReport {
+  mentor: Mentor;
+  count: string;
+}
+
+export interface Report {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  report: string;
+  message: string;
+}

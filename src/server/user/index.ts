@@ -176,5 +176,21 @@ export const createNewMentor = async (data: any) => {
     throw error;
   }
 };
+export const getReports = async () => {
+  try {
+    const response = await apiClient.get(`/api/v1/report-mentor`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+export const getReportById = async (id: string) => {
+  try {
+    const response = await apiClient.get(`/api/v1/get-report-mentor/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw error;
+  }
+};
 
 // /create-new-mentor

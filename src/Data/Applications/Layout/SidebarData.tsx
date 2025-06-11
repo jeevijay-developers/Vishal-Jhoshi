@@ -278,6 +278,14 @@ export const AdminMenuList: MenuItem[] | undefined = [
         lanClass: "lan-3",
       },
       {
+        title: "Mentor reports",
+        id: 1,
+        icon: "mdi:account", // ✅ Correct icon for a user/profile
+        path: "/mentor-reports",
+        type: "link",
+        lanClass: "lan-3",
+      },
+      {
         title: "Add Mentor",
         id: 2,
         icon: "mdi:chat-outline",
